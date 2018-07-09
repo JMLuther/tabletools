@@ -1,0 +1,14 @@
+Package: tabletools
+Type: Package
+Title: Helpful Tools to Make html Tables 
+Version: 0.1.0
+Author: JM Luther
+Maintainer: JM Luther <matt.luther@comcast.net>
+Description: Functions for creating html tables. 
+License: 
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr,
+    htmlTable,
+    rlang
+RoxygenNote: 6.0.1
