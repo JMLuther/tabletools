@@ -4,12 +4,19 @@
 \alias{my_summary}
 \title{Custom Summarization for a variable in a dataframe}
 \usage{
-my_summary(df, my_var, probs = c(0.025, 0.975), digits = 2, ...)
+my_summary(df, my_var, probs = c(0.025, 0.975), na.rm = T, digits = 2,
+  ...)
 }
 \arguments{
 \item{df}{A dataframe}
 
 \item{my_var}{A variable name}
+
+\item{probs}{For quantile functions, a vector with the desired quantiles...c(0.025, 0.975) default}
+
+\item{na.rm}{a logical value indicating whether NA values should be stripped}
+
+\item{digits}{integer indicating number of decimal places}
 }
 \value{
 A dataframe with named variables for: mean, sd, n, sem, and 95%CI

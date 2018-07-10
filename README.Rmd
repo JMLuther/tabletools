@@ -10,9 +10,9 @@ output:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
-)
+  fig.path = "README-")
 library(dplyr)
+library(ggplot2)
 library(htmlTable)
 library(tabletools)
 ```
@@ -22,7 +22,7 @@ library(tabletools)
 
 ## Installation
 
-Install from Github:  `devtools::install_github("JMLuther/tabletools")`
+Install from Github:  devtools::install_github("JMLuther/tabletools")
 
 
 The goal of tabletools is to provide functions which are helpful for generating summary html tables.
@@ -32,7 +32,40 @@ These functions are most useful in conjunction with an html table generating pac
   *  `knitr::kable` see [Create Awesome HTML Table with knitr::kable and kableExtra](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html)  
   *  `formattable` 
 
-## Example
+## `my_summary` custom summary  
+
+This summary function is customized to my preferences, and should provide enough data to pipe into ggplot or a simple summary table.
+Just provides a summary for a single continuous variable.
+
+Table:
+```{r}
+mtcars %>% 
+  group_by(cyl) %>% 
+  my_summary(mpg) %>% 
+  htmlTable::htmlTable(rnames=F, align = "c",
+                       css.cell = rbind(rep("padding-left: .5em; padding-right: .5em;",times=ncol(.)),
+                           matrix("padding:0 5px 0 5px;", ncol=ncol(.), nrow=nrow(.))))
+
+```
+
+ggplot:
+```{r}
+mtcars %>% 
+  group_by(cyl) %>% 
+  my_summary(mpg) %>% 
+  ggplot(aes(factor(cyl), mpg_mean, group=cyl,
+             ymin=mpg_ci_025, ymax=mpg_ci_975)) +
+  geom_linerange() +
+  geom_point(color="red", size=2) +
+  labs(title = "Gas mileage by number of cylinders",
+       x="Cylinders", 
+       y="Average MPG") +
+  theme_bw()
+```
+
+
+
+## Table with PCT and Fraction summary   
 
 Using `dplyr` tools to make a summary dataframe- then converting results to an html table.
 ```{r example}
@@ -47,3 +80,13 @@ mtcars %>%
 
 ```
 
+
+# Session Info  
+
+<button class="btn btn-primary" data-toggle="collapse" data-target="#SessionInfo"> Show/Hide </button>  
+<div id="SessionInfo" class="collapse">  
+```{r echo=T}
+Hmisc::markupSpecs$html$session()
+```
+</div>
+ 
