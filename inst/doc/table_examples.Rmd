@@ -1,10 +1,13 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+title: "Simple examples"
+author: "JM Luther"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 knitr::opts_chunk$set(
@@ -93,8 +96,10 @@ mtcars %>%
 The following functions provide useful
 # Session Info  
 
+<button class="btn btn-primary" data-toggle="collapse" data-target="#SessionInfo"> Show/Hide </button>  
+<div id="SessionInfo" class="collapse">  
 ```{r echo=F}
 Hmisc::markupSpecs$html$session()
 ```
-
+</div>
  

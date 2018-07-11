@@ -3,7 +3,7 @@ Type: Package
 Title: Helpful Tools to Make html Tables 
 Version: 0.1.0
 Author: JM Luther
-Maintainer: JM Luther <matt.luther@comcast.net>
+Maintainer: JM Luther <james.luther@vanderbilt.edu>
 Description: Functions for creating html tables. 
 License: 
 Encoding: UTF-8
@@ -12,3 +12,6 @@ Imports: dplyr,
     htmlTable,
     rlang
 RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,12 +1,4 @@
----
-output:
-  md_document:
-    variant: markdown_github
----
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+## ----echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE---------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -17,31 +9,8 @@ library(ggplot2)
 library(htmlTable)
 library(tabletools)
 library(tidyr)
-```
 
-# tabletools
-
-The goal of tabletools is to provide functions which are helpful for generating summary html tables.
-For details on the functions, please see help documentation in the package.
-
-## Installation
-
-Install from Github:  `devtools::install_github("JMLuther/tabletools")`
-
-
-These functions are most useful in conjunction with an html table generating package::functions such as:  
-  
-  *  `htmlTable::htmlTable` [Tables with htmlTable and some alternatives](https://cran.r-project.org/web/packages/htmlTable/vignettes/tables.html)  
-  *  `knitr::kable` see [Create Awesome HTML Table with knitr::kable and kableExtra](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html)  
-  *  `formattable` 
-
-## `my_summary` custom summary  
-
-This summary function is customized to my preferences, and should provide enough data to pipe into ggplot or a simple summary table.
-Just provides a summary for a single continuous variable.
-
-Table:
-```{r}
+## ------------------------------------------------------------------------
 mtcars %>% 
   group_by(cyl) %>% 
   my_summary(mpg, digits = 1) %>% # override the default 2 decimal point rounding
@@ -49,10 +18,8 @@ mtcars %>%
                        css.cell = rbind(rep("padding-left: .5em; padding-right: .5em;",times=ncol(.)),
                                         matrix("padding:0 5px 0 5px;", ncol=ncol(.), nrow=nrow(.))))
 
-```
 
-Plot:
-```{r}
+## ------------------------------------------------------------------------
 mtcars %>% 
   group_by(cyl) %>% 
   my_summary(mpg) %>% 
@@ -65,12 +32,8 @@ mtcars %>%
        title= "Average MPG by number of Cylinders") +
   theme_bw()
 
-```
 
-
-# Summary text functions 
-
-```{r}
+## ------------------------------------------------------------------------
 mtcars %>%
   summarise(mean_sd = txt_mean_sd(mpg),
             mean_sem = txt_mean_sem(mpg),
@@ -85,16 +48,7 @@ mtcars %>%
                                         matrix("padding:0 5px 0 5px;", ncol=ncol(.), nrow=nrow(.))))
   
 
-```
 
-
-
-
-The following functions provide useful
-# Session Info  
-
-```{r echo=F}
+## ----echo=F--------------------------------------------------------------
 Hmisc::markupSpecs$html$session()
-```
 
- 

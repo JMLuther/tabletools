@@ -147,12 +147,85 @@ mtcars %>%
 
 ![](README-unnamed-chunk-3-1.png)
 
-Session Info
-============
+Summary text functions
+======================
 
-<button class="btn btn-primary" data-toggle="collapse" data-target="#SessionInfo">
-Show/Hide
-</button>
+``` r
+mtcars %>%
+  summarise(mean_sd = txt_mean_sd(mpg),
+            mean_sem = txt_mean_sem(mpg),
+            mean_range = txt_mean_range(mpg),
+            median_iqr = txt_median_iqr(mpg),
+            pct_fr = txt_pct_fr(vs, 1)
+            ) %>% 
+  tidyr::gather(txt_f, output) %>% # this is better than using t() which creates a matrix
+  htmlTable::htmlTable(rnames=F, align = "l", align.header = "l", 
+                       caption = "Example results",
+                       css.cell = rbind(rep("padding-left: .5em; padding-right: .5em;",times=ncol(.)),
+                                        matrix("padding:0 5px 0 5px;", ncol=ncol(.), nrow=nrow(.))))
+```
+
+<table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
+<thead>
+<tr>
+<td colspan="2" style="text-align: left;">
+Example results
+</td>
+</tr>
+<tr>
+<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: left;">
+txt\_f
+</th>
+<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: left;">
+output
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding:0 5px 0 5px; text-align: left;">
+mean\_sd
+</td>
+<td style="padding:0 5px 0 5px; text-align: left;">
+20.1 ± 6.0
+</td>
+</tr>
+<tr>
+<td style="padding:0 5px 0 5px; text-align: left;">
+mean\_sem
+</td>
+<td style="padding:0 5px 0 5px; text-align: left;">
+20.1 ± 1.1
+</td>
+</tr>
+<tr>
+<td style="padding:0 5px 0 5px; text-align: left;">
+mean\_range
+</td>
+<td style="padding:0 5px 0 5px; text-align: left;">
+20.1 (10.4 - 33.9)
+</td>
+</tr>
+<tr>
+<td style="padding:0 5px 0 5px; text-align: left;">
+median\_iqr
+</td>
+<td style="padding:0 5px 0 5px; text-align: left;">
+19.2 (15.4 - 22.8)
+</td>
+</tr>
+<tr>
+<td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: left;">
+pct\_fr
+</td>
+<td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: left;">
+43.8% ( <sup>14</sup>⁄<sub>32</sub> )
+</td>
+</tr>
+</tbody>
+</table>
+The following functions provide useful \# Session Info
+
 <!--html_preserve-->
 <pre>
  R version 3.5.1 (2018-07-02)
@@ -165,8 +238,8 @@ Show/Hide
  [1] stats     graphics  grDevices utils     datasets  methods   base     
  
  other attached packages:
- [1] bindrcpp_0.2.2   tabletools_0.1.0 htmlTable_1.12   ggplot2_3.0.0   
- [5] dplyr_0.7.6     
+ [1] bindrcpp_0.2.2   tidyr_0.8.1      tabletools_0.1.0 htmlTable_1.12  
+ [5] ggplot2_3.0.0    dplyr_0.7.6     
  </pre>
 To cite R in publication use:
 <p>
