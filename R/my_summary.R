@@ -20,6 +20,7 @@
 my_summary <- function(df, my_var, probs = c(0.025, .975), na.rm = T, digits = 2, ...) {
   my_var <- enquo(my_var)
   mean_name <- paste0(quo_name(my_var), "_mean")
+  median_name <- paste0(quo_name(my_var), "_median")
   sd_name   <- paste0(quo_name(my_var), "_sd")
   n_name    <- paste0(quo_name(my_var), "_n")
   sem_name  <- paste0(quo_name(my_var), "_sem")
@@ -28,6 +29,7 @@ my_summary <- function(df, my_var, probs = c(0.025, .975), na.rm = T, digits = 2
 
   summarise(df,
             !!mean_name := round(mean(!!my_var, na.rm = na.rm), digits),
+            !!median_name := round(median(!!my_var, na.rm = na.rm), digits),
             !!sd_name   := round(sd(!!my_var, na.rm=na.rm), digits),
             !!n_name    := sum(!is.na(!!my_var)), # an integer
             !!sem_name  := round(sd(!!my_var, na.rm=na.rm)/sqrt(sum(!is.na(!!my_var))), digits),
