@@ -23,6 +23,40 @@ A text table with grouped summary
 \description{
 Grouped Summary Table with optional html output
 }
+\examples{
+library(tidyverse)
+          by = list(cyl = mtcars[, "cyl"]),
+          FUN = function(x) sprintf("\%.2f &pm \%.2f", mean(x), sd(x))) \%>\% 
+  t() \%>\% 
+  as.data.frame() \%>\% 
+  rownames_to_column() \%>\% 
+  {names(.) <- unlist(.[1, ]); .} \%>\% 
+  .[-1, ] 
+
+# output HTML format
+mtcars \%>\% 
+  table_grouped_summary(., 
+                        var_names =  c("disp", "hp", "drat", "mpg", "wt"),
+                        grouping_variable = "cyl",
+                        html_output = TRUE,
+                        total = TRUE)
+
+# output text format
+  mtcars \%>\% 
+  table_grouped_summary(., 
+                        var_names =  c("disp", "hp", "drat", "mpg", "wt"),
+                        grouping_variable = "cyl",
+                        html_output = FALSE,
+                        total = TRUE)
+
+# without overall total
+mtcars \%>\% 
+  table_grouped_summary(., 
+                        var_names =  c("disp", "hp", "drat", "mpg", "wt"),
+                        grouping_variable = "cyl",
+                        html_output = FALSE,
+                        total = FALSE)
+}
 \seealso{
-\code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[base]{sd}}, \code{\link[htmlTable]{htmlTable}}
+\code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[stats]{sd}}, \code{\link[htmlTable]{htmlTable}}
 }
