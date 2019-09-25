@@ -15,7 +15,7 @@
 #'   summarise(mean_mpg = txt_mean_range(mpg))
 
 txt_median_iqr <- function(var, lower=0.25, upper=0.75, na.rm = T, ...){
-  sprintf("%.1f (%.1f - %.1f)",
+  sprintf("%.1f[%.1f-%.1f]",
           median(var, na.rm = na.rm, ...),
           quantile(var, lower, na.rm = na.rm, names = FALSE),
           quantile(var, upper, na.rm = na.rm, names = FALSE)

@@ -13,7 +13,7 @@
 #'   summarise(mean_mpg = txt_mean_range(mpg))
 
 txt_mean_range <- function(var, na.rm = TRUE, ...){
-  sprintf("%.1f (%.1f - %.1f)",
+  sprintf("%.1f(%.1f-%.1f)",
           mean(var, na.rm = na.rm),
           min(var, na.rm = na.rm),
           max(var, na.rm = na.rm))

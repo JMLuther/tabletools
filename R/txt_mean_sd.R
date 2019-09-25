@@ -20,7 +20,7 @@
 #'   summarise(mean_mpg = txt_mean_sd(mpg))
 
 txt_mean_sd <- function(var, na.rm = T, ...){
-  sprintf("%.1f &plusmn; %.1f",
+  sprintf("%.1f&plusmn;%.1f",
           mean(var, na.rm = na.rm, ...),
           sd(var, na.rm = na.rm)
           )

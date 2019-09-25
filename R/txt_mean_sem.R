@@ -13,7 +13,7 @@
 #'   group_by(cyl) %>%
 #'   summarise(mean_mpg = txt_mean_sem(mpg))
 txt_mean_sem <- function(var, ...){
-  sprintf("%.1f &plusmn; %.1f",
+  sprintf("%.1f&plusmn;%.1f",
           mean(var, na.rm = T),
           sd(var, na.rm = T)/sqrt(length(var)))
 }
