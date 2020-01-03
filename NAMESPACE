@@ -2,6 +2,7 @@
 
 export(gls_pvalue)
 export(my_summary)
+export(rcorr_clean)
 export(table_grouped_summary)
 export(txt_chisquare_report)
 export(txt_mcnemar_report)
