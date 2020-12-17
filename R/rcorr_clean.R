@@ -72,7 +72,7 @@ rcorr_clean <- function(rcmat, lookup_varTable = NULL) {
   # n as diagonal
   # HTML-style labels
   rcmat$label_html <- rcmat$P_simplified
-  rcmat$label_html[upper.tri(rcmat$label_html)] <- sprintf("<i>p</i>=%s", rcmat$label_html[upper.tri(rcmat$label_html)] )
+  rcmat$label_html[upper.tri(rcmat$label_html)] <- sprintf("<i>P</i>=%s", rcmat$label_html[upper.tri(rcmat$label_html)] )
   rcmat$label_html[lower.tri(rcmat$label_html)] <- sprintf("<i>&rho;</i>=%.2f", rcmat$r[lower.tri(rcmat$r)])
   diag(rcmat$label_html) <- sprintf("<strong>n=%1.0f</strong>", diag(rcmat$n)) # this is a vector, not a matrix
   # text format p-values
