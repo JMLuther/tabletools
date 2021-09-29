@@ -18,3 +18,9 @@ txt_pct_fr <- function(var, referent_value, na.rm = T){
           sum(var == referent_value, na.rm = na.rm), length(var))
   }
 
+txt_pct_fr2 <- function(var, referent_value, na.rm = T){
+  sprintf("%.2f%%(<sup>%.0f</sup>&frasl;<sub>%.0f</sub>)",
+          mean(var == referent_value, na.rm = na.rm)*100,
+          sum(var == referent_value, na.rm = na.rm), length(var))
+}
+

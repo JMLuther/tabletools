@@ -25,3 +25,10 @@ txt_mean_sd <- function(var, na.rm = T, ...){
           sd(var, na.rm = na.rm)
           )
 }
+
+txt_mean_sd2 <- function(var, na.rm = T, ...){
+  sprintf("%.2f&plusmn;%.2f",
+          mean(var, na.rm = na.rm, ...),
+          sd(var, na.rm = na.rm)
+  )
+}

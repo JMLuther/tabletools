@@ -18,3 +18,8 @@ txt_mean_sem <- function(var, ...){
           sd(var, na.rm = T)/sqrt(length(var)))
 }
 
+txt_mean_sem2 <- function(var, ...){
+  sprintf("%.2f&plusmn;%.2f",
+          mean(var, na.rm = T),
+          sd(var, na.rm = T)/sqrt(length(var)))
+}
