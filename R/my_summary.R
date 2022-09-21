@@ -28,11 +28,11 @@ my_summary <- function(df, my_var, probs = c(0.025, .975), na.rm = T, digits = 2
   ciu_name  <- paste0(quo_name(my_var), "_ci_", gsub("^[0-9]+.([0-9]+)", "\\1", probs[[2]])) # allows for flexible quantiles
 
   summarise(df,
-            !!mean_name := round(mean(!!my_var, na.rm = na.rm), digits),
-            !!median_name := round(median(!!my_var, na.rm = na.rm), digits),
-            !!sd_name   := round(sd(!!my_var, na.rm=na.rm), digits),
             !!n_name    := sum(!is.na(!!my_var)), # an integer
+            !!mean_name := round(mean(!!my_var, na.rm = na.rm), digits),
+            !!sd_name   := round(sd(!!my_var, na.rm=na.rm), digits),
             !!sem_name  := round(sd(!!my_var, na.rm=na.rm)/sqrt(sum(!is.na(!!my_var))), digits),
+            !!median_name := round(median(!!my_var, na.rm = na.rm), digits),
             !!cil_name  := round(quantile(!!my_var, probs = probs[[1]], names = F, na.rm = na.rm), digits),
             !!ciu_name  := round(quantile(!!my_var, probs = probs[[2]], names = F, na.rm = na.rm), digits)
   )

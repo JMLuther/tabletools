@@ -11,7 +11,7 @@ LazyData: true
 Imports: dplyr,
     htmlTable,
     rlang
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
