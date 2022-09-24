@@ -11,7 +11,7 @@ txt_clean_nonascii(string, regex = "[^[:alnum:][:blank:]+?&/\\\\-\\\\.]", ...)
 
 \item{regex}{}
 
-\item{...}{other options passed to [base::gsub()]}
+\item{...}{other options passed to `Base::gsub()``}
 }
 \value{
 A character string or vector, now stripped of any non-matching values
@@ -23,5 +23,6 @@ Default matching can be overridden by `regex` option.
 \examples{
 test_strings <- c("\"The Erlenmeyer Flask\"‡", "\"My Struggle\"‡", "\"Founder's Mutation\"", "\"Mulder & Scully Meet the Were-Monster\"",
 "\"Home Again\"", "\"Babylon\"", "\"My Struggle II\"‡" )
+test_strings
 txt_clean_nonascii(test_strings)
 }

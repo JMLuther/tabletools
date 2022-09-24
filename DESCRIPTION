@@ -4,7 +4,7 @@ Title: Helpful Tools to Make html Tables
 Version: 0.1.0
 Author: JM Luther
 Maintainer: JM Luther <james.luther@vanderbilt.edu>
-Description: Functions for creating html tables. 
+Description: Functions for creating html tables, and other misc. functions. 
 License: 
 Encoding: UTF-8
 LazyData: true
@@ -12,6 +12,8 @@ Imports: dplyr,
     htmlTable,
     rlang
 RoxygenNote: 7.2.1
-Suggests: knitr,
-    rmarkdown
+Suggests: 
+    knitr,
+    rmarkdown,
+    stringdist
 VignetteBuilder: knitr
