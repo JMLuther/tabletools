@@ -5,7 +5,7 @@
 #' 
 #' @param string_vector a character vector of possible values
 #' @param string_tomatch a single character value for which a match is requested
-#' @param method Method for distance calculation. The default is "jacard", see \code{\link[stringdist]{stringdist-metrics}}.
+#' @param method Method for distance calculation. The default is "jaccard", see \code{\link[stringdist]{stringdist-metrics}}.
 #'
 #' @return `pick_bestmatch_index` returns the integer index for the best-scoring match
 #' ``
