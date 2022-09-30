@@ -4,7 +4,7 @@
 \alias{txt_pct_fr}
 \title{Summary text functions for html tables}
 \usage{
-txt_pct_fr(var, referent_value, na.rm = T, ...)
+txt_pct_fr(var, referent_value, na.rm = TRUE)
 }
 \arguments{
 \item{var}{A vector, or variable name within a dataframe}

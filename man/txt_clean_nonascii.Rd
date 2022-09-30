@@ -7,11 +7,9 @@
 txt_clean_nonascii(string, regex = "[^[:alnum:][:blank:]+?&/\\\\-\\\\.]", ...)
 }
 \arguments{
-\item{string}{a character string, or character vector}
+\item{string}{character string, or vector of character strings which will be cleaned}
 
-\item{regex}{}
-
-\item{...}{other options passed to `Base::gsub()``}
+\item{regex}{defaults to remove all non-ascii text characters, but keeping a few}
 }
 \value{
 A character string or vector, now stripped of any non-matching values

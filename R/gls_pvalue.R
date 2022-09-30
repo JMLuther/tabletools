@@ -1,6 +1,5 @@
 #' Get p-value from an rms::Gls model
 #'
-#' @usage gls_pvalue(gls_model)
 #' @param gls_model a Gls model obtained from \code{\link[rms]{Gls}}
 #' @return A single p-value
 #' @seealso  \code{\link[rms]{Gls}}

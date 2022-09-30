@@ -4,7 +4,14 @@
 \alias{table_grouped_summary}
 \title{Grouped Summary Table with optional html output}
 \usage{
-table_grouped_summary(df, var_names, grouping_variable, html_output = FALSE, total = TRUE, ...)
+table_grouped_summary(
+  df,
+  var_names,
+  grouping_variable,
+  html_output = FALSE,
+  total = TRUE,
+  ...
+)
 }
 \arguments{
 \item{df}{a dataframe}

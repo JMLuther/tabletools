@@ -11,6 +11,8 @@
 #' @seealso \code{\link[dplyr]{summarise}}, \code{\link[base]{mean}}, \code{\link[base]{sd}},
 #'  \code{\link[base]{round}}, \code{\link[stats]{quantile}}
 #' @export
+#' @import dplyr
+#' @import rlang
 #' @examples
 #' library(dplyr)
 #' my_summary(mtcars, mpg)
@@ -18,14 +20,14 @@
 #' mtcars %>% group_by(cyl) %>% my_summary(mpg, probs = c(0.01, .999), digits = 0)
 
 my_summary <- function(df, my_var, probs = c(0.025, .975), na.rm = T, digits = 2, ...) {
-  my_var <- enquo(my_var)
-  mean_name <- paste0(quo_name(my_var), "_mean")
-  median_name <- paste0(quo_name(my_var), "_median")
-  sd_name   <- paste0(quo_name(my_var), "_sd")
-  n_name    <- paste0(quo_name(my_var), "_n")
-  sem_name  <- paste0(quo_name(my_var), "_sem")
-  cil_name  <- paste0(quo_name(my_var), "_ci_", gsub("^[0-9]+.([0-9]+)", "\\1", probs[[1]])) # allows for flexible quantiles
-  ciu_name  <- paste0(quo_name(my_var), "_ci_", gsub("^[0-9]+.([0-9]+)", "\\1", probs[[2]])) # allows for flexible quantiles
+  my_var <- rlang::enquo(my_var)
+  mean_name <- paste0(rlang::quo_name(my_var), "_mean")
+  median_name <- paste0(rlang::quo_name(my_var), "_median")
+  sd_name   <- paste0(rlang::quo_name(my_var), "_sd")
+  n_name    <- paste0(rlang::quo_name(my_var), "_n")
+  sem_name  <- paste0(rlang::quo_name(my_var), "_sem")
+  cil_name  <- paste0(rlang::quo_name(my_var), "_ci_", gsub("^[0-9]+.([0-9]+)", "\\1", probs[[1]])) # allows for flexible quantiles
+  ciu_name  <- paste0(rlang::quo_name(my_var), "_ci_", gsub("^[0-9]+.([0-9]+)", "\\1", probs[[2]])) # allows for flexible quantiles
 
   summarise(df,
             !!n_name    := sum(!is.na(!!my_var)), # an integer

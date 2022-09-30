@@ -3,7 +3,6 @@
 #' @param var A numeric vector or variable name within a dataframe
 #' @param na.rm a logical value indicating whether NA values should be stripped
 #' @param ... Values to be passed into `mean` arguments.
-#' @usage txt_mean_sd(var, na.rm = TRUE, ...)
 #' @return A character vector with mean and sd, suitable for printing in an html table
 #' @seealso  \code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[base]{sd}}
 #' @export
@@ -19,14 +18,14 @@
 #'   group_by(cyl) %>%
 #'   summarise(mean_mpg = txt_mean_sd(mpg))
 
-txt_mean_sd <- function(var, na.rm = T, ...){
+txt_mean_sd <- function(var, na.rm = TRUE, ...){
   sprintf("%.1f&plusmn;%.1f",
           mean(var, na.rm = na.rm, ...),
           sd(var, na.rm = na.rm)
           )
 }
 
-txt_mean_sd2 <- function(var, na.rm = T, ...){
+txt_mean_sd2 <- function(var, na.rm = TRUE, ...){
   sprintf("%.2f&plusmn;%.2f",
           mean(var, na.rm = na.rm, ...),
           sd(var, na.rm = na.rm)
