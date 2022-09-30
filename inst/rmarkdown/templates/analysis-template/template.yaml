@@ -1,0 +1,4 @@
+name: Analysis template
+description: >
+   Basic template for analysis and report
+create_dir: FALSE
