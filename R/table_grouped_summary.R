@@ -1,6 +1,5 @@
 #' Grouped Summary Table with optional html output
 #'
-#' @usage table_grouped_summary(df, var_names, grouping_variable, html_output = FALSE, total = TRUE, ...)
 #' @param df a dataframe
 #' @param var_names a character vector containing bare variable names
 #' @param grouping_variable a character string containing the grouping variable name

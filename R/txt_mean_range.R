@@ -1,6 +1,5 @@
 #' Summary text functions for html tables
 #'
-#' @usage txt_mean_range(var, na.rm = TRUE, ...)
 #' @inheritParams txt_mean_sd
 #' @return A character vector with mean (range), suitable for printing in an html table
 #' @seealso  \code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[base]{min}}, \code{\link[base]{max}}

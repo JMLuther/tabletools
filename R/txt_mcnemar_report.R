@@ -4,7 +4,6 @@
 #' The input object must be a `mcnemar.test` object, and the p-value is formatted by the 
 #' `htmlTable::txtPval()` function.  
 #' 
-#' @usage txt_chisquare_report(chisquare_object, ....)
 #' @param mcnemar_object A McNemar's Chi-square object 
 #' @export
 #' @seealso \code{\link[htmlTable]{txtPval}}, \code{\link[base]{sprintf}}, \code{\link[stats]{mcnemar.test}}

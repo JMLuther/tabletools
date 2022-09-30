@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: JM Luther
 Maintainer: JM Luther <james.luther@vanderbilt.edu>
 Description: Functions for creating html tables, and other misc. functions. 
-License: 
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: dplyr,

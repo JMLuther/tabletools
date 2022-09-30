@@ -5,9 +5,7 @@
 #' 
 #' @param string_vector a character vector of possible values
 #' @param string_tomatch a single character value for which a match is requested
-#' @param method 
-#' @param ... 
-#' @inheritParams stringdist::stringdist
+#' @param method Method for distance calculation. The default is "jacard", see \code{\link[stringdist]{stringdist-metrics}}.
 #'
 #' @return `pick_bestmatch_index` returns the integer index for the best-scoring match
 #' ``
@@ -15,6 +13,7 @@
 #' 
 #' `pick_bestmatch_score` returns the calculated score for the best-scoring match.
 #' @export
+#' @seealso \code{\link{[stringdist]{stringdist}}}
 #' @examples
 #' single_char <- "A Very Specific Title"
 #' possible_matches <- c("shouldnt_match", "extraneous_text", "random_text", "oiphjhdfkl", "very_specific_title")

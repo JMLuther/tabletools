@@ -11,9 +11,7 @@ pick_bestmatch_score(string_vector, string_tomatch, method = "jaccard", ...)
 
 \item{string_tomatch}{a single character value for which a match is requested}
 
-\item{method}{}
-
-\item{...}{}
+\item{method}{Method for distance calculation. The default is "jacard", see \code{\link[stringdist]{stringdist-metrics}}.}
 }
 \value{
 `pick_bestmatch_index` returns the integer index for the best-scoring match

@@ -4,7 +4,7 @@
 \alias{txt_mcnemar_report}
 \title{Summary text functions for html tables}
 \usage{
-txt_chisquare_report(chisquare_object, ....)
+txt_mcnemar_report(mcnemar_object, ....)
 }
 \arguments{
 \item{mcnemar_object}{A McNemar's Chi-square object}

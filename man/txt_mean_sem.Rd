@@ -9,6 +9,8 @@ txt_mean_sem(var, na.rm = TRUE, ...)
 \arguments{
 \item{var}{A numeric vector or variable name within a dataframe}
 
+\item{na.rm}{a logical value indicating whether NA values should be stripped}
+
 \item{...}{Values to be passed into `mean` arguments.}
 }
 \value{

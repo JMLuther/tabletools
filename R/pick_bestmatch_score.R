@@ -3,11 +3,7 @@
 #' Functions to match text using fuzzy matching from a vector of possible matches. Bases on `stringdist` functions.
 #' Note: the `stringdist` package is required to be installed to run these functions.
 #' 
-#' @param string_vector a character vector of possible values
-#' @param string_tomatch a single character value for which a match is requested
-#' @param method 
-#' @param ... 
-#' @inheritParams stringdist::stringdist
+#' @inheritParams pick_bestmatch_value
 #'
 #' @return `pick_bestmatch_index` returns the integer index for the best-scoring match
 #' ``

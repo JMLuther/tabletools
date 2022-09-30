@@ -11,9 +11,7 @@ pick_bestmatch_value(string_vector, string_tomatch, method = "jaccard", ...)
 
 \item{string_tomatch}{a single character value for which a match is requested}
 
-\item{method}{}
-
-\item{...}{}
+\item{method}{Method for distance calculation. The default is "jacard", see \code{\link[stringdist]{stringdist-metrics}}.}
 }
 \value{
 `pick_bestmatch_index` returns the integer index for the best-scoring match
@@ -40,4 +38,7 @@ sapply(possible_methods, function(x) pick_bestmatch_index(possible_matches, sing
 sapply(possible_methods, function(x) pick_bestmatch_value(possible_matches, single_char, method = x))
 sapply(possible_methods, function(x) pick_bestmatch_score(possible_matches, single_char, method = x))
 
+}
+\seealso{
+\code{\link{[stringdist]{stringdist}}}
 }
