@@ -3,7 +3,6 @@
 #' @description Calculates Body Surface Area (m2) by several common methods. Converts weight to Kg and Height to cm if needed. 
 #' 
 #' Avaialbe methods for BSA calculations include:
-
 #' \deqn{\sqrt{\frac{Ht(cm) \cdot Wt(kg)}{3600}} \tag{Mosteller}}
 #' 
 #' \deqn{Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184 \tag{DuBois and DuBois}}
@@ -26,7 +25,7 @@
 
 #' @returns a numeric vector
 #' @export
-#' @import mathjaxr
+#' 
 #' @examples 
 #' bsa_methods <- c("Mosteller", "DuBois", "Boyd", "Gehan-George", "Haycock", "Yu", "Livingston", "Tikuisis")
 #' names(bsa_methods) <- bsa_methods
