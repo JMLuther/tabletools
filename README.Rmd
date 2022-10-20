@@ -26,7 +26,8 @@ For details on the functions, please see help documentation in the package.
 
 ## Installation
 
-Install from Github:  `devtools::install_github("JMLuther/tabletools")`
+Install from Github:  `devtools::install_github("JMLuther/tabletools", build_vignettes = TRUE)`
+
 
 
 These functions are most useful in conjunction with an html table generating package::functions such as:  
