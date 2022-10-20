@@ -3,26 +3,20 @@
 #' @description Calculates Body Surface Area (m2) by several common methods. Converts weight to Kg and Height to cm if needed. 
 #' 
 #' Avaialbe methods for BSA calculations include:
-#' \deqn{\sqrt{\frac{Ht(cm) \cdot Wt(kg)}{3600}} \tag{Mosteller}}
 #' 
-#' \deqn{Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184 \tag{DuBois and DuBois}}
-#' 
-#' \deqn{Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235 \tag{Gehan and George}}
-#' 
-#' \deqn{Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265 \tag{Haycock}}
-#' 
-#' \deqn{71.3989 \cdot Ht(cm)^{0.7437} \cdot Wt(kg)^{0.4040} \div 10000 \tag{Yu}}
-#' 
-#' \deqn{0.1173 \cdot Wt(kg)^{0.6466} \tag{Livingston}}
-#' 
-#' \deqn{128.1 \cdot Ht(cm)^{0.60} \cdot Wt(kg)^{0.44} \tag{Tikuisis}}
+#' *  Mosteller: SQRT{Ht(cm) x Wt(kg) / 3600  
+#'   *  DuBois and DuBois: Wt(kg)^{0.425} x Ht(cm)^{0.725} x 0.007184 
+#'   *  Gehan and George: Wt(kg)^{0.51456} x Ht(cm)^{0.42246} x 0.0235 
+#'   *  Haycock: Wt(kg)^{0.5378} x Ht(cm)^{0.3964} x 0.024265
+#'   *  Yu: 71.3989 x Ht(cm)^{0.7437} x Wt(kg)^{0.4040} / 10000
+#'   *  Livingston: 0.1173 x Wt(kg)^{0.6466} 
+#'   *  Tikuisis: 128.1 x Ht(cm)^{0.60} x Wt(kg)^{0.44} 
 #' 
 #' @param weight Body Weight (kg)
 #' @param height Body Height (m)
 #' @param weight_units If `weight` is in Units other than kg, specifiy here to  properly convert for calucations ("kg", "g", or "lbs")
 #' @param height_units If `height` is in Units other than m, specifiy here to  properly convert for calucations ("m", "cm", or "in")
 #' @param method Which BSA formula to use for calculation ()
-
 #' @returns a numeric vector
 #' @export
 #' 
