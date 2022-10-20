@@ -1,0 +1,55 @@
+---
+title: "Metabolic-Calculations-Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Metabolic-Calculations-Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tabletools)
+
+```
+
+# Body Surface Area  
+
+The `bsa` command calculates Body Surface area (m<sup>2</sup>) using the most commonly available methods [Yu et al](https://pubmed.ncbi.nlm.nih.gov/19900761/). 
+
+Available Methods and Formulas:  
+
+\begin{equation}
+\sqrt{\frac{Ht(cm) \cdot Wt(kg)}{3600}} \tag{Mosteller}
+\end{equation}
+
+\begin{equation}
+Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184 \tag{DuBois and DuBois}
+\end{equation}
+
+\begin{equation}
+Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235 \tag{Gehan and George}
+\end{equation}
+
+\begin{equation}
+Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265 \tag{Haycock}
+\end{equation}
+
+\begin{equation}
+71.3989 \cdot Ht(cm)^{0.7437} \cdot Wt(kg)^{0.4040} \div 10000 \tag{Yu}
+\end{equation}
+
+\begin{equation}
+0.1173 \cdot Wt(kg)^{0.6466} \tag{Livingston}
+\end{equation}
+
+\begin{equation}
+128.1 \cdot Ht(cm)^{0.60} \cdot Wt(kg)^{0.44} \tag{Tikuisis}
+\end{equation}
+
