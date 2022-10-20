@@ -25,17 +25,18 @@ bsa(
 \item{method}{Which BSA formula to use for calculation ()}
 }
 \value{
-a numeric vector
+a numeric vector with Body Surface Area (BSA, m^2)
 }
 \description{
 Calculates Body Surface Area (m2) by several common methods. Converts weight to Kg and Height to cm if needed. Avaialbe methods for BSA calculations include:
-*  Mosteller: SQRT(Ht(cm) x Wt(kg) / 3600  
-*  DuBois and DuBois: Wt(kg)^(0.425) x Ht(cm)^(0.725) x 0.007184 
-*  Gehan and George: Wt(kg)^(0.51456) x Ht(cm)^(0.42246) x 0.0235 
-*  Haycock: Wt(kg)^(0.5378) x Ht(cm)^(0.3964) x 0.024265
-*  Yu: 71.3989 x Ht(cm)^(0.7437) x Wt(kg)^(0.4040) / 10000
-*  Livingston: 0.1173 x Wt(kg)^(0.6466) 
-*  Tikuisis: 128.1 x Ht(cm)^(0.60) x Wt(kg)^(0.44)
+
+  *  Mosteller: SQRT(Ht(cm) x Wt(kg) / 3600   
+  *  DuBois and DuBois: Wt(kg)^(0.425) x Ht(cm)^(0.725) x 0.007184  
+  *  Gehan and George: Wt(kg)^(0.51456) x Ht(cm)^(0.42246) x 0.0235  
+  *  Haycock: Wt(kg)^(0.5378) x Ht(cm)^(0.3964) x 0.024265  
+  *  Yu: 71.3989 x Ht(cm)^(0.7437) x Wt(kg)^(0.4040) / 10000  
+  *  Livingston: 0.1173 x Wt(kg)^(0.6466)   
+  *  Tikuisis: 128.1 x Ht(cm)^(0.60) x Wt(kg)^(0.44)
 }
 \examples{
 bsa_methods <- c("Mosteller", "DuBois", "Boyd", "Gehan-George", "Haycock", "Yu", "Livingston", "Tikuisis")
