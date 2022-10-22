@@ -109,16 +109,3 @@ matsuda_df <- function(df, timeCol=time, glucoseCol=glucose, insulinCol=insulin,
   return(10000/sqrt(g0*ins0*g_bar*ins_bar))
 }
 
-matsuda <- function(time, glucose, insulin) {
-  if (any(is.na(time)) | any(is.na(glucose)) | any(is.na(insulin))) {
-    stop("Check for missing values in time, glucose, and insulin")} 
-  if (!all(order(time) == seq_along(time))) {
-    stop("Time values must be ordered from 0 to end")} # check proper time order
-  ind0 = which(time==0)
-  g0 = glucose[ind0]
-  ins0 = insulin[ind0]
-  time_max = max(time)
-  g_bar <- sfsmisc::integrate.xy(time, glucose, use.spline = FALSE)/time_max 
-  ins_bar <- sfsmisc::integrate.xy(time, insulin,use.spline = FALSE)/time_max
-  return(10000/sqrt(g0*ins0*g_bar*ins_bar))
-}
