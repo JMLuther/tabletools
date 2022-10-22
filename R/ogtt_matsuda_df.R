@@ -2,19 +2,9 @@
 #'
 #' This function calculates the Matsuda index using glucose and insulin 
 #' sampled during a standard 75g oral glucose tolerance test.
-#' Results can be checked using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online calculator}
+#' Results can be checked using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online calculator}. 
+#' 
 #' Standard timepoints are 0, 30, 60, 90, and 120 min.
-#' 
-#' The Matsuda Composite <i>Insulin Sensitivity Index</i> is calculated as:
-#' $$ ISI_{Composite} = \frac{10,000} {\sqrt{G_{0} \cdot Ins_{0} \cdot \bar{G} \cdot \bar{Ins}}}$$
-#' 
-#' where:
-#' 
-#'  *  $G_{0}$ is fasting plasma glucose (in mg/dL)
-#'  *  $Ins_{0}$ is fasting plasma Insulin (in $\mu$U/mL)
-#'  *  $\bar{G}$ is mean glucose during the OGTT (as weighted avg = AUC/time)
-#'  *  $\bar{Ins}$ is mean insulin during the OGTT (as weighted avg = AUC/time)  
-#' 
 #' Note: insulin unit conversion may differ differ depending on assay. 
 #' Insulin (pmol/l) = insulin (uU/ml)*6 
 #' 
@@ -25,7 +15,7 @@
 #' @param df A long-format data frame
 #' @param timeCol a column name (unquoted) indicating time values (in minutes)
 #' @param glucoseCol a column name (unquoted) storing glucose values (in mg/dL)
-#' @param insulinCol a column name (unquoted) storing insulin values (in $\mu$U/mL)
+#' @param insulinCol a column name (unquoted) storing insulin values (in uU/mL)
 #' @param time_units if units are not in "min", can indicate here for unit conversion (options "min" or "hr")
 #' @param glucose_units if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l") 
 #' @param insulin_units if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")
