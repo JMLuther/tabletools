@@ -3,6 +3,8 @@
 export(bmi)
 export(bsa)
 export(gls_pvalue)
+export(matsuda)
+export(matsuda_df)
 export(my_summary)
 export(pick_bestmatch_index)
 export(pick_bestmatch_score)
