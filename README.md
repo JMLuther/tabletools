@@ -1,24 +1,30 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-tabletools
-==========
 
-The goal of tabletools is to provide functions which are helpful for generating summary html tables. For details on the functions, please see help documentation in the package.
+# tabletools
 
-Installation
-------------
+The goal of tabletools is to provide functions which are helpful for
+generating summary html tables. For details on the functions, please see
+help documentation in the package.
 
-Install from Github: `devtools::install_github("JMLuther/tabletools")`
+## Installation
 
-These functions are most useful in conjunction with an html table generating package::functions such as:
+Install from Github:
+`devtools::install_github("JMLuther/tabletools", build_vignettes = TRUE)`
 
--   `htmlTable::htmlTable` [Tables with htmlTable and some alternatives](https://cran.r-project.org/web/packages/htmlTable/vignettes/tables.html)
--   `knitr::kable` see [Create Awesome HTML Table with knitr::kable and kableExtra](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html)
+These functions are most useful in conjunction with an html table
+generating package::functions such as:
+
+-   `htmlTable::htmlTable` [Tables with htmlTable and some
+    alternatives](https://cran.r-project.org/web/packages/htmlTable/vignettes/tables.html)  
+-   `knitr::kable` see [Create Awesome HTML Table with knitr::kable and
+    kableExtra](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html)  
 -   `formattable`
 
-`my_summary` custom summary
----------------------------
+## `my_summary` custom summary
 
-This summary function is customized to my preferences, and should provide enough data to pipe into ggplot or a simple summary table. Just provides a summary for a single continuous variable.
+This summary function is customized to my preferences, and should
+provide enough data to pipe into ggplot or a simple summary table. Just
+provides a summary for a single continuous variable.
 
 Table:
 
@@ -34,26 +40,29 @@ mtcars %>%
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
 cyl
 </th>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-mpg\_mean
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+mpg_n
 </th>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-mpg\_sd
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+mpg_mean
 </th>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-mpg\_n
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+mpg_sd
 </th>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-mpg\_sem
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+mpg_sem
 </th>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-mpg\_ci\_025
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+mpg_median
 </th>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
-mpg\_ci\_975
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+mpg_ci_025
+</th>
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+mpg_ci_975
 </th>
 </tr>
 </thead>
@@ -63,16 +72,19 @@ mpg\_ci\_975
 4
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
+11
+</td>
+<td style="padding:0 5px 0 5px; text-align: center;">
 26.7
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
 4.5
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
-11
+1.4
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
-1.4
+26
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
 21.4
@@ -86,16 +98,19 @@ mpg\_ci\_975
 6
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
+7
+</td>
+<td style="padding:0 5px 0 5px; text-align: center;">
 19.7
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
 1.5
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
-7
+0.5
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
-0.5
+19.7
 </td>
 <td style="padding:0 5px 0 5px; text-align: center;">
 17.8
@@ -109,16 +124,19 @@ mpg\_ci\_975
 8
 </td>
 <td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: center;">
+14
+</td>
+<td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: center;">
 15.1
 </td>
 <td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: center;">
 2.6
 </td>
 <td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: center;">
-14
+0.7
 </td>
 <td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: center;">
-0.7
+15.2
 </td>
 <td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: center;">
 10.4
@@ -129,6 +147,7 @@ mpg\_ci\_975
 </tr>
 </tbody>
 </table>
+
 Plot:
 
 ``` r
@@ -147,8 +166,7 @@ mtcars %>%
 
 ![](README-unnamed-chunk-3-1.png)
 
-Summary text functions
-======================
+# Summary text functions
 
 ``` r
 mtcars %>%
@@ -173,10 +191,10 @@ Example results
 </td>
 </tr>
 <tr>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: left;">
-txt\_f
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: left;">
+txt_f
 </th>
-<th style="padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: left;">
+<th style="font-weight: 900; padding-left: .5em; padding-right: .5em; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: left;">
 output
 </th>
 </tr>
@@ -184,53 +202,53 @@ output
 <tbody>
 <tr>
 <td style="padding:0 5px 0 5px; text-align: left;">
-mean\_sd
+mean_sd
 </td>
 <td style="padding:0 5px 0 5px; text-align: left;">
-20.1 ± 6.0
-</td>
-</tr>
-<tr>
-<td style="padding:0 5px 0 5px; text-align: left;">
-mean\_sem
-</td>
-<td style="padding:0 5px 0 5px; text-align: left;">
-20.1 ± 1.1
+20.1±6.0
 </td>
 </tr>
 <tr>
 <td style="padding:0 5px 0 5px; text-align: left;">
-mean\_range
+mean_sem
 </td>
 <td style="padding:0 5px 0 5px; text-align: left;">
-20.1 (10.4 - 33.9)
+20.1±1.1
 </td>
 </tr>
 <tr>
 <td style="padding:0 5px 0 5px; text-align: left;">
-median\_iqr
+mean_range
 </td>
 <td style="padding:0 5px 0 5px; text-align: left;">
-19.2 (15.4 - 22.8)
+20.1(10.4-33.9)
+</td>
+</tr>
+<tr>
+<td style="padding:0 5px 0 5px; text-align: left;">
+median_iqr
+</td>
+<td style="padding:0 5px 0 5px; text-align: left;">
+19.2\[15.4-22.8\]
 </td>
 </tr>
 <tr>
 <td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: left;">
-pct\_fr
+pct_fr
 </td>
 <td style="padding:0 5px 0 5px; border-bottom: 2px solid grey; text-align: left;">
-43.8% ( <sup>14</sup>⁄<sub>32</sub> )
+43.8%(<sup>14</sup>⁄<sub>32</sub>)
 </td>
 </tr>
 </tbody>
 </table>
+
 The following functions provide useful \# Session Info
 
-<!--html_preserve-->
 <pre>
- R version 3.5.1 (2018-07-02)
+ R version 4.2.1 (2022-06-23 ucrt)
  Platform: x86_64-w64-mingw32/x64 (64-bit)
- Running under: Windows 7 x64 (build 7601) Service Pack 1
+ Running under: Windows 10 x64 (build 19044)
  
  Matrix products: default
  
@@ -238,11 +256,20 @@ The following functions provide useful \# Session Info
  [1] stats     graphics  grDevices utils     datasets  methods   base     
  
  other attached packages:
- [1] bindrcpp_0.2.2   tidyr_0.8.1      tabletools_0.1.0 htmlTable_1.12  
- [5] ggplot2_3.0.0    dplyr_0.7.6     
+ [1] tidyr_1.2.1      tabletools_0.1.0 htmlTable_2.4.1  ggplot2_3.3.6   
+ [5] dplyr_1.0.10    
  </pre>
-To cite R in publication use:
-<p>
-R Core Team (2018). <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing, Vienna, Austria. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
-</p>
-<!--/html_preserve-->
+ To cite R in publications use:
+ <p>R Core Team (2022).
+ <em>R: A Language and Environment for Statistical Computing</em>.
+ R Foundation for Statistical Computing, Vienna, Austria.
+ <a href="https://www.R-project.org/">https://www.R-project.org/</a>. 
+ </p>
+ 
+To cite the <tt>ggplot2</tt> package in publications use:
+
+ <p>Wickham H (2016).
+ <em>ggplot2: Elegant Graphics for Data Analysis</em>.
+ Springer-Verlag New York.
+ ISBN 978-3-319-24277-4, <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>. 
+ </p>
