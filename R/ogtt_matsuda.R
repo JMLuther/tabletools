@@ -13,7 +13,7 @@
 #'  
 #' @param time  a column name (unquoted) indicating time values (in minutes)
 #' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
-#' @param insulin a column name (unquoted) storing insulin values (in $\mu$U/mL)
+#' @param insulin a column name (unquoted) storing insulin values (in uU/mL)
 #' @param time_units if units are not in "min", can indicate here for unit conversion (options "min" or "hr")
 #' @param glucose_units if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l") 
 #' @param insulin_units if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")

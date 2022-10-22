@@ -11,7 +11,7 @@ matsuda(time, glucose, insulin)
 
 \item{glucose}{a column name (unquoted) storing glucose values (in mg/dL)}
 
-\item{insulin}{a column name (unquoted) storing insulin values (in $\mu$U/mL)}
+\item{insulin}{a column name (unquoted) storing insulin values (in uU/mL)}
 
 \item{time_units}{if units are not in "min", can indicate here for unit conversion (options "min" or "hr")}
 
