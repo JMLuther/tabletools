@@ -39,7 +39,7 @@ Results can be checked using the [Matsuda online calculator](http://mmatsuda.dia
 Standard timepoints are 0, 30, 60, 90, and 120 min.
 }
 \details{
-The Matsuda Composite Insulin Sensitivity Index is calculated as:
+The Matsuda Composite <i>Insulin Sensitivity Index</i> is calculated as:
 $$ ISI_{Composite} = \frac{10,000} {\sqrt{G_{0} \cdot Ins_{0} \cdot \bar{G} \cdot \bar{Ins}}}$$
 
 where:

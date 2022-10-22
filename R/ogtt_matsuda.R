@@ -2,10 +2,10 @@
 #'
 #' This function calculates the Matsuda index using glucose and insulin 
 #' sampled during a standard 75g oral glucose tolerance test.
-#' Results can be checked using the [Matsuda online calculator](http://mmatsuda.diabetes-smc.jp/MIndex.html)
+#' Results can be checked using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online calculator}
 #' Standard timepoints are 0, 30, 60, 90, and 120 min.
 #' 
-#' The Matsuda Composite Insulin Sensitivity Index is calculated as:
+#' The Matsuda Composite <i>Insulin Sensitivity Index</i> is calculated as:
 #' $$ ISI_{Composite} = \frac{10,000} {\sqrt{G_{0} \cdot Ins_{0} \cdot \bar{G} \cdot \bar{Ins}}}$$
 #' 
 #' where:
@@ -29,6 +29,7 @@
 #' @param insulin_units if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")
 #'
 #' @return Matsuda index as a single value 
+#' @export
 #' @examples 
 # A dataframe with a single subject
 #' ogtt1 <- data.frame(
