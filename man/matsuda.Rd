@@ -4,7 +4,14 @@
 \alias{matsuda}
 \title{Matsuda-Defronzo Index Calculation (from standard 75g OGTT)}
 \usage{
-matsuda(time, glucose, insulin)
+matsuda(
+  time,
+  glucose,
+  insulin,
+  time_units = "min",
+  glucose_units = "mg/dl",
+  insulin_units = "uU/ml"
+)
 }
 \arguments{
 \item{time}{a column name (unquoted) indicating time values (in minutes)}
