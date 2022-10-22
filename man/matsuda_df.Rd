@@ -35,7 +35,7 @@ Matsuda index as a single value
 \description{
 This function calculates the Matsuda index using glucose and insulin 
 sampled during a standard 75g oral glucose tolerance test.
-Results can be checked using the [Matsuda online calculator](http://mmatsuda.diabetes-smc.jp/MIndex.html)
+Results can be checked using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online calculator}
 Standard timepoints are 0, 30, 60, 90, and 120 min.
 }
 \details{
