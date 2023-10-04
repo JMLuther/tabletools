@@ -74,7 +74,7 @@ matsuda <- function(time, glucose, insulin, time_units = "min", glucose_units = 
   } else if (time_units == "hr") {
     time = time*60}
   
-  # convert time glucose to min
+  # convert time glucose to mg/dl
   if (glucose_units == "mg/dl") {
     glucose = glucose
       } else if (glucose_units == "mmol/l") {
