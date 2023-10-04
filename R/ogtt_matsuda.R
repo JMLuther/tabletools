@@ -63,11 +63,17 @@
 
 matsuda <- function(time, glucose, insulin, time_units = "min", glucose_units = "mg/dl", insulin_units = "uU/ml") {
   if (any(is.na(time)) | any(is.na(glucose)) | any(is.na(insulin))) {
-    stop("Check for missing values in time, glucose, and insulin")} 
+    rlang::warn("Check for missing values in time, glucose, and insulin")
+    return(NA_real_)}
+
   if (any(!is.numeric(time)) | any(!is.numeric(glucose)) | any(!is.numeric(insulin))) {
-    stop("non-numeric values in time, glucose, or insulin")} 
+    rlang::warn("non-numeric values in time, glucose, or insulin")
+    return(NA_real_)}
+  
   if (!all(order(time) == seq_along(time))) {
-    stop("Time values must be ordered from 0 to end")} # check proper time order
+    rlang::warn("Time values must be ordered from 0 to end") # check proper time order
+    return(NA_real_)}
+  
   # convert time units to min
   if (time_units == "min") {
     time = time

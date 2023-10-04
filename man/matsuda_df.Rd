@@ -46,6 +46,7 @@ Insulin (pmol/l) = insulin (uU/ml)*6
 `matsuda()` accepts 3 separate vectors with time, glucose, insulin.
 }
 \examples{
+library(dplyr)
 # A long-format dataframe with a single subject
 ogtt1 <- data.frame(
   time=c(0, 30, 60, 90, 120),              # minutes
@@ -56,7 +57,7 @@ ogtt1 <- data.frame(
   matsuda_df(ogtt1) # works because columns are default names
   matsuda_df(ogtt1, time, glucose, insulin)
   
-# Need to specify column names if named differently
+# Specify column names if named differently
 ogtt2 <- data.frame(
     t=c(0, 30, 60, 90, 120),              # minutes
     gluc=c(93, 129, 178, 164, 97),        # mg/dL
@@ -65,7 +66,7 @@ matsuda_df(ogtt2)
 matsuda_df(ogtt2, t, gluc, ins) # works by positional matching
 matsuda_df(ogtt2, timeCol = t, glucoseCol =  gluc, insulinCol =  ins)
 
-# # error if time data is out of order
+# # Warning, Returns NA if time data is out of order
 ogtt3 <- data.frame(
   time=c(0, 60, 30, 90, 120),              # minutes
   glucose=c(100, 129, 178, 164, 97),        # mg/dL
@@ -73,7 +74,7 @@ ogtt3 <- data.frame(
   
   matsuda_df(ogtt3, time, glucose, insulin)
   
-# error if missing values
+# Warning, Returns NA if missing values
 ogtt4 <- data.frame(
   time=c(0, 60, 30, 90, 120),              # minutes
   glucose=c(100, NA, 178, 164, 97),        # mg/dL
@@ -95,4 +96,11 @@ matsuda_df(ogtt5, time, glucose, insulin,
            time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
 
 matsuda_df(ogtt5, time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
+
+# Handle multiple OGTT data frames
+# These all need to be structured the same as a nested list.
+nested_df <- dplyr::tibble(id = 1:3,
+                           data = list(ogtt1, ogtt1, ogtt1)) # same data in this case
+                           nested_df \%>\% 
+                             dplyr::mutate(matsuda= purrr::map_dbl(data, ~matsuda_df(.x)))
 }
