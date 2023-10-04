@@ -16,7 +16,8 @@
 
 quicki <- function(glucose, insulin,  glucose_units = "mg/dl", insulin_units = "uU/ml") {
   if (any(!is.numeric(glucose)) | any(!is.numeric(insulin))) {
-    stop("non-numeric values in glucose, or insulin")} 
+    return(NA_real_)
+    warning("non-numeric values in glucose, or insulin")} 
   # convert time glucose to mg/dl
   if (glucose_units == "mg/dl") {
     glucose = glucose
@@ -29,6 +30,5 @@ quicki <- function(glucose, insulin,  glucose_units = "mg/dl", insulin_units = "
   } else if (insulin_units == "pmol/l") {
     insulin = insulin/6} # VUMC conversion units in DRTC lab
   return(1/((log(glucose, 10) + log(insulin, 10))))
-
   }
 
