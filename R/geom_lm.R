@@ -2,7 +2,7 @@
 #'
 #' Convenience function- a version of `geom_smooth()` using `lm()` instead of `loess()`
 #'
-#' @param formula 
+#' @param formula y~x for most
 #' @param se Plot error range (T/F)
 #' @param linewidth width of regression line
 #' @param ... pass additional arguments

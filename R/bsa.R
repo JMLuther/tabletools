@@ -15,7 +15,7 @@
 #' @param weight_units If `weight` is in Units other than kg, specifiy here to  properly convert for calucations ("kg", "g", or "lbs")
 #' @param height_units If `height` is in Units other than m, specifiy here to  properly convert for calucations ("m", "cm", or "in")
 #' @param method Which BSA formula to use for calculation ()
-#' @param ... 
+#'
 #' @returns a numeric vector with Body Surface Area (BSA, m^2)
 #' @export
 #' 
@@ -39,7 +39,7 @@
 #'     method = "Mosteller")
 #' bsa(weight = 70, height = 1.778)
 
-bsa <- function(weight, height, weight_units = "kg", height_units = "m", method = "Mosteller", ...) {
+bsa <- function(weight, height, weight_units = "kg", height_units = "m", method = "Mosteller") {
   # convert weight units to kg
   if (weight_units == "kg") {
     Wt = weight

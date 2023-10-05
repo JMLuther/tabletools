@@ -21,7 +21,7 @@
 
 
 txt_chisquare_report <- 
-  function(chisquare_object, ....) {
+  function(chisquare_object) {
     sprintf("<i>&Chi;<sup>2</sup></i>(%1.0f, <i>N</i>=%1.0f)=%1.1f, <i>p</i>=%s",
             chisquare_object$parameter,
             sum(chisquare_object$observed),

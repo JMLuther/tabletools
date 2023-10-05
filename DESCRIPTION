@@ -15,6 +15,7 @@ RoxygenNote: 7.2.3
 Suggests: 
     ggbeeswarm,
     ggplot2,
+    Hmisc,
     knitr,
     rmarkdown,
     sfsmisc,

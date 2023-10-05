@@ -3,7 +3,9 @@
 #' @param var A vector, or variable name within a dataframe
 #' @param lower For quantile functions, the lower quantile (0.25 default)
 #' @param upper For quantile functions, the upper quantile (0.75 default)
+#' @param ... passes to `median(...)`
 #' @param na.rm a logical value indicating whether NA values should be stripped
+#'
 #' @return A character vector with median (interquartile range), suitable for printing in an html table
 #' @seealso  \code{\link[base]{sprintf}}, \code{\link[stats]{median}}, \code{\link[base]{quantile}}
 #' @export
