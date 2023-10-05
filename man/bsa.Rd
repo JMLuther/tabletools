@@ -9,8 +9,7 @@ bsa(
   height,
   weight_units = "kg",
   height_units = "m",
-  method = "Mosteller",
-  ...
+  method = "Mosteller"
 )
 }
 \arguments{
@@ -23,8 +22,6 @@ bsa(
 \item{height_units}{If `height` is in Units other than m, specifiy here to  properly convert for calucations ("m", "cm", or "in")}
 
 \item{method}{Which BSA formula to use for calculation ()}
-
-\item{...}{}
 }
 \value{
 a numeric vector with Body Surface Area (BSA, m^2)

@@ -19,7 +19,7 @@
 #' mtcars %>% group_by(cyl) %>% my_summary(mpg)
 #' mtcars %>% group_by(cyl) %>% my_summary(mpg, probs = c(0.01, .999), digits = 0)
 
-my_summary <- function(df, my_var, probs = c(0.025, .975), na.rm = T, digits = 2, ...) {
+my_summary <- function(df, my_var, probs = c(0.025, .975), na.rm = T, digits = 2) {
   my_var <- rlang::enquo(my_var)
   mean_name <- paste0(rlang::quo_name(my_var), "_mean")
   median_name <- paste0(rlang::quo_name(my_var), "_median")

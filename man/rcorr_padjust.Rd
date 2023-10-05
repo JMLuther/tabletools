@@ -4,7 +4,7 @@
 \alias{rcorr_padjust}
 \title{Adjust p-value for an Hmisc::rcorr object}
 \usage{
-rcorr_padjust(x, method = "BH", ...)
+rcorr_padjust(x, method = "BH")
 }
 \arguments{
 \item{x}{An `rcorr` class object created by the function `Hmisc::rcorr``}

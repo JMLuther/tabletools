@@ -4,7 +4,7 @@
 \alias{my_summary}
 \title{Custom Summarization for a variable in a dataframe}
 \usage{
-my_summary(df, my_var, probs = c(0.025, 0.975), na.rm = T, digits = 2, ...)
+my_summary(df, my_var, probs = c(0.025, 0.975), na.rm = T, digits = 2)
 }
 \arguments{
 \item{df}{A dataframe}

@@ -4,7 +4,7 @@
 \alias{txt_chisquare_report}
 \title{Summary text functions for html tables}
 \usage{
-txt_chisquare_report(chisquare_object, ....)
+txt_chisquare_report(chisquare_object)
 }
 \arguments{
 \item{chisquare_object}{A Chi-square object}

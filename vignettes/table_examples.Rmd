@@ -15,11 +15,9 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "README-"
 )
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
 library(htmlTable)
 library(tabletools)
-library(tidyr)
 ```
 
 # tabletools

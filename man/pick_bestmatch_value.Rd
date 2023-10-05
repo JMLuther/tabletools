@@ -4,7 +4,7 @@
 \alias{pick_bestmatch_value}
 \title{Fuzzy matching functions}
 \usage{
-pick_bestmatch_value(string_vector, string_tomatch, method = "jaccard", ...)
+pick_bestmatch_value(string_vector, string_tomatch, method = "jaccard")
 }
 \arguments{
 \item{string_vector}{a character vector of possible values}

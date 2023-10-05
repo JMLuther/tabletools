@@ -9,8 +9,7 @@ table_grouped_summary(
   var_names,
   grouping_variable,
   html_output = FALSE,
-  total = TRUE,
-  ...
+  total = TRUE
 )
 }
 \arguments{

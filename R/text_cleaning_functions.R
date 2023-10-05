@@ -16,7 +16,7 @@
 #' test_strings
 #' txt_clean_nonascii(test_strings)
 
-txt_clean_nonascii <- function(string, regex = "[^[:alnum:][:blank:]+?&/\\-\\.]", ...) {
+txt_clean_nonascii <- function(string, regex = "[^[:alnum:][:blank:]+?&/\\-\\.]") {
   gsub(regex, "", string)
   }
 

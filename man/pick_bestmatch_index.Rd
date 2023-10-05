@@ -4,7 +4,7 @@
 \alias{pick_bestmatch_index}
 \title{Fuzzy matching functions}
 \usage{
-pick_bestmatch_index(string_vector, string_tomatch, method = "jaccard", ...)
+pick_bestmatch_index(string_vector, string_tomatch, method = "jaccard")
 }
 \arguments{
 \item{string_vector}{a character vector of possible values}

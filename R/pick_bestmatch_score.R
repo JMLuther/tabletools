@@ -26,7 +26,7 @@
 #' sapply(possible_methods, function(x) pick_bestmatch_score(possible_matches, single_char, method = x))
 #' 
 
-pick_bestmatch_score <- function(string_vector, string_tomatch, method = "jaccard", ...) {
+pick_bestmatch_score <- function(string_vector, string_tomatch, method = "jaccard") {
   if (!requireNamespace("stringdist", quietly = TRUE)) {
     stop(
       "Package \"stringdist\" must be installed to use this function.",

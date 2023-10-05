@@ -19,7 +19,11 @@
 #'     method = "Mosteller")
 #' bmi(weight = 70, height = 1.778)
 #' 
-bmi <- function(weight, height, weight_units = "kg", height_units = "m", ...) {
+#' @param weight 
+#' @param height 
+#' @param weight_units 
+#' @param height_units 
+bmi <- function(weight, height, weight_units = "kg", height_units = "m") {
   # convert weight units to kg
   if (weight_units == "kg") {
     Wt = weight

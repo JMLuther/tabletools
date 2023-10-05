@@ -34,7 +34,7 @@
 #'            p.adjust = map_dbl(method, ~rcorr_padjust(test_rcorr, method = .x)$P[4,5]),
 #'           txtPval = htmlTable::txtPval(map_dbl(method, ~rcorr_padjust(test_rcorr, method = .x)$P[4,5])))
 
-rcorr_padjust <- function(x, method = "BH", ...) {
+rcorr_padjust <- function(x, method = "BH") {
   stopifnot(class(x) == "rcorr")
   x$P[upper.tri(x$P)] <- p.adjust(x$P[upper.tri(x$P)], method = method)
   x$P[lower.tri(x$P)] <- p.adjust(x$P[lower.tri(x$P)], method = method)

@@ -46,7 +46,7 @@
 #'                         total = FALSE)
  
 
-table_grouped_summary <- function(df, var_names, grouping_variable, html_output = FALSE, total = TRUE, ...) {
+table_grouped_summary <- function(df, var_names, grouping_variable, html_output = FALSE, total = TRUE) {
   t_sub =
     t(aggregate(df[, var_names], 
                 by = list(group = df[, grouping_variable]), 

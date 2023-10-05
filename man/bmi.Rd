@@ -4,16 +4,16 @@
 \alias{bmi}
 \title{Body Mass Index Calculation}
 \usage{
-bmi(weight, height, weight_units = "kg", height_units = "m", ...)
+bmi(weight, height, weight_units = "kg", height_units = "m")
 }
 \arguments{
-\item{weight}{Body Weight (kg)}
+\item{weight}{}
 
-\item{height}{Body Height (m)}
+\item{height}{}
 
-\item{weight_units}{If `weight` is in Units other than kg, specifiy here to  properly convert for calucations ("kg", "g", or "lbs")}
+\item{weight_units}{}
 
-\item{height_units}{If `height` is in Units other than m, specifiy here to  properly convert for calucations ("m", "cm", or "in")}
+\item{height_units}{}
 }
 \value{
 a numeric vector with Body Mass Index (BMI, kg/m^2)

@@ -7,7 +7,7 @@
 geom_lm(formula = y ~ x, se = TRUE, linewidth = 1, ...)
 }
 \arguments{
-\item{formula}{}
+\item{formula}{y~x for most}
 
 \item{se}{Plot error range (T/F)}
 

@@ -4,7 +4,7 @@
 \alias{txt_clean_nonascii}
 \title{Functions to clean character strings}
 \usage{
-txt_clean_nonascii(string, regex = "[^[:alnum:][:blank:]+?&/\\\\-\\\\.]", ...)
+txt_clean_nonascii(string, regex = "[^[:alnum:][:blank:]+?&/\\\\-\\\\.]")
 }
 \arguments{
 \item{string}{character string, or vector of character strings which will be cleaned}
