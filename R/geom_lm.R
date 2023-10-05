@@ -11,6 +11,8 @@
 #' @export
 #'
 #' @examples
+#' library(dplyr)
+#' library(ggplot)
 #' Orange %>% 
 #'   ggplot(aes(age, circumference)) +
 #'     geom_lm(alpha = 0.5, color = "steelblue") +

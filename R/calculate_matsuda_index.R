@@ -20,17 +20,21 @@
 #'
 #' @return Matsuda index as a single value 
 #' @export
+#' @import sfsmisc
 #' @examples 
-# A dataframe with a single subject
-#' ogtt1 <- data.frame(
-#'   time=c(0, 30, 60, 90, 120),              # minutes
-#'   glucose=c(93, 129, 178, 164, 97),        # mg/dL
-#'   insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
-#'   
-#' # dataframe with variable columns appropriately named
-#' calculate_matsuda_index(time =  ogtt1$time,
-#'         glucose = ogtt1$glucose,
-#'         insulin = ogtt1$insulin) # 3.43125
+#' individual objects for each item
+#' time=c(0, 30, 60, 90, 120)              # minutes
+#' glucose=c(93, 129, 178, 164, 97)        # mg/dL
+#' insulin=c(12.8, 30.7, 68.5, 74.1, 44.0) # uU/mL
+#' calculate_matsuda_index(time, glucose, insulin) # 3.43125
+#' 
+#' # handling data stored in a dataframe
+#' ogtt1 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
+#'                     glucose=c(93, 129, 178, 164, 97),        # mg/dL
+#'                     insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
+#' calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin) # 3.43125
+#' 
+#' 
 #' # error if time is out of order
 #' ogtt3 <- data.frame(
 #'   time=c(0, 60, 30, 90, 120),              # minutes
@@ -38,8 +42,8 @@
 #'   insulin=c(12.8, 100, 68.5, 74.1, 44.0)) # uU/mL
 #' 
 #' calculate_matsuda_index(time =  ogtt3$time,
-#'         glucose = ogtt3$glucose,
-#'         insulin = ogtt3$insulin) # error
+#'                         glucose = ogtt3$glucose,
+#'                         insulin = ogtt3$insulin) # error
 #' 
 #' # error if missing values
 #' ogtt4 <- data.frame(
@@ -48,18 +52,18 @@
 #'   insulin=c(12.8, 100, 68.5, 74.1, 44.0)) # uU/mL
 #' 
 #' calculate_matsuda_index(time =  ogtt4$time,
-#'         glucose = ogtt4$glucose,
-#'         insulin = ogtt4$insulin) # error
+#'                         glucose = ogtt4$glucose,
+#'                         insulin = ogtt4$insulin) # error
 #' 
-#' # Convert units: 
+#' # Convert units:
 #' ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
 #'                     glucose = c(5.167, 7.167, 9.889, 9.111, 5.3889), # glucose in mmol/l
 #'                     insulin = c(76.8,184.2,411,444.6,264)) # insulin in pmol/l
 #' 
 #' calculate_matsuda_index(time =  ogtt5$time,
-#'         glucose = ogtt5$glucose,
-#'         insulin = ogtt5$insulin,
-#'         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
+#'                         glucose = ogtt5$glucose,
+#'                         insulin = ogtt5$insulin,
+#'                         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
 
 calculate_matsuda_index <- function(time, glucose, insulin, time_units = "min", glucose_units = "mg/dl", insulin_units = "uU/ml") {
   if (any(is.na(time)) | any(is.na(glucose)) | any(is.na(insulin))) {

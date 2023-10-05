@@ -7,13 +7,13 @@
 #' @export
 #'
 #' @examples
-#' convert_height_m(70, "inches")
-#' convert_height_m(c(70, 75, 65), "inches")
+#' convert_height_to_m(70, "inches")
+#' convert_height_to_m(c(70, 75, 65), "inches")
 
-convert_height_m <- function(height, height_units){
+convert_height_to_m <- function(height, height_units){
   switch(height_units,
-         m = height,
+         m = height, meters = height,
          cm = height/100,
-         inches = height*0.0254,
+         inches = height*0.0254, "in" = height*0.0254, ins = height*0.0254,
          stop("invalid units; use m, cm, or inches"))
 }

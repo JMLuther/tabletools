@@ -22,6 +22,8 @@ a ggplot object
 Convenience function- a version of `geom_smooth()` using `lm()` instead of `loess()`
 }
 \examples{
+library(dplyr)
+library(ggplot)
 Orange \%>\% 
   ggplot(aes(age, circumference)) +
     geom_lm(alpha = 0.5, color = "steelblue") +
