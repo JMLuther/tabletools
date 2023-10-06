@@ -44,3 +44,43 @@ Insulin (pmol/l) = insulin (uU/ml)*6
 
 `calculate_matsuda_index_df()` requires a dataframe input with time, glucose, insulin columns.
 }
+\examples{
+library(dplyr)
+# A long-format dataframe with a single subject
+ogtt1 <- data.frame(
+  time=c(0, 30, 60, 90, 120),              # minutes
+   glucose=c(93, 129, 178, 164, 97),        # mg/dL
+   insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
+   
+ # dataframe with variable columns appropriately named
+   calculate_matsuda_index_df(ogtt1) # works because columns are default names
+   calculate_matsuda_index_df(ogtt1, time, glucose, insulin)
+   
+ # Specify column names if named differently
+ ogtt2 <- data.frame(
+     t=c(0, 30, 60, 90, 120),              # minutes
+     gluc=c(93, 129, 178, 164, 97),        # mg/dL
+     ins=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
+ 
+ # dataframe with differently named variable columns
+ # Convert units
+ ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
+                     glucose = c(5.167, 7.167, 9.889, 9.111, 5.3889), # glucose in mmol/l
+                     insulin = c(76.8,184.2,411,444.6,264)) # insulin in pmol/l
+ 
+ # you don't have to specify units, if using default values
+ calculate_matsuda_index_df(ogtt1, time, glucose, insulin,
+            insulin_units = "uU/ml", glucose_units = "mg/dl") # default values
+ # if not default, specify units for proper conversino
+ calculate_matsuda_index_df(ogtt5, time, glucose, insulin,
+            time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
+ 
+ calculate_matsuda_index_df(ogtt5, time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
+ 
+# Handle multiple OGTT data frames
+# These all need to be structured the same as a nested list.
+nested_df <- dplyr::tibble(id = 1:3,
+                           data = list(ogtt1, ogtt1, ogtt1)) # same data in this case
+dplyr::mutate(nested_df, matsuda= purrr::map_dbl(data, ~calculate_matsuda_index_df(.x)))
+
+}
