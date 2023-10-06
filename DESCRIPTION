@@ -20,5 +20,4 @@ Suggests:
     rmarkdown,
     sfsmisc,
     stringdist,
-    tidyverse
 VignetteBuilder: knitr

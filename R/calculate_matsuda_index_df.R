@@ -24,7 +24,6 @@
 #' @export
 #' @import sfsmisc
 #' @examples 
-#' 
 #' library(dplyr)
 #' # A long-format dataframe with a single subject
 #' ogtt1 <- data.frame(
@@ -42,7 +41,7 @@
 #'      gluc=c(93, 129, 178, 164, 97),        # mg/dL
 #'      ins=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
 #'  
-#'  calculate_matsuda_index_df(ogtt2)  # doesn't work because names different than default
+#'  try(calculate_matsuda_index_df(ogtt2))  # doesn't work because names different than default
 #'  calculate_matsuda_index_df(ogtt2, t, gluc, ins) # works by positional matching
 #'  # it's better to be explicit 
 #'  calculate_matsuda_index_df(ogtt2, timeCol = t, glucoseCol =  gluc, insulinCol =  ins)
@@ -99,7 +98,6 @@ calculate_matsuda_index_df <- function(df, timeCol=time, glucoseCol=glucose, ins
     return(NA_real_)}
   
   # convert units; 
-  # doesn't alter the underlying dataframe, only 
   df[[timeCol]] = convert_time_to_min(df[[timeCol]], time_units)
   df[[glucoseCol]] = convert_glucose_to_mgdl(df[[glucoseCol]], glucose_units)
   df[[insulinCol]] = convert_insulin_to_uU_ml(df[[insulinCol]], insulin_units)

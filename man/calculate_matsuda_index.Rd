@@ -65,7 +65,7 @@ Insulin (pmol/l) = insulin (uU/ml)*6
 `calculate_matsuda_index()` accepts 3 separate vectors for time, glucose, insulin.
 }
 \examples{
-individual objects for each item
+# individual objects for each item
 time=c(0, 30, 60, 90, 120)              # minutes
 glucose=c(93, 129, 178, 164, 97)        # mg/dL
 insulin=c(12.8, 30.7, 68.5, 74.1, 44.0) # uU/mL

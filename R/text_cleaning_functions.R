@@ -3,7 +3,6 @@
 #' `txt_clean_nonascii` removes non-standard characters from text, but keeps space, -, and . by default, using regex matching.
 #' Default matching can be overridden by `regex` option.
 #' 
-#' @inheritParams base::gsub
 #' @param string character string, or vector of character strings which will be cleaned 
 #' @param regex defaults to remove all non-ascii text characters, but keeping a few  
 #'
