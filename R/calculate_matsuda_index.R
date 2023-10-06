@@ -65,11 +65,13 @@
 #'                         insulin = ogtt5$insulin,
 #'                         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
 
-calculate_matsuda_index <- function(time, glucose, insulin, time_units = "min", glucose_units = "mg/dl", insulin_units = "uU/ml") {
+calculate_matsuda_index <- function(time, glucose, insulin, time_units = "min", 
+                                    glucose_units = "mg/dl", insulin_units = "uU/ml") {
+
   if (any(is.na(time)) | any(is.na(glucose)) | any(is.na(insulin))) {
     rlang::warn("Check for missing values in time, glucose, and insulin")
     return(NA_real_)}
-
+  
   if (any(!is.numeric(time)) | any(!is.numeric(glucose)) | any(!is.numeric(insulin))) {
     rlang::warn("non-numeric values in time, glucose, or insulin")
     return(NA_real_)}
