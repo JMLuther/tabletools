@@ -9,7 +9,6 @@
 #' Insulin (pmol/l) = insulin (uU/ml)*6 
 #' 
 #' `calculate_matsuda_index_df()` requires a dataframe input with time, glucose, insulin columns. 
-#' `calculate_matsuda_index()` accepts 3 separate vectors with time, glucose, insulin. 
 #'  
 #' 
 #' @param df A long-format data frame
@@ -22,7 +21,7 @@
 #'
 #' @return Matsuda index as a single value 
 #' @export
-#' @import sfsmisc
+#' @importFrom sfsmisc integrate.xy 
 #' @examples 
 #' library(dplyr)
 #' # A long-format dataframe with a single subject
@@ -41,29 +40,8 @@
 #'      gluc=c(93, 129, 178, 164, 97),        # mg/dL
 #'      ins=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
 #'  
-#'  try(calculate_matsuda_index_df(ogtt2))  # doesn't work because names different than default
-#'  calculate_matsuda_index_df(ogtt2, t, gluc, ins) # works by positional matching
-#'  # it's better to be explicit 
-#'  calculate_matsuda_index_df(ogtt2, timeCol = t, glucoseCol =  gluc, insulinCol =  ins)
-#'  
-#'  ## Warning, Returns NA if time data is out of order
-#'  ogtt3 <- data.frame(
-#'    time=c(0, 60, 30, 90, 120),              # minutes
-#'    glucose=c(100, 129, 178, 164, 97),        # mg/dL
-#'    insulin=c(12.8, 100, 68.5, 74.1, 44.0)) # uU/mL
-#'    
-#'    calculate_matsuda_index_df(ogtt3, time, glucose, insulin)
-#'    
-#'  # Warning, Returns NA if missing values
-#'  ogtt4 <- data.frame(
-#'    time=c(0, 60, 30, 90, 120),              # minutes
-#'    glucose=c(100, NA, 178, 164, 97),        # mg/dL
-#'    insulin=c(12.8, 100, 68.5, 74.1, 44.0)) # uU/mL
-#'    
-#'    calculate_matsuda_index_df(ogtt4, time, glucose, insulin)
-#'  
 #'  # dataframe with differently named variable columns
-#'  # Convert units:
+#'  # Convert units
 #'  ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
 #'                      glucose = c(5.167, 7.167, 9.889, 9.111, 5.3889), # glucose in mmol/l
 #'                      insulin = c(76.8,184.2,411,444.6,264)) # insulin in pmol/l
@@ -71,7 +49,7 @@
 #'  # you don't have to specify units, if using default values
 #'  calculate_matsuda_index_df(ogtt1, time, glucose, insulin,
 #'             insulin_units = "uU/ml", glucose_units = "mg/dl") # default values
-#'  # if not default, specify units for proper conversinon:
+#'  # if not default, specify units for proper conversino
 #'  calculate_matsuda_index_df(ogtt5, time, glucose, insulin,
 #'             time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
 #'  

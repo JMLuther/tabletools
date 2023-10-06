@@ -42,6 +42,5 @@ Standard timepoints are 0, 30, 60, 90, and 120 min.
 Note: insulin unit conversion may differ differ depending on assay. 
 Insulin (pmol/l) = insulin (uU/ml)*6 
 
-`calculate_matsuda_index_df()` requires a dataframe input with time, glucose, insulin columns. 
-`calculate_matsuda_index()` accepts 3 separate vectors with time, glucose, insulin.
+`calculate_matsuda_index_df()` requires a dataframe input with time, glucose, insulin columns.
 }
