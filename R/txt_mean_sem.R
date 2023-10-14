@@ -5,20 +5,17 @@
 #' @seealso  \code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[base]{sd}}
 #' @export
 #' @examples
-#' library(dplyr)
-#' txt_mean_sd(mtcars$mpg)
 #' txt_mean_sem(mtcars$mpg)
-#' mtcars %>%
-#'   group_by(cyl) %>%
-#'   summarise(mean_mpg = txt_mean_sem(mpg))
-txt_mean_sem <- function(var, na.rm = TRUE, ...){
-  sprintf("%.1f&plusmn;%.1f",
-          mean(var, na.rm = na.rm),
-          sd(var, na.rm = na.rm)/sqrt(length(var)))
+#' txt_mean_sem(mtcars$mpg, digits=1)
+
+txt_mean_sem <- function (var, na.rm = TRUE, digits=2) {
+  switch (digits,
+          `1` =   sprintf("%.1f&plusmn;%.1f", mean(var, na.rm = na.rm), 
+                          sd(var, na.rm = na.rm)/sqrt(length(var))),
+          `2` =  sprintf("%.2f&plusmn;%.2f", mean(var, na.rm = na.rm), 
+                         sd(var, na.rm = na.rm)/sqrt(length(var))),
+          `3` =  sprintf("%.3f&plusmn;%.3f", mean(var, na.rm = na.rm), 
+                         sd(var, na.rm = na.rm)/sqrt(length(var)))
+  )
 }
 
-txt_mean_sem2 <- function(var, na.rm = TRUE, ...){
-  sprintf("%.2f&plusmn;%.2f",
-          mean(var, na.rm = na.rm),
-          sd(var, na.rm = na.rm)/sqrt(length(var)))
-}

@@ -4,14 +4,14 @@
 \alias{txt_mean_sd}
 \title{Summary text functions for html tables}
 \usage{
-txt_mean_sd(var, na.rm = TRUE, ...)
+txt_mean_sd(var, na.rm = TRUE, digits = 2)
 }
 \arguments{
 \item{var}{A numeric vector or variable name within a dataframe}
 
 \item{na.rm}{a logical value indicating whether NA values should be stripped}
 
-\item{...}{Values to be passed into `mean` arguments.}
+\item{digits}{number of decimal places (limited to 1-3)}
 }
 \value{
 A character vector with mean and sd, suitable for printing in an html table
@@ -21,15 +21,9 @@ Summary text functions for html tables
 }
 \examples{
 library(dplyr)
-txt_mean_sd(mtcars$mpg)
-txt_mean_sd(mtcars$mpg, trim = .2)
-txt_mean_sem(mtcars$mpg)
-txt_mean_range(mtcars$mpg)
-txt_median_iqr(mtcars$mpg)
-txt_pct_fr(mtcars$cyl, 6)
-mtcars \%>\%
-  group_by(cyl) \%>\%
-  summarise(mean_mpg = txt_mean_sd(mpg))
+txt_mean_sd(1:10)
+txt_mean_sd(1:10, digits = 1)
+txt_mean_sd(1:10, digits = 3)
 }
 \seealso{
 \code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[base]{sd}}

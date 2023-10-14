@@ -4,14 +4,14 @@
 \alias{txt_mean_sem}
 \title{Summary text functions for html tables}
 \usage{
-txt_mean_sem(var, na.rm = TRUE, ...)
+txt_mean_sem(var, na.rm = TRUE, digits = 2)
 }
 \arguments{
 \item{var}{A numeric vector or variable name within a dataframe}
 
 \item{na.rm}{a logical value indicating whether NA values should be stripped}
 
-\item{...}{Values to be passed into `mean` arguments.}
+\item{digits}{number of decimal places (limited to 1-3)}
 }
 \value{
 A character vector with mean and sem, suitable for printing in an html table
@@ -20,12 +20,8 @@ A character vector with mean and sem, suitable for printing in an html table
 Summary text functions for html tables
 }
 \examples{
-library(dplyr)
-txt_mean_sd(mtcars$mpg)
 txt_mean_sem(mtcars$mpg)
-mtcars \%>\%
-  group_by(cyl) \%>\%
-  summarise(mean_mpg = txt_mean_sem(mpg))
+txt_mean_sem(mtcars$mpg, digits=1)
 }
 \seealso{
 \code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[base]{sd}}

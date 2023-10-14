@@ -10,8 +10,6 @@ txt_mean_range(var, na.rm = TRUE, ...)
 \item{var}{A numeric vector or variable name within a dataframe}
 
 \item{na.rm}{a logical value indicating whether NA values should be stripped}
-
-\item{...}{Values to be passed into `mean` arguments.}
 }
 \value{
 A character vector with mean (range), suitable for printing in an html table
