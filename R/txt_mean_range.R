@@ -11,9 +11,10 @@
 #'   group_by(cyl) %>%
 #'   summarise(mean_mpg = txt_mean_range(mpg))
 
-txt_mean_range <- function(var, na.rm = TRUE, ...){
+txt_mean_range <- function(var, na.rm = TRUE,  digits=1, unicode=T, ...){
+  string = paste0("%1.", digits, "f(%.", digits, "f-%.", digits, "f)")
   sprintf("%.1f(%.1f-%.1f)",
           mean(var, na.rm = na.rm),
           min(var, na.rm = na.rm),
           max(var, na.rm = na.rm))
-  }
+}

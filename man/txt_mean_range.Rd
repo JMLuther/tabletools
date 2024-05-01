@@ -4,12 +4,14 @@
 \alias{txt_mean_range}
 \title{Summary text functions for html tables}
 \usage{
-txt_mean_range(var, na.rm = TRUE, ...)
+txt_mean_range(var, na.rm = TRUE, digits = 1, unicode = T, ...)
 }
 \arguments{
 \item{var}{A numeric vector or variable name within a dataframe}
 
 \item{na.rm}{a logical value indicating whether NA values should be stripped}
+
+\item{digits}{number of decimal places (limited to 1-3)}
 }
 \value{
 A character vector with mean (range), suitable for printing in an html table

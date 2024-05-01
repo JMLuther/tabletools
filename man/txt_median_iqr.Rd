@@ -4,7 +4,7 @@
 \alias{txt_median_iqr}
 \title{Summary text functions for html tables}
 \usage{
-txt_median_iqr(var, lower = 0.25, upper = 0.75, na.rm = T, ...)
+txt_median_iqr(var, lower = 0.25, upper = 0.75, na.rm = T, digits = 1, ...)
 }
 \arguments{
 \item{var}{A vector, or variable name within a dataframe}

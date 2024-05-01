@@ -16,8 +16,9 @@
 #'   group_by(cyl) %>%
 #'   summarise(mean_mpg = txt_mean_range(mpg))
 
-txt_median_iqr <- function(var, lower=0.25, upper=0.75, na.rm = T, ...){
-  sprintf("%.1f[%.1f-%.1f]",
+txt_median_iqr <- function(var, lower=0.25, upper=0.75, na.rm = T, digits=1, ...){
+  string = paste0("%1.", digits, "f[%.", digits, "f-%.", digits, "f]")
+  sprintf(string,
           median(var, na.rm = na.rm, ...),
           quantile(var, lower, na.rm = na.rm, names = FALSE),
           quantile(var, upper, na.rm = na.rm, names = FALSE)

@@ -4,7 +4,7 @@
 \alias{txt_mean_sem}
 \title{Summary text functions for html tables}
 \usage{
-txt_mean_sem(var, na.rm = TRUE, digits = 2)
+txt_mean_sem(var, na.rm = TRUE, digits = 2, unicode = T)
 }
 \arguments{
 \item{var}{A numeric vector or variable name within a dataframe}

@@ -4,7 +4,7 @@
 \alias{txt_mean_sd}
 \title{Summary text functions for html tables}
 \usage{
-txt_mean_sd(var, na.rm = TRUE, digits = 2)
+txt_mean_sd(var, na.rm = TRUE, digits = 2, unicode = T)
 }
 \arguments{
 \item{var}{A numeric vector or variable name within a dataframe}
@@ -24,7 +24,5 @@ library(dplyr)
 txt_mean_sd(1:10)
 txt_mean_sd(1:10, digits = 1)
 txt_mean_sd(1:10, digits = 3)
-}
-\seealso{
-\code{\link[base]{sprintf}}, \code{\link[base]{mean}}, \code{\link[base]{sd}}
+txt_mean_sd(x, digits = 3, unicode = F)
 }
