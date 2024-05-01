@@ -8,14 +8,10 @@
 #' txt_mean_sem(mtcars$mpg)
 #' txt_mean_sem(mtcars$mpg, digits=1)
 
-txt_mean_sem <- function (var, na.rm = TRUE, digits=2) {
-  switch (digits,
-          `1` =   sprintf("%.1f&plusmn;%.1f", mean(var, na.rm = na.rm), 
-                          sd(var, na.rm = na.rm)/sqrt(length(var))),
-          `2` =  sprintf("%.2f&plusmn;%.2f", mean(var, na.rm = na.rm), 
-                         sd(var, na.rm = na.rm)/sqrt(length(var))),
-          `3` =  sprintf("%.3f&plusmn;%.3f", mean(var, na.rm = na.rm), 
-                         sd(var, na.rm = na.rm)/sqrt(length(var)))
-  )
+txt_mean_sem <- function (var, na.rm = TRUE, digits=2, unicode=T) {
+  if (unicode) { 
+    string = paste0("%1.", digits, "f\U00B1%1.", digits, "f")
+  } else {string = paste0("%1.", digits, "f&plusmn;%1.", digits, "f")}
+  sprintf(string, mean(var, na.rm = na.rm), 
+          sd(var, na.rm = na.rm)/sqrt(length(var)))
 }
-
