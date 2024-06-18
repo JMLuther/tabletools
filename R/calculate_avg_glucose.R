@@ -1,6 +1,6 @@
 #' Estimate average glucose from A1C value
 #'
-#' @param a1c measured A1C%
+#' @param a1c measured A1C
 #' @param glucose_units Desired glucose units for result- default is "mg/dl",
 #'   can indicate here for unit conversion options, eg "mg/dl" or "mmol/l"
 #'

@@ -7,7 +7,7 @@
 calculate_avg_glucose(a1c, glucose_units = "mg/dl")
 }
 \arguments{
-\item{a1c}{measured A1C%}
+\item{a1c}{measured A1C}
 
 \item{glucose_units}{Desired glucose units for result- default is "mg/dl",
 can indicate here for unit conversion options, eg "mg/dl" or "mmol/l"}
