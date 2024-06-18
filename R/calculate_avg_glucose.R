@@ -1,12 +1,12 @@
 #' Estimate average glucose from A1C value
 #'
-#' @param a1c measured A1C (%)
+#' @param a1c measured A1C%
 #' @param glucose_units Desired glucose units for result- default is "mg/dl",
-#'   can indicate here for unit conversion (options "mg/dl" or "mmol/l")
+#'   can indicate here for unit conversion options, eg "mg/dl" or "mmol/l"
 #'
-#' @return estimated average glucose (mg/dl default), as a single numeric value
+#' @return estimated average glucose with mg/dl default, as a single numeric value
 #' @export
-#' @details Conversion from A1C to estimated average glucose (eAG) using linear
+#' @details Conversion from A1C to estimated average glucose using linear
 #' interpolation described in the paper
 #' \href{https://pubmed.ncbi.nlm.nih.gov/18540046/}{"Translating the A1C assay
 #' into estimated average glucose values"}
