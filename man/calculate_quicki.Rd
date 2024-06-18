@@ -27,8 +27,8 @@ QUICKI estimate of insulin sensitivity, as a single numeric value
 Quick Index of Insulin Sensitivity (QUICKI)
 }
 \examples{
-calculate_quickiglucose = c(93), insulin = c(12.8))
-calculate_quicki93, 12.8)
-calculate_quicki93, NA) # error
-calculate_quicki5.167, 76.8, glucose_units = "mmol/l", insulin_units = "pmol/l")
+calculate_quicki(glucose = c(93), insulin = c(12.8))
+calculate_quicki(93, 12.8)
+calculate_quicki(93, NA) # error
+calculate_quicki(5.167, 76.8, glucose_units = "mmol/l", insulin_units = "pmol/l")
 }
