@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Metabolic-Calculations-Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
@@ -19,37 +20,200 @@ library(tabletools)
 
 ```
 
-# Body Surface Area  
+# Introduction
 
-The `bsa` command calculates Body Surface area (m<sup>2</sup>) using the most commonly available methods [Yu et al](https://pubmed.ncbi.nlm.nih.gov/19900761/). 
+This package has evolved to include functions useful for metabolic studies in humans, in particular to assess insulin sensitivity.
 
-Available Methods and Formulas:  
+# Unit conversion functions
 
+Convenience functions are provided to convert glucose, insulin and other units to the desired units.
+
+## Glucose and Insulin
+
+Most functions default to using glucose (mg/dL) and insulin (uU/mL) as the input units because these are most commonly reported in the US.
+
+To convert glucose from mg/dL to mmol/L, use the `convert_glucose_to_mM` function, indicating the original units of the glucose value.
+
+```{r}
+convert_glucose_to_mM(100, glucose_units =  "mg/dL")
+```
+
+To convert insulin from uU/mL to pmol/L, use the `convert_insulin_to_pM` function, indicating the original units of the insulin value.
+
+```{r}
+convert_insulin_to_pM(10, insulin_units = "uU/mL")
+```
+
+## Weight and Height
+
+Similar functions are available to convert weight and height to the desired units.
+
+```{r}
+convert_weight_to_kg(150, weight_units = "lbs")
+```
+
+Height from inches to meters:
+
+```{r}
+convert_height_to_m(70, height_units = "in")
+```
+
+# Insulin sensitivity
+
+Sample OGTT Data, to use for fasting and OGTT based calculations.
+
+```{r}
+# handling data stored in a dataframe
+ogtt1 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
+                    glucose=c(93, 129, 178, 164, 97),        # mg/dL
+                    insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
+
+# example from Gutch et al 2015
+ogtt2 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
+                    glucose=c(100, 160, 160, 160, 140),      # mg/dL
+                    insulin=c(5, 10, 10, 10, 5))             # uU/mL
+```
+
+## Fasting Glucose and insulin
+
+The HOMA-IR and QUICKI indices are used to assess insulin sensitivity. There is an updated HOMA2 calculation that is preferable to the original HOMA-IR calculation, but it is based on a series of equations that are not accessible to incorporate into a function. There is an online and downloadable calculator for HOMA2 [that is readily available here](https://www.rdm.ox.ac.uk/about/our-clinical-facilities-and-units/DTU/software/homa).
+
+### A1C estimated average glucose
+
+The estimated average glucose can be calculated from A1C:
+
+```{r}
+calculate_avg_glucose(5.5)
+```
+
+### HOMA-IR:
+
+Higher values indicate lower insulin sensitivity.
+
+```{r}
+calculate_homair(ogtt1$glucose[1], ogtt1$insulin[1])
+```
+
+### QUICKI:
+
+Higher values indicate higher insulin sensitivity.
+
+```{r}
+calculate_quicki(ogtt1$glucose[1], ogtt1$insulin[1])
+```
+
+## OGTT based calculations
+
+### Matsuda Index
+
+Matsuda index is the most often used OGTT-based estimate of insulin sensitivity. Calculations can be verified at an online calculator [here](https://mmatsuda.diabetes-smc.jp/MIndex.html).
+
+```{r}
+calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
+```
+
+### Stumvoll Index
+
+```{r}
+calculate_stumvoll_isi(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
+```
+
+# Body Surface Area
+
+The `bsa` command calculates Body Surface area (m<sup>2</sup>) using the most commonly available methods [Yu et al](https://pubmed.ncbi.nlm.nih.gov/19900761/).
+
+The default method is the Mosteller formula. Functions will conduct unit conversions if the proper units are provided- defaults to kg and m.
+
+```{r}
+calculate_bsa(weight = 70, height =  1.50, method = "Mosteller",
+              weight_units = "kg", height_units = "m")
+```
+
+Available Methods and Formulas:
+
+```{=tex}
 \begin{equation}
 \sqrt{\frac{Ht(cm) \cdot Wt(kg)}{3600}} \tag{Mosteller}
 \end{equation}
-
+```
+```{=tex}
 \begin{equation}
 Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184 \tag{DuBois and DuBois}
 \end{equation}
-
+```
+```{=tex}
 \begin{equation}
 Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235 \tag{Gehan and George}
 \end{equation}
-
+```
+```{=tex}
 \begin{equation}
 Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265 \tag{Haycock}
 \end{equation}
-
+```
+```{=tex}
 \begin{equation}
 71.3989 \cdot Ht(cm)^{0.7437} \cdot Wt(kg)^{0.4040} \div 10000 \tag{Yu}
 \end{equation}
-
+```
+```{=tex}
 \begin{equation}
 0.1173 \cdot Wt(kg)^{0.6466} \tag{Livingston}
 \end{equation}
-
+```
+```{=tex}
 \begin{equation}
 128.1 \cdot Ht(cm)^{0.60} \cdot Wt(kg)^{0.44} \tag{Tikuisis}
 \end{equation}
+```
+# Kidney function equations
 
+## eGFR
+
+Creatinine clearance is the historical standard to estimate glomerular filtration rate (GFR). The Cockcroft-Gault formula was used in the past, but has been superceded by the MDRD and more recently CKD-EPI equations. Newer methods incorporating Cystatin C are also available, and may increase accuracy when using race-free equations [@Inker2021].
+
+Formulas for multiple methods of eGFR are provided- not meant to be comprehensive, but up to date. The ASN and NKF task force panels now recommend using equations that do not incorporate a race coefficient. Details on the formulas can be found in Supplemental Table S10 of [@Inker2021].
+
+Online calculators to verify the results are available:
+
+-   New CKD-EPI equations at [Kidney.org](https://www.kidney.org/professionals/kdoqi/gfr_calculator)\
+-   Old 2009 CKD-EPI (race-based) calculator is maintained at [NIH/NIDDK](https://www.niddk.nih.gov/health-information/professionals/clinical-tools-patient-management/kidney-disease/laboratory-evaluation/glomerular-filtration-rate-calculators/historical) for comparison.
+-   MDRD
+
+### Cockcroft-Gault
+
+```{r}
+calculate_egfr_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 95.2
+```
+
+### CKD-EPI
+
+Note: When comparing results using this function against Inker Table S11 there are minor differences amounting to no more than 0.5-1.0 ml/min/1.73m2.
+
+The [2021 CKD-EPI equation](https://www.kidney.org/content/ckd-epi-creatinine-equation-2021) is: 
+$$eGFR_{cr}= 142\cdot min(Cr/\kappa, 1)^\alpha \cdot max(Cr/\kappa, 1)^{-1.200} \cdot 0.9938^{Age} \cdot 1.102[Female] $$ 
+
+where:
+
+\* $\kappa$ = 0.7 (Female) or 0.9 (Male)\
+\* $\alpha$ = -0.241 (Female) or -0.302 (Male)\
+\* Age is in years \* Cr = serum Creatinine in mg/dL
+
+Note that the 2021 CKD-EPI formula also has a version which was derived using Race, and produces slightly different results. 
+
+$$eGFR_{cr}= 141\cdot min(Cr/\kappa, 1)^\alpha \cdot max(Cr/\kappa, 1)^{-1.209} \cdot 0.9929^{Age} \cdot 1.018[Female] \cdot 1.159[Black] $$ 
+
+where:
+
+\* $\kappa$ = 0.7 (Female) or 0.9 (Male)\
+\* $\alpha$ = -0.329 (Female) or -0.411 (Male)\
+
+```{r}
+calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8) # 95.2
+```
+
+
+
+### CKD-EPI Cr-Cystatin-C
+
+not yet incorporated

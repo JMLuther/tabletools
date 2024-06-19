@@ -13,8 +13,6 @@ calculate_egfr_mdrd(age, sex = "Male", race = "White", weight, creatinine)
 
 \item{race}{}
 
-\item{weight}{}
-
 \item{creatinine}{}
 }
 \value{
@@ -31,8 +29,16 @@ Calculates estimated glomerular filtration rate (GFR) by several
   *  Cockcroft-Gault
 }
 \examples{
-calculate_egfr_mdrd(age = 50, sex = "Male", race = "White", weight = 70, creatinine = 1.5) # 49.5
-calculate_egfr_mdrd(age = 50, sex = "Male", race = "Black", weight = 70, creatinine = 1.5) # 60
-calculate_egfr_mdrd(age = 50, sex = "Female", race = "White", weight = 70, creatinine = 1.5) # 36.8
-calculate_egfr_mdrd(age = 50, sex = "Female", race = "Black", weight = 70, creatinine = 1.5) # 44.5
+
+calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 118
+calculate_egfr_mdrd(age=50, sex="Male", creatinine=0.6) # 142.6
+
+calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1) # 92
+calculate_egfr_mdrd(age=50, sex="Male", creatinine=1)   # 79
+
+calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1.5) # 56
+calculate_egfr_mdrd(age=50, sex="Male", creatinine=1.5) # 49
+
+calculate_egfr_ckdepi(age=50, sex="Male", creatinine=2.0) # 40
+calculate_egfr_mdrd(age=50, sex="Male", creatinine=2.0) # 35.5
 }

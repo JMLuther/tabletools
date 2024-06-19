@@ -11,19 +11,26 @@
 #'
 #' @param age Age, in years
 #' @param sex Sex 
-#' @param sex Sex 
 #' @param race 
-#' @param weight 
 #' @param creatinine 
 #'
 #' @returns a numeric vector with eGFR (ml/min/1.73m^2)
 #' @export
 #'
 #' @examples
-#' calculate_egfr_mdrd(age = 50, sex = "Male", race = "White", weight = 70, creatinine = 1.5) # 49.5
-#' calculate_egfr_mdrd(age = 50, sex = "Male", race = "Black", weight = 70, creatinine = 1.5) # 60
-#' calculate_egfr_mdrd(age = 50, sex = "Female", race = "White", weight = 70, creatinine = 1.5) # 36.8
-#' calculate_egfr_mdrd(age = 50, sex = "Female", race = "Black", weight = 70, creatinine = 1.5) # 44.5
+#' 
+#' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 118
+#' calculate_egfr_mdrd(age=50, sex="Male", creatinine=0.6) # 142.6
+#' 
+#' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1) # 92
+#' calculate_egfr_mdrd(age=50, sex="Male", creatinine=1)   # 79
+#' 
+#' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1.5) # 56
+#' calculate_egfr_mdrd(age=50, sex="Male", creatinine=1.5) # 49
+#' 
+#' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=2.0) # 40
+#' calculate_egfr_mdrd(age=50, sex="Male", creatinine=2.0) # 35.5
+
 
 
 calculate_egfr_mdrd <- function(age, sex="Male", race="White", weight, creatinine) {

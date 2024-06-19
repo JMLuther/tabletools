@@ -29,6 +29,8 @@ Calculates estimated glomerular filtration rate (GFR) by several
   *  Cockcroft-Gault
 }
 \examples{
-calculate_egfr(age=70, sex="Male", creatinine=0.8, method="CKD-EPI") # 95.2
-calculate_egfr(age=50, sex="Female", creatinine=1.0, method="CKD-EPI") # 68.6  
+calculate_egfr_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 95.2
+calculate_egfr_cg(age=70, sex="Female", weight=70, creatinine=1.0) # 95.2
+calculate_egfr_cg(age=50, sex="Male", weight=70, creatinine=1.0) # 95.2
+calculate_egfr_cg(age=50, sex="Female", weight=70, creatinine=1.0) # 95.2
 }
