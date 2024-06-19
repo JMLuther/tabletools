@@ -19,9 +19,122 @@ library(tabletools)
 
 ```
 
+# Introduction
+
+This package has evolved to include functions useful for metabolic studies in humans, in particular to assess insulin sensitivity. 
+
+# Unit conversion functions
+
+Convenience functions are provided to convert glucose, insulin and other units to the desired units. 
+
+## Glucose and Insulin
+
+Most functions default to using glucose (mg/dL) and insulin (uU/mL) as the input units because these are most commonly reported in the US.
+
+To convert glucose from mg/dL to mmol/L, use the `convert_glucose_to_mM` function, indicating the original units of the glucose value. 
+
+```{r}
+convert_glucose_to_mM(100, glucose_units =  "mg/dL")
+```
+
+To convert insulin from uU/mL to pmol/L, use the `convert_insulin_to_pM` function, indicating the original units of the insulin value. 
+
+```{r}
+convert_insulin_to_pM(10, insulin_units = "uU/mL")
+```
+
+## Weight and Height
+
+Similar functions are available to convert weight and height to the desired units.
+```{r}
+convert_weight_to_kg(150, weight_units = "lbs")
+```
+
+Height from inches to meters:
+```{r}
+convert_height_to_m(70, height_units = "in")
+```
+
+
+
+# Insulin sensitivity
+
+Sample OGTT Data, to use for fasting and OGTT based calculations. 
+
+```{r}
+# handling data stored in a dataframe
+ogtt1 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
+                    glucose=c(93, 129, 178, 164, 97),        # mg/dL
+                    insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
+
+# example from Gutch et al 2015
+ogtt2 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
+                    glucose=c(100, 160, 160, 160, 140),      # mg/dL
+                    insulin=c(5, 10, 10, 10, 5))             # uU/mL
+```
+
+
+
+## Fasting Glucose and insulin
+
+The HOMA-IR and QUICKI indices are used to assess insulin sensitivity.
+There is an updated HOMA2 calculation that is preferable to the original HOMA-IR calculation, but it is based on a series of equations that are not accessible to incorporate into a function. There is an online and downloadable calculator for HOMA2 [that is readily available here](https://www.rdm.ox.ac.uk/about/our-clinical-facilities-and-units/DTU/software/homa).
+
+### A1C estimated average glucose
+
+The estimated average glucose can be calculated from A1C:
+```{r}
+calculate_avg_glucose(5.5)
+```
+
+
+### HOMA-IR: 
+
+Higher values indicate lower insulin sensitivity. 
+
+```{r}
+calculate_homair(ogtt1$glucose[1], ogtt1$insulin[1])
+```
+
+
+### QUICKI:
+
+Higher values indicate higher insulin sensitivity. 
+
+
+```{r}
+calculate_quicki(ogtt1$glucose[1], ogtt1$insulin[1])
+```
+
+## OGTT based calculations
+
+### Matsuda Index
+
+Matsuda index is the most often used OGTT-based estimate of insulin sensitivity. 
+Calculations can be verified at an online calculator [here](https://mmatsuda.diabetes-smc.jp/MIndex.html).
+
+
+```{r}
+calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
+```
+
+### Stumvoll Index
+
+```{r}
+calculate_stumvoll_isi(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
+```
+
 # Body Surface Area  
 
 The `bsa` command calculates Body Surface area (m<sup>2</sup>) using the most commonly available methods [Yu et al](https://pubmed.ncbi.nlm.nih.gov/19900761/). 
+
+The default method is the Mosteller formula. 
+Functions will conduct unit conversions if the proper units are provided- defaults to kg and m.
+```{r}
+calculate_bsa(weight = 70, height =  1.50, method = "Mosteller",
+              weight_units = "kg", height_units = "m")
+```
+
 
 Available Methods and Formulas:  
 

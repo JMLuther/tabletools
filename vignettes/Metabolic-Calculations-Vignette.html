@@ -341,10 +341,107 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tabletools)</span></code></pre></div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This package has evolved to include functions useful for metabolic
+studies in humans, in particular to assess insulin sensitivity.</p>
+</div>
+<div id="unit-conversion-functions" class="section level1">
+<h1>Unit conversion functions</h1>
+<p>Convenience functions are provided to convert glucose, insulin and
+other units to the desired units.</p>
+<div id="glucose-and-insulin" class="section level2">
+<h2>Glucose and Insulin</h2>
+<p>Most functions default to using glucose (mg/dL) and insulin (uU/mL)
+as the input units because these are most commonly reported in the
+US.</p>
+<p>To convert glucose from mg/dL to mmol/L, use the
+<code>convert_glucose_to_mM</code> function, indicating the original
+units of the glucose value.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">convert_glucose_to_mM</span>(<span class="dv">100</span>, <span class="at">glucose_units =</span>  <span class="st">&quot;mg/dL&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; [1] 5.555556</span></span></code></pre></div>
+<p>To convert insulin from uU/mL to pmol/L, use the
+<code>convert_insulin_to_pM</code> function, indicating the original
+units of the insulin value.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">convert_insulin_to_pM</span>(<span class="dv">10</span>, <span class="at">insulin_units =</span> <span class="st">&quot;uU/mL&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; [1] 60</span></span></code></pre></div>
+</div>
+<div id="weight-and-height" class="section level2">
+<h2>Weight and Height</h2>
+<p>Similar functions are available to convert weight and height to the
+desired units.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">convert_weight_to_kg</span>(<span class="dv">150</span>, <span class="at">weight_units =</span> <span class="st">&quot;lbs&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; [1] 68.18182</span></span></code></pre></div>
+<p>Height from inches to meters:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">convert_height_to_m</span>(<span class="dv">70</span>, <span class="at">height_units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] 1.778</span></span></code></pre></div>
+</div>
+</div>
+<div id="insulin-sensitivity" class="section level1">
+<h1>Insulin sensitivity</h1>
+<p>Sample OGTT Data, to use for fasting and OGTT based calculations.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># handling data stored in a dataframe</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>ogtt1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">60</span>, <span class="dv">90</span>, <span class="dv">120</span>),              <span class="co"># minutes</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                    <span class="at">glucose=</span><span class="fu">c</span>(<span class="dv">93</span>, <span class="dv">129</span>, <span class="dv">178</span>, <span class="dv">164</span>, <span class="dv">97</span>),        <span class="co"># mg/dL</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                    <span class="at">insulin=</span><span class="fu">c</span>(<span class="fl">12.8</span>, <span class="fl">30.7</span>, <span class="fl">68.5</span>, <span class="fl">74.1</span>, <span class="fl">44.0</span>)) <span class="co"># uU/mL</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># example from Gutch et al 2015</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>ogtt2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="dv">60</span>, <span class="dv">90</span>, <span class="dv">120</span>),              <span class="co"># minutes</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>                    <span class="at">glucose=</span><span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">160</span>, <span class="dv">160</span>, <span class="dv">160</span>, <span class="dv">140</span>),      <span class="co"># mg/dL</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>                    <span class="at">insulin=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>))             <span class="co"># uU/mL</span></span></code></pre></div>
+<div id="fasting-glucose-and-insulin" class="section level2">
+<h2>Fasting Glucose and insulin</h2>
+<p>The HOMA-IR and QUICKI indices are used to assess insulin
+sensitivity. There is an updated HOMA2 calculation that is preferable to
+the original HOMA-IR calculation, but it is based on a series of
+equations that are not accessible to incorporate into a function. There
+is an online and downloadable calculator for HOMA2 <a href="https://www.rdm.ox.ac.uk/about/our-clinical-facilities-and-units/DTU/software/homa">that
+is readily available here</a>.</p>
+<div id="a1c-estimated-average-glucose" class="section level3">
+<h3>A1C estimated average glucose</h3>
+<p>The estimated average glucose can be calculated from A1C:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">calculate_avg_glucose</span>(<span class="fl">5.5</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; [1] 111.15</span></span></code></pre></div>
+</div>
+<div id="homa-ir" class="section level3">
+<h3>HOMA-IR:</h3>
+<p>Higher values indicate lower insulin sensitivity.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">calculate_homair</span>(ogtt1<span class="sc">$</span>glucose[<span class="dv">1</span>], ogtt1<span class="sc">$</span>insulin[<span class="dv">1</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] 2.939259</span></span></code></pre></div>
+</div>
+<div id="quicki" class="section level3">
+<h3>QUICKI:</h3>
+<p>Higher values indicate higher insulin sensitivity.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">calculate_quicki</span>(ogtt1<span class="sc">$</span>glucose[<span class="dv">1</span>], ogtt1<span class="sc">$</span>insulin[<span class="dv">1</span>])</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.32513</span></span></code></pre></div>
+</div>
+</div>
+<div id="ogtt-based-calculations" class="section level2">
+<h2>OGTT based calculations</h2>
+<div id="matsuda-index" class="section level3">
+<h3>Matsuda Index</h3>
+<p>Matsuda index is the most often used OGTT-based estimate of insulin
+sensitivity. Calculations can be verified at an online calculator <a href="https://mmatsuda.diabetes-smc.jp/MIndex.html">here</a>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">calculate_matsuda_index</span>(ogtt1<span class="sc">$</span>time, ogtt1<span class="sc">$</span>glucose, ogtt1<span class="sc">$</span>insulin)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] 3.43125</span></span></code></pre></div>
+</div>
+<div id="stumvoll-index" class="section level3">
+<h3>Stumvoll Index</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">calculate_stumvoll_isi</span>(ogtt1<span class="sc">$</span>time, ogtt1<span class="sc">$</span>glucose, ogtt1<span class="sc">$</span>insulin) <span class="co">#</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.0901296</span></span></code></pre></div>
+</div>
+</div>
+</div>
 <div id="body-surface-area" class="section level1">
 <h1>Body Surface Area</h1>
 <p>The <code>bsa</code> command calculates Body Surface area
 (m<sup>2</sup>) using the most commonly available methods <a href="https://pubmed.ncbi.nlm.nih.gov/19900761/">Yu et al</a>.</p>
+<p>The default method is the Mosteller formula. Functions will conduct
+unit conversions if the proper units are provided- defaults to kg and
+m.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">calculate_bsa</span>(<span class="at">weight =</span> <span class="dv">70</span>, <span class="at">height =</span>  <span class="fl">1.50</span>, <span class="at">method =</span> <span class="st">&quot;Mosteller&quot;</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>              <span class="at">weight_units =</span> <span class="st">&quot;kg&quot;</span>, <span class="at">height_units =</span> <span class="st">&quot;m&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; [1] 1.707825</span></span></code></pre></div>
 <p>Available Methods and Formulas:</p>
 <p><span class="math display">\[\begin{equation}
 \sqrt{\frac{Ht(cm) \cdot Wt(kg)}{3600}} \tag{Mosteller}
