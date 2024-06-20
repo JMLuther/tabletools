@@ -51,7 +51,7 @@ calculate_bsa(weight = 70, height =  1.50, method = "Mosteller",
               weight_units = "kg", height_units = "m")
 
 ## -----------------------------------------------------------------------------
-calculate_egfr_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 95.2
+calculate_creatclearance_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 68
 
 ## -----------------------------------------------------------------------------
 calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8) # 95.2

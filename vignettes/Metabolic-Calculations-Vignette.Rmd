@@ -182,16 +182,23 @@ Online calculators to verify the results are available:
 
 ### Cockcroft-Gault
 
+This formula estimates Creatinine Clearance, whereas others estimate GFR.
+The Cockcroft-Gault Creatinine Clearance estimating equation was used for decades in clinical practice before the MDRD and CKD-EPI equations were developed. 
+
+$$Creatinine~CL_{CG}= \frac{(140-Age) \cdot Weight \cdot 0.85[Female]}{72 \cdot Creatinine}$$
+
+where units are Weight (kg), Age (years), and Creatinine (mg/dL).
+
+
 ```{r}
-calculate_egfr_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 95.2
+calculate_creatclearance_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 68
 ```
 
 ### CKD-EPI
 
 Note: When comparing results using this function against Inker Table S11 there are minor differences amounting to no more than 0.5-1.0 ml/min/1.73m2.
 
-The [2021 CKD-EPI equation](https://www.kidney.org/content/ckd-epi-creatinine-equation-2021) is: 
-$$eGFR_{cr}= 142\cdot min(Cr/\kappa, 1)^\alpha \cdot max(Cr/\kappa, 1)^{-1.200} \cdot 0.9938^{Age} \cdot 1.102[Female] $$ 
+The [2021 CKD-EPI equation](https://www.kidney.org/content/ckd-epi-creatinine-equation-2021) is: $$eGFR_{cr}= 142\cdot min(Cr/\kappa, 1)^\alpha \cdot max(Cr/\kappa, 1)^{-1.200} \cdot 0.9938^{Age} \cdot 1.102[Female] $$
 
 where:
 
@@ -199,9 +206,9 @@ where:
 \* $\alpha$ = -0.241 (Female) or -0.302 (Male)\
 \* Age is in years \* Cr = serum Creatinine in mg/dL
 
-Note that the 2021 CKD-EPI formula also has a version which was derived using Race, and produces slightly different results. 
+Note that the 2021 CKD-EPI formula also has a version which was derived using Race, and produces slightly different results.
 
-$$eGFR_{cr}= 141\cdot min(Cr/\kappa, 1)^\alpha \cdot max(Cr/\kappa, 1)^{-1.209} \cdot 0.9929^{Age} \cdot 1.018[Female] \cdot 1.159[Black] $$ 
+$$eGFR_{cr}= 141\cdot min(Cr/\kappa, 1)^\alpha \cdot max(Cr/\kappa, 1)^{-1.209} \cdot 0.9929^{Age} \cdot 1.018[Female] \cdot 1.159[Black] $$
 
 where:
 
@@ -212,8 +219,18 @@ where:
 calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8) # 95.2
 ```
 
+### MDRD
+
+The MDRD equation was the first GFR estimating equation incorporated into widespread clinical practice.[@Levey2006] It has fallen out of use in favor of the newer CKD-EPI equations. Limitations include use of racial adjustments that are biased, and overestimation of GFR especially at higher values.
+
+The best accepted MDRD version is the 4-variable equation incorporating age, sex, race, and creatinine.
+
+$$eGFR_{MDRD}= 175 \cdot Cr^{-1.154} \cdot Age^{-0.203} \cdot 1.212[Black] \cdot 0.742[Female]$$ 
+Where the race and sex adjustment is included if Black or Female.
 
 
 ### CKD-EPI Cr-Cystatin-C
 
 not yet incorporated
+
+# Bibliography

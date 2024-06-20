@@ -513,7 +513,14 @@ for comparison.</li>
 </ul>
 <div id="cockcroft-gault" class="section level3">
 <h3>Cockcroft-Gault</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">calculate_egfr_cg</span>(<span class="at">age=</span><span class="dv">70</span>, <span class="at">sex=</span><span class="st">&quot;Male&quot;</span>, <span class="at">weight=</span><span class="dv">70</span>, <span class="at">creatinine=</span><span class="fl">1.0</span>) <span class="co"># 95.2</span></span>
+<p>This formula estimates Creatinine Clearance, whereas others estimate
+GFR. The Cockcroft-Gault Creatinine Clearance estimating equation was
+used for decades in clinical practice before the MDRD and CKD-EPI
+equations were developed.</p>
+<p><span class="math display">\[Creatinine~CL_{CG}= \frac{(140-Age)
+\cdot Weight \cdot 0.85[Female]}{72 \cdot Creatinine}\]</span></p>
+<p>where units are Weight (kg), Age (years), and Creatinine (mg/dL).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">calculate_creatclearance_cg</span>(<span class="at">age=</span><span class="dv">70</span>, <span class="at">sex=</span><span class="st">&quot;Male&quot;</span>, <span class="at">weight=</span><span class="dv">70</span>, <span class="at">creatinine=</span><span class="fl">1.0</span>) <span class="co"># 68</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1] 68.05556</span></span></code></pre></div>
 </div>
 <div id="ckd-epi" class="section level3">
@@ -545,9 +552,27 @@ derived using Race, and produces slightly different results.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">calculate_egfr_ckdepi</span>(<span class="at">age=</span><span class="dv">70</span>, <span class="at">sex=</span><span class="st">&quot;Male&quot;</span>, <span class="at">creatinine=</span><span class="fl">0.8</span>) <span class="co"># 95.2</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; [1] 95.20634</span></span></code></pre></div>
 </div>
+<div id="mdrd" class="section level3">
+<h3>MDRD</h3>
+<p>The MDRD equation was the first GFR estimating equation incorporated
+into widespread clinical practice.<span class="citation">(Levey et al.
+2006)</span> It has fallen out of use in favor of the newer CKD-EPI
+equations. Limitations include use of racial adjustments that are
+biased, and overestimation of GFR especially at higher values.</p>
+<p>The best accepted MDRD version is the 4-variable equation
+incorporating age, sex, race, and creatinine.</p>
+<p><span class="math display">\[eGFR_{MDRD}= 175 \cdot Cr^{-1.154} \cdot
+Age^{-0.203} \cdot 1.212[Black] \cdot 0.742[Female]\]</span> Where the
+race and sex adjustment is included if Black or Female.</p>
+</div>
 <div id="ckd-epi-cr-cystatin-c" class="section level3">
 <h3>CKD-EPI Cr-Cystatin-C</h3>
 <p>not yet incorporated</p>
+</div>
+</div>
+</div>
+<div id="bibliography" class="section level1 unnumbered">
+<h1 class="unnumbered">Bibliography</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Inker2021" class="csl-entry">
 Inker, Lesley A., Nwamaka D. Eneanya, Josef Coresh, Hocine Tighiouart,
@@ -556,7 +581,13 @@ Creatinine- and Cystatin C<span></span>Based Equations to Estimate GFR
 Without Race.”</span> <em>New England Journal of Medicine</em> 385 (19):
 1737–49. <a href="https://doi.org/10.1056/nejmoa2102953">https://doi.org/10.1056/nejmoa2102953</a>.
 </div>
-</div>
+<div id="ref-Levey2006" class="csl-entry">
+Levey, Andrew S., Josef Coresh, Tom Greene, Lesley A. Stevens, Yaping
+(Lucy) Zhang, Stephen Hendriksen, John W. Kusek, and Frederick Van
+Lente. 2006. <span>“Using Standardized Serum Creatinine Values in the
+Modification of Diet in Renal Disease Study Equation for Estimating
+Glomerular Filtration Rate.”</span> <em>Annals of Internal Medicine</em>
+145 (4): 247–54. <a href="https://doi.org/10.7326/0003-4819-145-4-200608150-00004">https://doi.org/10.7326/0003-4819-145-4-200608150-00004</a>.
 </div>
 </div>
 </div>

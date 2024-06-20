@@ -38,11 +38,11 @@ Calculates estimated glomerular filtration rate (GFR) by several
   common methods. Converts weight to Kg and Height to cm if needed. Available
   methods for eGFR calculations include:
 
-  *  CKD-EPI AS Equation (2021) incorporating only Age, Sex 
-  *  CKD-EPI ASR Equation (original, 2009) incorporating Age, Sex, Race
-  *  CKD-EPI Cystatin-C (not incorporated)
-  *  MDRD  
-  *  Cockcroft-Gault 
+  * CKD-EPI AS Equation (2021) incorporating only Age, Sex 
+  * CKD-EPI ASR Equation (original, 2009) incorporating Age, Sex, Race
+  * CKD-EPI Cystatin-C (not incorporated)
+  * MDRD  
+  * Cockcroft-Gault 
 
 Online calculators can be used to compare reults for [CKD-EPI AS (2021)](https://www.kidney.org/professionals/kdoqi/gfr_calculator),
 [CKD-EPI ASR](https://www.niddk.nih.gov/health-information/professionals/clinical-tools-patient-management/kidney-disease/laboratory-evaluation/glomerular-filtration-rate-calculators/historical)
