@@ -4,7 +4,7 @@
 \alias{calculate_egfr_mdrd}
 \title{Calculate estimated GFR by MDRD}
 \usage{
-calculate_egfr_mdrd(age, sex = "Male", race = "White", weight, creatinine)
+calculate_egfr_mdrd(age, sex = "Male", race = "White", creatinine)
 }
 \arguments{
 \item{age}{Age, in years}

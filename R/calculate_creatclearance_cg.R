@@ -12,15 +12,15 @@
 #' @export
 #'
 #' @examples
-#' calculate_egfr_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 95.2
-#' calculate_egfr_cg(age=70, sex="Female", weight=70, creatinine=1.0) # 95.2
-#' calculate_egfr_cg(age=50, sex="Male", weight=70, creatinine=1.0) # 95.2
-#' calculate_egfr_cg(age=50, sex="Female", weight=70, creatinine=1.0) # 95.2
+#' calculate_creatclearance_cg(age=70, sex="Male", weight=70, creatinine=1.0) # 68.05556
+#' calculate_creatclearance_cg(age=70, sex="Female", weight=70, creatinine=1.0) # 57.84722
+#' calculate_creatclearance_cg(age=50, sex="Male", weight=70, creatinine=1.0) # 87.5
+#' calculate_creatclearance_cg(age=50, sex="Female", weight=70, creatinine=1.0) # 74.375
+#' calculate_creatclearance_cg(age=50, sex="Female", weight=154, creatinine=1.0, weight_units="lbs") # 74.375
 
-
-
-calculate_creatclearance_cg <- function(age, sex, weight, creatinine) {
+calculate_creatclearance_cg <- function(age, sex, weight, creatinine, weight_units="kg") {
   F = switch(sex, "Female" = 0.85, "Male"=1)
-  eGFR = (140 - age) * weight * F / (72*creatinine)
+  weight_kg = convert_weight_to_kg(weight, weight_units)
+  eGFR = (140 - age) * weight_kg * F / (72*creatinine)
     return(eGFR)
 }

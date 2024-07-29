@@ -26,11 +26,11 @@
 
 
 calculate_bmi <- function(height, weight, height_units = "m", weight_units = "kg"){
-  if(!height_units %in% c("cm", "m", "inches")) rlang::abort("please specify height as cm, m, or in")
-  if(!weight_units %in% c("kg", "lbs")) rlang::abort("please specify weight units as kg or lbs")
+  if(!height_units %in% c("cm", "m", "inches", "in", "ins")) rlang::abort("please specify height as cm, m, or in")
+  if(!weight_units %in% c("kg", "g", "lbs")) rlang::abort("please specify weight units as kg, g, or lbs")
   
-  weight_kg = convert_weight_kg(weight, weight_units)
-  height_m =  convert_height_m(height, height_units)
+  weight_kg = convert_weight_to_kg(weight, weight_units)
+  height_m =  convert_height_to_m(height, height_units)
   
   weight_kg/height_m^2
 }
