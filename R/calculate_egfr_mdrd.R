@@ -33,7 +33,7 @@
 
 
 
-calculate_egfr_mdrd <- function(age, sex="Male", race="White", weight, creatinine) {
+calculate_egfr_mdrd <- function(age, sex="Male", race="White", creatinine) {
   F = switch(sex, "Female" = 0.742, "Male"=1)
   R = switch(race, "Black" = 1.212, "White"=1)
   eGFR = 175 * creatinine ^(-1.154) * age^(-0.203) * R * F

@@ -18,7 +18,7 @@
 #' calculate_creatclearance_urine(urine_volume = 1000, creatinine_serum = 1.0, creatinine_urine = 100) # 69.4
 #' calculate_creatclearance_urine(urine_volume = 1000, creatinine_serum = 1.0, creatinine_urine = 100,
 #'                                    bsa_adjust = T) # error- need height, weight
-#' calculate_creatclearance_24hrurine(urine_volume = 1000, creatinine_serum = 1.0, creatinine_urine = 100,
+#' calculate_creatclearance_urine(urine_volume = 1000, creatinine_serum = 1.0, creatinine_urine = 100,
 #'                                    bsa_adjust = T, weight = 70, height = 1.5) # 70.3
 
 calculate_creatclearance_urine <- function(urine_volume, creatinine_urine, creatinine_serum, urine_collection_time=24,

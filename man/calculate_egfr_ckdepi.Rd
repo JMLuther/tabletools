@@ -44,8 +44,8 @@ Calculates estimated glomerular filtration rate (GFR) by several
   * MDRD  
   * Cockcroft-Gault 
 
-Online calculators can be used to compare reults for [CKD-EPI AS (2021)](https://www.kidney.org/professionals/kdoqi/gfr_calculator),
-[CKD-EPI ASR](https://www.niddk.nih.gov/health-information/professionals/clinical-tools-patient-management/kidney-disease/laboratory-evaluation/glomerular-filtration-rate-calculators/historical)
+Online calculators can be used to compare reults for \href{https://www.kidney.org/professionals/kdoqi/gfr_calculator}{CKD-EPI AS (2021)},
+\href{https://www.niddk.nih.gov/health-information/professionals/clinical-tools-patient-management/kidney-disease/laboratory-evaluation/glomerular-filtration-rate-calculators/historical}{CKD-EPI ASR}
 }
 \examples{
 calculate_egfr(age=70, sex="Male", creatinine=0.8, method="CKD-EPI") # 95.2

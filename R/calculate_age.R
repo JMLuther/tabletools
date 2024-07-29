@@ -28,6 +28,6 @@ calculate_age <- function(dob, date="today", date_format="ymd", units="years") {
                "mdy" = lubridate::mdy(dob),
                "ymd" = lubridate::ymd(dob))
 
-  age = as.numeric(interval(dob, d), {{units}})
+  age = as.numeric(lubridate::interval(dob, date), {{units}})
   return(age)                 
 }
