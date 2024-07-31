@@ -31,12 +31,12 @@ Calculates Body Surface Area (m2) by several common methods. Converts weight to 
 Available methods for BSA calculations are described in \href{https://pubmed.ncbi.nlm.nih.gov/19900761/}{Yu et al.}:
 \itemize{
 \item Mosteller: \eqn{\frac{\sqrt{Ht(cm) \cdot Wt(kg)} }{3600}}
-\item DuBois and DuBois: $Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184 $
-\item Gehan and George: $Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235  $
-\item Haycock: $Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265  $
-\item Yu: $\frac{71.3989 \cdot Ht(cm)^{0.7437} \cdot Wt(kg)^{0.4040}}{10000}  $
-\item Livingston: $0.1173 \cdot Wt(kg)^{0.6466}   $
-\item Tikuisis: $128.1 \cdot Ht(cm)^{0.60} \cdot Wt(kg)^{0.44}  $
+\item DuBois and DuBois: \eqn{Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184}
+\item Gehan and George: \eqn{Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235}
+\item Haycock: \eqn{Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265 }
+\item Yu: \eqn{\frac{71.3989 \cdot Ht(cm)^{0.7437} \cdot Wt(kg)^{0.4040}}{10000} }
+\item Livingston: \eqn{0.1173 \cdot Wt(kg)^{0.6466}  }
+\item Tikuisis: \eqn{128.1 \cdot Ht(cm)^{0.60} \cdot Wt(kg)^{0.44} }
 }
 }
 \examples{

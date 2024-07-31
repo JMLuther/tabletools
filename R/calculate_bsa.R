@@ -4,12 +4,12 @@
 #' Available methods for BSA calculations are described in \href{https://pubmed.ncbi.nlm.nih.gov/19900761/}{Yu et al.}:
 #' 
 #'  *  Mosteller: \eqn{\frac{\sqrt{Ht(cm) \cdot Wt(kg)} }{3600}}
-#'  *  DuBois and DuBois: $Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184 $
-#'  *  Gehan and George: $Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235  $
-#'  *  Haycock: $Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265  $
-#'  *  Yu: $\frac{71.3989 \cdot Ht(cm)^{0.7437} \cdot Wt(kg)^{0.4040}}{10000}  $
-#'  *  Livingston: $0.1173 \cdot Wt(kg)^{0.6466}   $
-#'  *  Tikuisis: $128.1 \cdot Ht(cm)^{0.60} \cdot Wt(kg)^{0.44}  $
+#'  *  DuBois and DuBois: \eqn{Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184}
+#'  *  Gehan and George: \eqn{Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235}
+#'  *  Haycock: \eqn{Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265 }
+#'  *  Yu: \eqn{\frac{71.3989 \cdot Ht(cm)^{0.7437} \cdot Wt(kg)^{0.4040}}{10000} }
+#'  *  Livingston: \eqn{0.1173 \cdot Wt(kg)^{0.6466}  }
+#'  *  Tikuisis: \eqn{128.1 \cdot Ht(cm)^{0.60} \cdot Wt(kg)^{0.44} }
 #' 
 #' @param weight Body Weight (kg)
 #' @param height Body Height (m)
