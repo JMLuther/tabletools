@@ -52,7 +52,7 @@ Insulin (pmol/l) = insulin (uU/ml)*6
 
 \code{calculate_caumo_si()} accepts 3 separate vectors for time, glucose, insulin. Other options include f (absorption fraction), and D (glucose dose)
 
-uses the formula:
+uses the formula detailed in \href{https://pubmed.ncbi.nlm.nih.gov/11095485/}{Caumo et al}:
 \deqn{\frac{f \cdot D_{oral} \cdot \frac{AUC[\Delta g(t)/g(t)]} {AUC[\Delta g(t)]} - GE \cdot AUC[\Delta g(t)/g(t)]}
 {AUC[\Delta i(t)]}
 }
