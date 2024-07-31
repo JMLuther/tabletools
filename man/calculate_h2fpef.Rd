@@ -5,36 +5,29 @@
 \title{H2PEF calculator
 Returns the H2FPEF}
 \usage{
-calculate_h2fpef(bmi, htn_meds, afib, pa_pressure, age, filling_pressure)
+calculate_h2fpef(age, bmi, pa_pressure, filling_pressure, afib)
 }
 \arguments{
+\item{age}{Age (years)}
+
 \item{bmi}{BMI, kg/m^2}
-
-\item{htn_meds}{Number of Hypertension medications}
-
-\item{afib}{Atrial Fibrillation (T/F)}
 
 \item{pa_pressure}{estimated Pulmonary Artery Pressure (mm/hg)}
 
-\item{age}{Age (years)}
-
 \item{filling_pressure}{(Doppler echo E/e')}
+
+\item{afib}{Atrial Fibrillation (T/F)}
+}
+\value{
+H2PEF probability (%)
 }
 \description{
-H2PEF calculator
-Returns the H2FPEF
+Estimated probability of HFpEF based on a validated risk calculator \href{https://pubmed.ncbi.nlm.nih.gov/29792299/}{(Reddy 2018)}.
+This calculator uses the continuous model provided online, downloadable as an XLS file,
+rather than the point-based estimate.
 }
 \examples{
-calculate_h2fpef(bmi=31, htn_meds = 3, afib = F, pa_pressure = 15, age = F, filling_pressure = 6)
-library(dplyr, purrr)
-dat=data.frame(bmi=c(20, 31, 50),
-               htn_meds=c(0,3,3),
-               afib=c(F,F,T),
-               pa_pressure=c(15, 35, 36),
-               age=c(45, 45, 65),
-               filling_pressure=c(6, 9, 10))
-
-purrr::pmap_df(dat, calculate_h2fpef)
-dat |> 
-  mutate(purrr::pmap_df(dat, calculate_h2fpef))
+calculate_h2fpef(age=45, bmi=31, filling_pressure=9, pa_pressure = 35, afib = F)
+calculate_h2fpef(age=60, bmi=25, filling_pressure=5, pa_pressure = 12, afib = T)
+calculate_h2fpef(age=51, bmi=30, filling_pressure=10, pa_pressure = 45, afib = T)
 }

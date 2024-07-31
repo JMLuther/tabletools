@@ -1,5 +1,8 @@
 #' Quick Index of Insulin Sensitivity (QUICKI)
 #'
+#' uses the formula: 
+#' \deqn{\frac{1}{(log_{10}(Glucose(md/dL)) + log_{10}(Insulin(uU/mL)))}}
+#' 
 #' @param glucose fasting glucose (mg/dL)
 #' @param insulin fasting insulin (uU/mL)
 #' @param glucose_units if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l") 

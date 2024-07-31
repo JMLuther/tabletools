@@ -24,7 +24,7 @@ calculate_homair(
 HOMA-IR estimate of insulin sensitivity, as a single numeric value
 }
 \description{
-Calculate HOMA-IR from fasting glucose and insulin
+Uses the simple formula \eqn{Glucose(mM) \cdot Insulin(uU/mL) /22.5}
 }
 \examples{
 calculate_homair(glucose = c(93), insulin = c(12.8))

@@ -9,10 +9,11 @@
 #' 
 #' `calculate_caumo_si()` accepts 3 separate vectors for time, glucose, insulin. Other options include f (absorption fraction), and D (glucose dose)
 #' 
-#' uses the formula detailed in \href{https://pubmed.ncbi.nlm.nih.gov/11095485/}{Caumo et al}:
+#' Uses the formula detailed in \href{https://pubmed.ncbi.nlm.nih.gov/11095485/}{Caumo et al}:
 #' \deqn{\frac{f \cdot D_{oral} \cdot \frac{AUC[\Delta g(t)/g(t)]} {AUC[\Delta g(t)]} - GE \cdot AUC[\Delta g(t)/g(t)]}
 #' {AUC[\Delta i(t)]}
 #' }
+#' Where g(t) is glucose and i(t) is insulin during the time course. GE is assumed to be 0.024 \eqn{dL \cdot kg^{-1} \cdot min^{-1}}, f=0.8, and D = 75g (standard OGTT glucose dose). The values for f and D can be changed if desired.
 #'  
 #' @param time  a column name (unquoted) indicating time values (in minutes); first value assumed to be t=0
 #' @param glucose a column name (unquoted) storing glucose values (in mg/dL)

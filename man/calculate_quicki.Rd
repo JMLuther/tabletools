@@ -24,7 +24,8 @@ calculate_quicki(
 QUICKI estimate of insulin sensitivity, as a single numeric value
 }
 \description{
-Quick Index of Insulin Sensitivity (QUICKI)
+uses the formula: 
+\deqn{\frac{1}{(log_{10}(Glucose(md/dL)) + log_{10}(Insulin(uU/mL)))}}
 }
 \examples{
 calculate_quicki(glucose = c(93), insulin = c(12.8))

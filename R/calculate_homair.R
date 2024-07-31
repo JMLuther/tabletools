@@ -1,5 +1,7 @@
 #' Calculate HOMA-IR from fasting glucose and insulin
 #'
+#' Uses the simple formula \eqn{Glucose(mM) \cdot Insulin(uU/mL) /22.5} 
+#' 
 #' @param glucose fasting glucose (mg/dL)
 #' @param insulin fasting insulin (uU/mL)
 #' @param glucose_units if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l") 

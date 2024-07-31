@@ -1,47 +1,30 @@
 #' H2PEF calculator
 #' Returns the H2FPEF
+#' 
+#' Estimated probability of HFpEF based on a validated risk calculator \href{https://pubmed.ncbi.nlm.nih.gov/29792299/}{(Reddy 2018)}.
+#' This calculator uses the continuous model provided online, downloadable as an XLS file,
+#' rather than the point-based estimate.  
 #'
 #'
-#' @param bmi BMI, kg/m^2
-#' @param htn_meds Number of Hypertension medications
-#' @param afib Atrial Fibrillation (T/F)
-#' @param pa_pressure estimated Pulmonary Artery Pressure (mm/hg) 
 #' @param age Age (years)
+#' @param bmi BMI, kg/m^2
+#' @param pa_pressure estimated Pulmonary Artery Pressure (mm/hg) 
 #' @param filling_pressure (Doppler echo E/e') 
+#' @param afib Atrial Fibrillation (T/F)
 #'
-#' @return 
+#' @return H2PEF probability (%) 
 #' @export
 #'
 #' @examples
-#' calculate_h2fpef(bmi=31, htn_meds = 3, afib = F, pa_pressure = 15, age = F, filling_pressure = 6)
-#' library(dplyr, purrr)
-#' dat=data.frame(bmi=c(20, 31, 50),
-#'                htn_meds=c(0,3,3),
-#'                afib=c(F,F,T),
-#'                pa_pressure=c(15, 35, 36),
-#'                age=c(45, 45, 65),
-#'                filling_pressure=c(6, 9, 10))
-#' 
-#' purrr::pmap_df(dat, calculate_h2fpef)
-#' dat |> 
-#'   mutate(purrr::pmap_df(dat, calculate_h2fpef))
+#' calculate_h2fpef(age=45, bmi=31, filling_pressure=9, pa_pressure = 35, afib = F)
+#' calculate_h2fpef(age=60, bmi=25, filling_pressure=5, pa_pressure = 12, afib = T)
+#' calculate_h2fpef(age=51, bmi=30, filling_pressure=10, pa_pressure = 45, afib = T)
 
 
-calculate_h2fpef <- function(bmi, htn_meds, afib, pa_pressure, age, filling_pressure) {
-  
-  H1  = ifelse(bmi>30, 2, 0)
-  H2  = ifelse(htn_meds>=2, 1, 0)
-  Fib = ifelse(afib, 3, 0)
-  P   = ifelse(pa_pressure>35, 1, 0)
-  E   = ifelse(age>60, 1, 0)
-  Fill= ifelse(filling_pressure>9, 1, 0)
-
-  h2fpef = as.character(sum(H1, H2, Fib, P, E, Fill))
-  h2fpfef_t <- c(14,25,40,56,72,84,91,95,98,99)
-  names(h2pfef_t) = 0:9
-
-  return(data.frame("h2fpef_score"=as.numeric(h2fpef),
-           "h2fpef_probability"=h2pfef_t[[h2fpef]]/100,
-           "h2fpef_description"=paste0("H2FPEF score is ", h2fpef, " points. Probability of HFpEF is ", h2pfef_t[[h2fpef]], "%")))
+calculate_h2fpef <- function(age, bmi, pa_pressure, filling_pressure, afib) {
+  log_odds = -9.19174463966566 + 0.0451129471272832*age + 0.130730156015681*bmi + 0.0858634402456586*filling_pressure + 0.051963758732548*pa_pressure + 1.69968057294513*afib
+  # log_odds = -9.1917 + 0.0451*age +0.1307*bmi + 0.0859*filling_pressure + 0.0520*pa_pressure +1.6997*afib
+  odds = exp(log_odds)
+  prob = 100*odds/(1+odds)
+  return(prob)
 }
-

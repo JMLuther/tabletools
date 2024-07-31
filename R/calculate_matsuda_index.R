@@ -9,6 +9,9 @@
 #' Insulin (pmol/l) = insulin (uU/ml)*6 
 #' 
 #' `calculate_matsuda_index()` accepts 3 separate vectors for time, glucose, insulin. 
+#' 
+#' #' The formula used for this calculation is described in \href{https://pubmed.ncbi.nlm.nih.gov/10480510/}{Matsuda et al.}:
+#' \deqn{10,000 \cdot \sqrt{Glucose_{0} \cdot Insulin_{0} \cdot Glucose_{mean} \cdot Insulin_{mean} }}
 #'  
 #' @param time  a column name (unquoted) indicating time values (in minutes)
 #' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
@@ -16,6 +19,7 @@
 #' @param time_units if units are not in "min", can indicate here for unit conversion (options "min" or "hr")
 #' @param glucose_units if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l") 
 #' @param insulin_units if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")
+#'
 #'
 #' @return Matsuda index as a single value 
 #' @export
