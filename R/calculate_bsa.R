@@ -3,7 +3,7 @@
 #' @description Calculates Body Surface Area (m2) by several common methods. Converts weight to Kg and Height to cm if needed. 
 #' Available methods for BSA calculations are described in \href{https://pubmed.ncbi.nlm.nih.gov/19900761/}{Yu et al.}:
 #' 
-#'  *  Mosteller: $\frac{\sqrt{Ht(cm) \cdot Wt(kg)} }{3600}$
+#'  *  Mosteller: \eqn{\frac{\sqrt{Ht(cm) \cdot Wt(kg)} }{3600}}
 #'  *  DuBois and DuBois: $Wt(kg)^{0.425} \cdot Ht(cm)^{0.725} \cdot 0.007184 $
 #'  *  Gehan and George: $Wt(kg)^{0.51456} \cdot Ht(cm)^{0.42246} \cdot 0.0235  $
 #'  *  Haycock: $Wt(kg)^{0.5378} \cdot Ht(cm)^{0.3964} \cdot 0.024265  $
