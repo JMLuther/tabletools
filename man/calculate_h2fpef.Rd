@@ -24,7 +24,7 @@ H2PEF probability (%)
 \description{
 Estimated probability of HFpEF based on a validated risk calculator \href{https://pubmed.ncbi.nlm.nih.gov/29792299/}{(Reddy 2018)}.
 This calculator uses the continuous model provided online, downloadable as an XLS file,
-rather than the point-based estimate.
+rather than the point-based estimate. Results of this function have been checked against this online calculator.
 }
 \examples{
 calculate_h2fpef(age=45, bmi=31, filling_pressure=9, pa_pressure = 35, afib = F)
