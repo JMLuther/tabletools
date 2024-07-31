@@ -3,7 +3,7 @@
 #' 
 #' Estimated probability of HFpEF based on a validated risk calculator \href{https://pubmed.ncbi.nlm.nih.gov/29792299/}{(Reddy 2018)}.
 #' This calculator uses the continuous model provided online, downloadable as an XLS file,
-#' rather than the point-based estimate.  
+#' rather than the point-based estimate. Results of this function have been checked against this online calculator.  
 #'
 #'
 #' @param age Age (years)
