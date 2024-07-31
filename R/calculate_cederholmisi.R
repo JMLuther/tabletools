@@ -77,7 +77,6 @@
 #'   group_by(cat) |> 
 #'     summarise(isi_ceder = calculate_cederholm_isi(time, glucose, insulin, weight=70))
 
-
 calculate_cederholm_isi <- function(time, glucose, insulin, weight, D=75,
                                     glucose_method="plasma",
                                     time_units = "min", 
