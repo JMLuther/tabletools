@@ -7,7 +7,12 @@
 #' Note: insulin unit conversion may differ differ depending on assay. 
 #' Insulin (pmol/l) = insulin (uU/ml)*6 
 #' 
-#' `calculate_caumo_si()` accepts 3 separate vectors for time, glucose, insulin. 
+#' `calculate_caumo_si()` accepts 3 separate vectors for time, glucose, insulin. Other options include f (absorption fraction), and D (glucose dose)
+#' 
+#' uses the formula:
+#' \deqn{\frac{f \cdot D_{oral} \cdot \frac{AUC[\Delta g(t)/g(t)]} {AUC[\Delta g(t)]} - GE \cdot AUC[\Delta g(t)/g(t)]}
+#' {AUC[\Delta i(t)]}
+#' }
 #'  
 #' @param time  a column name (unquoted) indicating time values (in minutes); first value assumed to be t=0
 #' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
@@ -19,6 +24,7 @@
 #' @param weight_units if units are not in "kg", can indicate here for unit conversion (options "lbs" or "g")
 #' @param f Fraction of Glucose absorbed (default 0.8)
 #' @param dose_glucose Glucose Dose, in grams (default to 75g, standard OGTT)
+#' @md
 #'
 #' @return Caumo Insulin Sensitivity Index as a single value (10^5 dL/kg/min per pmol/L) 
 #' @export

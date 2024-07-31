@@ -42,15 +42,20 @@ calculate_caumo_si(
 Caumo Insulin Sensitivity Index as a single value (10^5 dL/kg/min per pmol/L)
 }
 \description{
-This function calculates the Caumo Insulin Sensitivity Index using glucose and insulin 
+This function calculates the Caumo Insulin Sensitivity Index using glucose and insulin
 sampled during a standard 75g oral glucose tolerance test.
 }
 \details{
 Standard timepoints are 0, 30, 60, 90, and 120 min.
-Note: insulin unit conversion may differ differ depending on assay. 
-Insulin (pmol/l) = insulin (uU/ml)*6 
+Note: insulin unit conversion may differ differ depending on assay.
+Insulin (pmol/l) = insulin (uU/ml)*6
 
-`calculate_caumo_si()` accepts 3 separate vectors for time, glucose, insulin.
+\code{calculate_caumo_si()} accepts 3 separate vectors for time, glucose, insulin. Other options include f (absorption fraction), and D (glucose dose)
+
+uses the formula:
+\deqn{\frac{f \cdot D_{oral} \cdot \frac{AUC[\Delta g(t)/g(t)]} {AUC[\Delta g(t)]} - GE \cdot AUC[\Delta g(t)/g(t)]}
+{AUC[\Delta i(t)]}
+}
 }
 \examples{
 # individual objects for each item
