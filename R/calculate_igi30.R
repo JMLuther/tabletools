@@ -7,7 +7,7 @@
 #' Note: insulin unit conversion may differ differ depending on assay. 
 #' Insulin (pmol/l) = insulin (uU/ml)*6 
 #' 
-#' `calculate_igi60()` accepts 3 separate vectors for time, glucose, insulin. 
+#' `calculate_igi30()` accepts 3 separate vectors for time, glucose, insulin. 
 #'  
 #' @param time  a column name (unquoted) indicating time values (in minutes)
 #' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
@@ -23,13 +23,13 @@
 #' time=c(0, 30, 60, 90, 120)              # minutes
 #' glucose=c(93, 129, 178, 164, 97)        # mg/dL
 #' insulin=c(12.8, 30.7, 68.5, 74.1, 44.0) # uU/mL
-#' calculate_igi60(time, glucose, insulin) # 11.80
+#' calculate_igi30(time, glucose, insulin) # 8.95
 #' 
 #' # handling data stored in a dataframe
 #' ogtt1 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
 #'                     glucose=c(93, 129, 178, 164, 97),        # mg/dL
 #'                     insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
-#' calculate_igi60(ogtt1$time, ogtt1$glucose, ogtt1$insulin) # 11.79529
+#' calculate_igi30(ogtt1$time, ogtt1$glucose, ogtt1$insulin) # 8.95
 #' 
 #' 
 #' 
@@ -38,12 +38,12 @@
 #'                     glucose = c(5.167, 7.167, 9.889, 9.111, 5.3889), # glucose in mmol/l
 #'                     insulin = c(76.8,184.2,411,444.6,264)) # insulin in pmol/l
 #' 
-#' calculate_igi60(time =  ogtt5$time,
+#' calculate_igi30(time =  ogtt5$time,
 #'                         glucose = ogtt5$glucose,
 #'                         insulin = ogtt5$insulin,
 #'                         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
 
-calculate_igi60 <- function(time, glucose, insulin, time_units = "min", 
+calculate_igi30 <- function(time, glucose, insulin, time_units = "min", 
                                     glucose_units = "mg/dl", insulin_units = "uU/ml") {
   
   if (any(is.na(time)) | any(is.na(glucose)) | any(is.na(insulin))) {
@@ -67,9 +67,9 @@ calculate_igi60 <- function(time, glucose, insulin, time_units = "min",
   g0 = glucose[ind0]
   ins0 = insulin[ind0]
 
-  ind60 = which(time==60)
-  g60 = glucose[ind60]
-  ins60 = insulin[ind60]
+  ind30 = which(time==30)
+  g30 = glucose[ind30]
+  ins30 = insulin[ind30]
   
-    return((ins60 - ins0)/(g60-g0))
+    return((ins30 - ins0)/(g30-g0))
 }

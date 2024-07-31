@@ -9,7 +9,9 @@
 #' Insulin (pmol/l) = insulin (uU/ml)*6 
 #' 
 #' `calculate_matsuda_index_df()` requires a dataframe input with time, glucose, insulin columns. 
-#'  
+#' 
+#' #' The formula used for this calculation is described in \href{https://pubmed.ncbi.nlm.nih.gov/10480510/}{Matsuda et al.}:
+#' \deqn{10,000 \cdot \sqrt{Glucose_{0} \cdot Insulin_{0} \cdot Glucose_{mean} \cdot Insulin_{mean} }}
 #' 
 #' @param df A long-format data frame
 #' @param timeCol a column name (unquoted) indicating time values (in minutes)

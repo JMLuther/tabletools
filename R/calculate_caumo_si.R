@@ -13,6 +13,7 @@
 #' \deqn{\frac{f \cdot D_{oral} \cdot \frac{AUC[\Delta g(t)/g(t)]} {AUC[\Delta g(t)]} - GE \cdot AUC[\Delta g(t)/g(t)]}
 #' {AUC[\Delta i(t)]}
 #' }
+#' Where GE is assumed to be 0.024 \eqn{dL \cdot kg^{-1} \cdot min^{-1}}, f=0.8, and D = 75g (standard OGTT glucose dose). The values for f and D can be changed if desired.
 #'  
 #' @param time  a column name (unquoted) indicating time values (in minutes); first value assumed to be t=0
 #' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
