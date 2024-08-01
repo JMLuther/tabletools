@@ -15,13 +15,21 @@ calculate_lvmass(lvedd, ivsd, lvpwd, bsa, length_units = "cm")
 
 \item{bsa}{Body surface area (\eqn{m^2})}
 
-\item{length_units}{}
+\item{length_units}{units of length used for length (default cm)}
 }
 \value{
-dataframe of echocardiagraphic LV mass results
+dataframe of echocardiagraphic LV mass results (LVM, LVMI, RWT)
 }
 \description{
-Uses methods according to \href{https://pubmed.ncbi.nlm.nih.gov/25559473/}{American Society of Echocardiography}
+Uses methods according to \href{https://pubmed.ncbi.nlm.nih.gov/25559473/}{American Society of Echocardiography}.
+Calculations using formulas, with units converted to mm for calculation:
+}
+\details{
+\itemize{
+\item LV Mass (LVM) = \eqn{0.8 \cdot (1.04 \cdot ((LVEDD + IVSD + LVPWD)^3 - LVEDD^3)) + 0.6}
+\item LV Mass Index (LVMI) = \eqn{LVM/BSA}
+\item Relative Wall Thickness (RWT) = \eqn{2 \cdot LVPWD/LVEDD}
+}
 }
 \examples{
 calculate_lvmass(lvedd = 50.5, ivsd = 10.7, lvpwd = 13.3, bsa=2.42, length_units = "mm")
