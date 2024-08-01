@@ -21,18 +21,11 @@ calculate_lvmass(lvedd, ivsd, lvpwd, bsa, length_units = "cm")
 dataframe of echocardiagraphic LV mass results (LVM, LVMI, RWT)
 }
 \description{
-<<<<<<< HEAD
 Use commonly reported echocardiographic measurements to calculate Left Ventricular Mass (LVM).
 }
 \details{
 Uses methods according to \href{https://pubmed.ncbi.nlm.nih.gov/25559473/}{American Society of Echocardiography}.
 Calculations using formulas, with units converted to mm for calculation:
-=======
-Uses methods according to \href{https://pubmed.ncbi.nlm.nih.gov/25559473/}{American Society of Echocardiography}.
-Calculations using formulas, with units converted to mm for calculation:
-}
-\details{
->>>>>>> 71f82c244af5fcf80a3e2f59668663afbe9803fd
 \itemize{
 \item LV Mass (LVM) = \eqn{0.8 \cdot (1.04 \cdot ((LVEDD + IVSD + LVPWD)^3 - LVEDD^3)) + 0.6}
 \item LV Mass Index (LVMI) = \eqn{LVM/BSA}
