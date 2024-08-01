@@ -1,14 +1,22 @@
 #' Calculate LV Mass using Echocardiogram results   
 #'
-#' Uses methods according to \href{https://pubmed.ncbi.nlm.nih.gov/25559473/}{American Society of Echocardiography}
+#' Use commonly reported echocardiographic measurements to calculate Left Ventricular Mass (LVM).
+#'
+#' Uses methods according to \href{https://pubmed.ncbi.nlm.nih.gov/25559473/}{American Society of Echocardiography}.
+#' Calculations using formulas, with units converted to mm for calculation:
+#' 
+#' *  LV Mass (LVM) = \eqn{0.8 \cdot (1.04 \cdot ((LVEDD + IVSD + LVPWD)^3 - LVEDD^3)) + 0.6}
+#' *  LV Mass Index (LVMI) = \eqn{LVM/BSA}
+#' *  Relative Wall Thickness (RWT) = \eqn{2 \cdot LVPWD/LVEDD}
 #'
 #' @param lvedd LV Internal Diameter Diastole 
 #' @param ivsd  LV Septal Thickness Diastole
 #' @param lvpwd LV Posterior Thickness Diastole
 #' @param bsa   Body surface area (\eqn{m^2})
-#' @param length_units 
+#' @param length_units units of length used for length (default cm)
+#' @md
 #'
-#' @return dataframe of echocardiagraphic LV mass results
+#' @return dataframe of echocardiagraphic LV mass results (LVM, LVMI, RWT)
 #' @export
 #'
 #' @examples
@@ -27,4 +35,3 @@ calculate_lvmass <- function(lvedd, ivsd, lvpwd, bsa, length_units="cm"){
   res_df = data.frame(lvm, lvmi, rwt)
   return(res_df)
 }
-
