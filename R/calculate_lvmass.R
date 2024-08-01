@@ -1,7 +1,10 @@
 #' Calculate LV Mass using Echocardiogram results   
 #'
+<<<<<<< HEAD
 #' Use commonly reported echocardiographic measurements to calculate Left Ventricular Mass (LVM).
 #'
+=======
+>>>>>>> 71f82c244af5fcf80a3e2f59668663afbe9803fd
 #' Uses methods according to \href{https://pubmed.ncbi.nlm.nih.gov/25559473/}{American Society of Echocardiography}.
 #' Calculations using formulas, with units converted to mm for calculation:
 #' 
