@@ -55,7 +55,7 @@ convert_weight_to_kg(150, weight_units = "lbs")
 Height from inches to meters:
 
 ```{r}
-convert_height_to_m(70, height_units = "in")
+convert_length_to_m(70, length_units = "in")
 ```
 
 # Insulin sensitivity

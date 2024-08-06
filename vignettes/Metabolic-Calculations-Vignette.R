@@ -18,7 +18,7 @@ convert_insulin_to_pM(10, insulin_units = "uU/mL")
 convert_weight_to_kg(150, weight_units = "lbs")
 
 ## -----------------------------------------------------------------------------
-convert_height_to_m(70, height_units = "in")
+convert_length_to_m(70, length_units = "in")
 
 ## -----------------------------------------------------------------------------
 # handling data stored in a dataframe
