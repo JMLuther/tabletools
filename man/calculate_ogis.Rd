@@ -89,7 +89,7 @@ calculate_ogis(time = time,  # 344.5
 calculate_ogis(time, glucose, insulin, height=1.70, weight = 70)
 calculate_ogis(time, glucose, insulin,
                height=70, height_units = "in",
-               weight = 157, weight_units = "lbs")
+               weight = 154, weight_units = "lbs")
 
 time = c(0,1.5,2)
 glucose = c(5.0, 7.5, 6.39)

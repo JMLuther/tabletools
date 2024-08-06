@@ -22,7 +22,7 @@ calculate_ogis_180 <- function(time, glucose, insulin, height, weight,
   glucose = convert_glucose_to_mgdl(glucose, glucose_units)
   insulin = convert_insulin_to_uU_ml(insulin, insulin_units)
   weight_kg = convert_weight_to_kg(weight, weight_units)
-  height_cm = convert_height_to_m(height, height_units)*100
+  height_cm = convert_length_to_m(height, height_units)*100
   bsa = calculate_bsa(height = height_cm, height_units = "cm", 
                       weight = weight_kg, weight_units = "kg",
                       method = "Gehan-George")
