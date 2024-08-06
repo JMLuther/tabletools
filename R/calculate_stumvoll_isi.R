@@ -84,3 +84,5 @@ calculate_stumvoll_isi <- function(time, glucose, insulin, time_units = "min",
   
     return(stumvoll_isi)
 }
+
+
