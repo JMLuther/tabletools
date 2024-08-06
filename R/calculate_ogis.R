@@ -3,7 +3,9 @@
 #' This function calculates the OGIS index using glucose and insulin sampled
 #' during a standard 75g oral glucose tolerance test.
 #'
-#' OGIS requires measurements at 0, 1.5, and 2hr. Alternatively a 3hr version
+#' OGIS requires measurements at 0, 90, and 120 minutes. Alternatively the 3hr
+#' version 'calculate_ogis_180()' requires valuse at 0, 120, and 180 minutes.
+
 #' can be used. Note: insulin unit conversion may differ differ depending on
 #' assay. Insulin (pmol/l) = insulin (uU/ml)*6 Results are adjusted for BSA OGIS
 #' is described in \href{https://pubmed.ncbi.nlm.nih.gov/11289482/}{Mari et
