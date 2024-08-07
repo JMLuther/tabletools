@@ -32,6 +32,7 @@
 #'                     glucose=c(93, 129, 178, 164, 97),        # mg/dL
 #'                     insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
 #' calculate_igi30(ogtt1$time, ogtt1$glucose, ogtt1$insulin) # 8.95
+#' calculate_igi60(ogtt1$time, ogtt1$glucose, ogtt1$insulin) # 11.79529
 #' 
 #' 
 #' 
@@ -41,6 +42,10 @@
 #'                     insulin = c(76.8,184.2,411,444.6,264)) # insulin in pmol/l
 #' 
 #' calculate_igi30(time =  ogtt5$time,
+#'                         glucose = ogtt5$glucose,
+#'                         insulin = ogtt5$insulin,
+#'                         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
+#' calculate_igi60(time =  ogtt5$time,
 #'                         glucose = ogtt5$glucose,
 #'                         insulin = ogtt5$insulin,
 #'                         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
@@ -56,9 +61,9 @@ calculate_igi30 <- function(time, glucose, insulin, time_units = "min",
     rlang::warn("non-numeric values in time, glucose, or insulin")
     return(NA_real_)}
   
-  if (!all(order(time) == seq_along(time))) {
-    rlang::warn("Time values must be ordered from 0 to end") # check proper time order
-    return(NA_real_)}
+  # if (!all(order(time) == seq_along(time))) {
+  #   rlang::warn("Time values must be ordered from 0 to end") # check proper time order
+  #   return(NA_real_)}
   
   # convert units; 
   time = convert_time_to_min(time, time_units)
