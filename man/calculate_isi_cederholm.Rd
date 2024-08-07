@@ -39,7 +39,7 @@ calculate_isi_cederholm(
 \item{weight_units}{Body weight units, to use for conversion if not in kg}
 }
 \value{
-Cederholm insulin sensitivity index as a single value (\eqn{mg \cdot L^2 \cdot mmol{-1} \cdot mU^{-1} \cdot min{-1}})
+Cederholm insulin sensitivity index as a single value (\eqn{mg \cdot L^2 \cdot mmol^{-1} \cdot mU^{-1} \cdot min{-1}})
 }
 \description{
 This function calculates the Cederholm Index using glucose and insulin

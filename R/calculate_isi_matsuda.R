@@ -10,7 +10,7 @@
 #' 
 #' `calculate_isi_matsuda()` accepts 3 separate vectors for time, glucose, insulin. 
 #' 
-#' #' The formula used for this calculation is described in \href{https://pubmed.ncbi.nlm.nih.gov/10480510/}{Matsuda et al.}:
+#' The formula used for this calculation is described in \href{https://pubmed.ncbi.nlm.nih.gov/10480510/}{Matsuda et al.}:
 #' \deqn{10,000 \cdot \sqrt{Glucose_{0} \cdot Insulin_{0} \cdot Glucose_{mean} \cdot Insulin_{mean} }}
 #'  
 #' @param time  a column name (unquoted) indicating time values (in minutes)
@@ -21,7 +21,7 @@
 #' @param insulin_units if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")
 #'
 #'
-#' @return Matsuda index as a single value 
+#' @return Matsuda index as a single value ()
 #' @export
 #' @importFrom sfsmisc integrate.xy 
 #' @examples 
