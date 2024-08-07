@@ -34,9 +34,10 @@
 #' @param insulin_units if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")
 #' @param weight_units Body weight units, to use for conversion if not in kg
 #'
-#' @return Cederholm insulin sensitivity index as a single value (\eqn{\frac{mg \cdot L^2 \cdot mmol{-1} \cdot mU^{-1} \cdot min{-1}}})
+#' @return Cederholm insulin sensitivity index as a single value (\eqn{mg \cdot L^2 \cdot mmol{-1} \cdot mU^{-1} \cdot min{-1}})
 #' @export
 #' @examples 
+#' @md
 #' # individual objects for each item
 #' time=c(0, 30, 60, 90, 120)              # minutes
 #' glucose=c(93, 129, 178, 164, 97)        # mg/dL
