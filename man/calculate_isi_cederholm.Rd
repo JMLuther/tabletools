@@ -39,23 +39,23 @@ calculate_isi_cederholm(
 \item{weight_units}{Body weight units, to use for conversion if not in kg}
 }
 \value{
-Cederholm insulin sensitivity index as a single value (\eqn{\frac{mg \cdot L^2 \cdot mmol{-1} \cdot mU^{-1} \cdot min{-1}}})
+Cederholm insulin sensitivity index as a single value (\eqn{mg \cdot L^2 \cdot mmol{-1} \cdot mU^{-1} \cdot min{-1}})
 }
 \description{
-This function calculates the Cederholm Index using glucose and insulin 
+This function calculates the Cederholm Index using glucose and insulin
 sampled during a standard 75g oral glucose tolerance test.
 }
 \details{
 Standard timepoints are 0, 30, 60, 90, and 120 min.
-Note: insulin unit conversion may differ differ depending on assay. 
-Insulin (pmol/l) = insulin (uU/ml)*6 
+Note: insulin unit conversion may differ differ depending on assay.
+Insulin (pmol/l) = insulin (uU/ml)*6
 
 The formula used for this calculation is described in \href{https://pubmed.ncbi.nlm.nih.gov/2261853/}{Cederholm et al.}:
 \deqn{\frac{75000 + (Glucose_{0} - Glucose_{120}) \cdot 1.15 \cdot 180 \cdot 0.19 \cdot Weight(kg)} 
 {120 \cdot log(Insulin_{mean}) \cdot Glucose_{mean}}
 }
-Where 75000 is the glucose dose (mg), 0.19 represents the Glucose space (0.19 * weight), and 1.15*180 factor 
-to converts whole blood glucose (\eqn{mmol\cdot L^{-1}}) to plasma (\eqn{mg \cdot L^{-1}}), 
+Where 75000 is the glucose dose (mg), 0.19 represents the Glucose space (0.19 * weight), and 1.15*180 factor
+to converts whole blood glucose (\eqn{mmol\cdot L^{-1}}) to plasma (\eqn{mg \cdot L^{-1}}),
 and 120 converts 2hours to minutes.
 
 If using Plasma glucose measurements the formula used is:
@@ -63,46 +63,6 @@ If using Plasma glucose measurements the formula used is:
 {120 \cdot log(Insulin_{mean}) \cdot Glucose_{mean}}
 }
 
-Therefore some of these conversion factors are not needed if using plasma 
+Therefore some of these conversion factors are not needed if using plasma
 glucose (eg YSI measurement) and already reporting glucose in mg/dL.
-}
-\examples{
-# individual objects for each item
-time=c(0, 30, 60, 90, 120)              # minutes
-glucose=c(93, 129, 178, 164, 97)        # mg/dL
-insulin=c(12.8, 30.7, 68.5, 74.1, 44.0) # uU/mL
-calculate_isi_cederholm(time, glucose, insulin, weight=70) # 20.1356
-
-# handling data stored in a dataframe
-ogtt1 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
-                    glucose=c(93, 129, 178, 164, 97),        # mg/dL
-                    insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
-calculate_isi_cederholm(ogtt1$time, ogtt1$glucose, ogtt1$insulin, weight=70)  # 20.1356
-
-
-
-# Convert units
-ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
-                    glucose = c(5.167, 7.167, 9.889, 9.111, 5.3889), # glucose in mmol/l
-                    insulin = c(76.8,184.2,411,444.6,264)) # insulin in pmol/l
-
-calculate_isi_cederholm(time =  ogtt5$time,
-                        glucose = ogtt5$glucose,
-                        insulin = ogtt5$insulin,
-                        weight=154, weight_units="lbs",
-                        time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
-                        
-dat <- data.frame( # data from Gutt. Diab Res Clin Pract. 2000 
-  stringsAsFactors = TRUE,
-cat = c("obese","obese","normal",
-        "normal","NGT","NGT","IGT","IGT","DM2","DM2"),
-        time = c(0L, 120L, 0L, 120L, 0L, 120L, 0L, 120L, 0L, 120L),
-        glucose = c(106.9,145.8,18,65,88.3,
-                    103.3,102.3,151.7,20.1,347.5),
-                    insulin = c(19.9,96.1,87,106.7,16.2,
-                                73.2,25.3,140.6,30.9,57.9))
-library(tidyverse)
-dat |> 
-  group_by(cat) |> 
-    summarise(isi_ceder = calculate_isi_cederholm(time, glucose, insulin, weight=70))
 }
