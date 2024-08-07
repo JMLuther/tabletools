@@ -1,7 +1,7 @@
 #' @export
-#' @rdname calculate_stumvoll_isi
+#' @rdname calculate_isi_stumvoll
 
-calculate_stumvoll_isi_dem <- function(time, glucose, insulin, bmi=NULL, age=NULL, 
+calculate_isi_stumvoll_dem <- function(time, glucose, insulin, bmi=NULL, age=NULL, 
                                    time_units = "min", 
                                     glucose_units = "mg/dl", insulin_units = "uU/ml") {
   
@@ -30,7 +30,7 @@ calculate_stumvoll_isi_dem <- function(time, glucose, insulin, bmi=NULL, age=NUL
     rlang::warn("Check for missing values in Age, BMI, or Insulin t=120")
     return(NA_real_)}
   
-  stumvoll_isi =  0.222-0.00333*bmi - 0.0000779*ins120 - 0.000422*age
+  isi_stumvoll =  0.222-0.00333*bmi - 0.0000779*ins120 - 0.000422*age
   
-    return(stumvoll_isi)
+    return(isi_stumvoll)
 }

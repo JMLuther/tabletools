@@ -109,13 +109,13 @@ calculate_quicki(ogtt1$glucose[1], ogtt1$insulin[1])
 Matsuda index is the most often used OGTT-based estimate of insulin sensitivity. Calculations can be verified at an online calculator [here](https://mmatsuda.diabetes-smc.jp/MIndex.html).
 
 ```{r}
-calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
+# calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
 ```
 
 ### Stumvoll Index
 
 ```{r}
-calculate_stumvoll_isi(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
+# calculate_isi_stumvoll(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
 ```
 
 # Body Surface Area

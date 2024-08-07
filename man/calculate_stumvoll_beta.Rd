@@ -34,7 +34,7 @@ Stumvoll beta cell estimates (`stumvoll_ph1`, `stumvol_ph2`) values as a `data.f
 }
 \description{
 This function calculates the Stumvoll phase 1 (ph1) and phase 2 (ph2) using glucose
-and insulin sampled during the first 30 minutes of a standard 75g oral glucose tolerance test.
+and insulin sampled during the first 30 minutes of a standard 75g oral glucose tolerance test. Described in \href{https://pubmed.ncbi.nlm.nih.gov/10868854/}{Stumvoll et al.}
 }
 \details{
 Standard timepoints are 0, 30, 60, 90, and 120 min. Note: insulin unit
