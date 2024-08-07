@@ -115,7 +115,7 @@ calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
 ### Stumvoll Index
 
 ```{r}
-calculate_stumvoll_isi(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
+# calculate_isi_stumvoll(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
 ```
 
 # Body Surface Area

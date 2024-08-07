@@ -1,7 +1,7 @@
 #' Stumvoll beta cell function Calculation (from standard 75g OGTT)
 #'
 #' This function calculates the Stumvoll phase 1 (ph1) and phase 2 (ph2) using glucose
-#' and insulin sampled during the first 30 minutes of a standard 75g oral glucose tolerance test.
+#' and insulin sampled during the first 30 minutes of a standard 75g oral glucose tolerance test. Described in \href{https://pubmed.ncbi.nlm.nih.gov/10868854/}{Stumvoll et al.}
 #'
 #' Standard timepoints are 0, 30, 60, 90, and 120 min. Note: insulin unit
 #' conversion may differ differ depending on assay. Insulin (pmol/l) = insulin

@@ -44,7 +44,7 @@ calculate_quicki(ogtt1$glucose[1], ogtt1$insulin[1])
 calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
 
 ## -----------------------------------------------------------------------------
-calculate_stumvoll_isi(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
+# calculate_isi_stumvoll(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
 
 ## -----------------------------------------------------------------------------
 calculate_bsa(weight = 70, height =  1.50, method = "Mosteller",
