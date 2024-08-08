@@ -65,16 +65,45 @@ Real OGTT data is provided in two different formats, wide and nested. The same d
 
 ## Wide format OGTT data
 
-The wide format is the most common way to store OGTT data, with each timepoint in a separate column. This is the format that is most often used in clinical practice. This package includes a sample dataset `ogtt_wide` with glucose and insulin data in wide format. Additional demographic data is also included.
+The wide format is the most common way to store OGTT data, with each timepoint in a separate column. 
+This is the format that is most often used in clinical research, and to some extent this is required by some databases (e.g. the commonly used RedCAP database). 
+
+This package includes a sample dataset `ogtt_wide` with glucose and insulin data in wide format. Additional demographic data is also included.
 
 *Wide format Data example*
 
 ```{r}
-ogtt_wide <- data(ogtt_wide)
-head(ogtt_wide)
+data(ogtt_wide)
+ogtt_wide |> head()
 ```
 
-## Nested Data format
+### Transform from wide to long format
+
+The ease of trasforming from wide to long format is one major advantage of R and `tidyr` functions such as `pivot_longer()`.
+
+Most often I favor using long format data, and will transform wide to long format as follows:
+(selection of just the OGTT values)
+```{r}
+ogtt_long <- 
+  ogtt_wide |> 
+  select(id, starts_with("ogtt_")) |> 
+  pivot_longer(cols = -id,
+               names_to = c(".value", "time"),
+               names_pattern = "ogtt_(.*)_([0-9]+)",
+               values_to = ".value",
+               names_transform = list(time = ~as.integer(.x))) |> # could be more complicated if not integers
+  group_by(id) # wise to group by id at this point
+```
+
+This can then be "nested"
+```{r}
+ogtt_long |> 
+  nest(.key = "ogtt_df") |> # already grouped by id
+  head()
+```
+
+
+## Nested format OGTT Data
 
 The `ogtt_nested` data file includes the OGTT data "nested", or collected into a single data frame for each participant. The OGTT dataframes (`ogtt_df` variable) are stored in a list-column so that each row of the dataframe contains only one participant's complete OGTT data. 
 Some familiarity of `tidyverse` data handling is helpful for using this data fomat.
