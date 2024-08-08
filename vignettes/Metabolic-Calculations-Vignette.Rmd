@@ -138,9 +138,9 @@ head(ogtt_long,10)
 ```
 
 
-## *Data plot examples* 
+## Data plot examples
 
-```{r figheight=4, fig.width=6}
+```{r figheight=4, fig.width=7}
 
 theme_set(theme_jml())
 pl_glucose <- 
@@ -155,7 +155,7 @@ cowplot::plot_grid(pl_glucose, pl_insulin, nrow=1)
 ```
 
 Summary plots
-```{r figheight=4, fig.width=8}
+```{r figheight=4, fig.width=7}
 pl_summary_glucose <- 
   ogtt_long |> 
   mutate(glucose_tolerance.f = factor_glucose_tolerance(glucose[time==120])) |> 
@@ -346,7 +346,7 @@ ogtt_isi |> select(id, glucose_tolerance.f, glucose_fasting.f, starts_with("isi_
 ```
 
 ### Summary Plots
-```{r fig.width=10, fig.height=8}
+```{r fig.width=7, fig.height=6}
 ogtt_isi |> select(id, glucose_tolerance.f, glucose_fasting.f, starts_with("isi_"), beta) |> 
   unnest() |> 
   pivot_longer(cols = -c(id, glucose_tolerance.f, glucose_fasting.f),
