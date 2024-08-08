@@ -200,19 +200,9 @@ The modified Stumvoll formula uses only the OGTT data.
 calculate_isi_stumvoll(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
 ```
 
-The demographic Stumvoll formula requires age and BMI.
-```{r}
-calculate_isi_stumvoll_dem(ogtt1$time, ogtt1$glucose, ogtt1$insulin, age=50, bmi=30) #
-```
-
-The Stumvoll equation for beta cell function returns phase 1 (ph1) and phase 2 (ph2) results:
-```{r}
-calculate_stumvoll_beta(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
-```
 
 ### Cederholm Index
 
-The sensitivity index described by Cederholm requires weight (kg):
 ```{r}
 calculate_isi_cederholm(ogtt1$time, ogtt1$glucose, ogtt1$insulin, weight=70)
 ```
