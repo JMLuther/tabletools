@@ -5,8 +5,9 @@ knitr::opts_chunk$set(
 )
 
 ## ----setup--------------------------------------------------------------------
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(tabletools)
-
+library(tidyverse)
 
 ## -----------------------------------------------------------------------------
 convert_glucose_to_mM(100, glucose_units =  "mg/dL")
@@ -19,6 +20,41 @@ convert_weight_to_kg(150, weight_units = "lbs")
 
 ## -----------------------------------------------------------------------------
 convert_length_to_m(70, length_units = "in")
+
+## -----------------------------------------------------------------------------
+ogtt_wide <- data(ogtt_wide)
+head(ogtt_wide)
+
+## -----------------------------------------------------------------------------
+data("ogtt_nested")
+ogtt_nested |> select(1:3, ogtt_df) |>  head()
+
+## -----------------------------------------------------------------------------
+ogtt_nested$ogtt_df[[1]]
+
+## -----------------------------------------------------------------------------
+data("ogtt_nested")
+
+ogtt_long <- 
+  ogtt_nested |> 
+  select(id, ogtt_df) |> 
+  unnest(cols = ogtt_df) |> 
+  group_by(id)
+head(ogtt_long,10)
+
+
+## ----figheight=4, fig.width=6-------------------------------------------------
+
+theme_set(theme_jml())
+pl_glucose <- 
+  ogtt_long |> 
+  ggplot(aes(time, glucose)) +
+  geom_line(aes(group=id), alpha=0.3)
+pl_insulin<- ogtt_long |> 
+  ggplot(aes(time, insulin)) +
+  geom_line(aes(group=id), alpha=0.3)
+cowplot::plot_grid(pl_glucose, pl_insulin, nrow=1)
+
 
 ## -----------------------------------------------------------------------------
 # handling data stored in a dataframe
@@ -41,10 +77,58 @@ calculate_homair(ogtt1$glucose[1], ogtt1$insulin[1])
 calculate_quicki(ogtt1$glucose[1], ogtt1$insulin[1])
 
 ## -----------------------------------------------------------------------------
-# calculate_matsuda_index(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
+calculate_isi_matsuda(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
 
 ## -----------------------------------------------------------------------------
-# calculate_isi_stumvoll(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
+calculate_isi_ogis(ogtt1$time, ogtt1$glucose, ogtt1$insulin,  height=1.70, weight = 70)
+
+## -----------------------------------------------------------------------------
+calculate_isi_stumvoll(ogtt1$time, ogtt1$glucose, ogtt1$insulin) #
+
+## -----------------------------------------------------------------------------
+calculate_isi_stumvoll_dem(ogtt1$time, ogtt1$glucose, ogtt1$insulin, age=50, bmi=30) #
+
+## -----------------------------------------------------------------------------
+calculate_stumvoll_beta(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
+
+## -----------------------------------------------------------------------------
+calculate_isi_cederholm(ogtt1$time, ogtt1$glucose, ogtt1$insulin, weight=70)
+
+## -----------------------------------------------------------------------------
+calculate_isi_gutt(ogtt1$time, ogtt1$glucose, ogtt1$insulin, bmi=30)
+
+## -----------------------------------------------------------------------------
+calculate_isi_caumo(ogtt1$time, ogtt1$glucose, ogtt1$insulin, weight = 100)
+
+## -----------------------------------------------------------------------------
+calculate_isi_bigtt(ogtt1$time, ogtt1$glucose, ogtt1$insulin, gender = "F", bmi=30)
+
+## -----------------------------------------------------------------------------
+calculate_isi_avignon(ogtt1$time, ogtt1$glucose, ogtt1$insulin, weight = 100)
+
+## -----------------------------------------------------------------------------
+calculate_isi_belfiore(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
+
+## ----message=FALSE, warning=FALSE---------------------------------------------
+ogtt_nested |> 
+  mutate(glucose_0 = map_dbl(ogtt_df, ~.x$glucose[.x$time==0]),
+         glucose_fasting.f = factor_glucose_fasting(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
+         glucose_tolerance.f = factor_glucose_tolerance(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
+         
+         isi_stumvoll = map_dbl(ogtt_df, ~calculate_isi_stumvoll(.x$time, .x$glucose, .x$insulin)),
+         isi_stumvoll_dem = pmap_dbl(list(ogtt_df, bmi, age), 
+                             ~calculate_isi_stumvoll_dem(..1$time, ..1$glucose, ..1$insulin, bmi=..2, age=..3)),
+         isi_matsuda = map_dbl(ogtt_df, ~calculate_isi_matsuda(.x$time, .x$glucose, .x$insulin)),
+         isi_caumo = map2_dbl(ogtt_df, weight_kg, ~calculate_isi_caumo(.x$time, .x$glucose, .x$insulin, weight=.y)),
+         isi_cederholm = map2_dbl(ogtt_df, weight_kg, ~calculate_isi_cederholm(.x$time, .x$glucose, .x$insulin, weight=.y)),
+         isi_gutt = map2_dbl(ogtt_df, bmi, ~calculate_isi_gutt(.x$time, .x$glucose, .x$insulin, bmi=.y)),
+         isi_ogis = pmap_dbl(list(ogtt_df, height_cm/100, weight_kg), 
+                             ~calculate_isi_ogis(..1$time, ..1$glucose, ..1$insulin, height=..2, weight=..3)),
+         isi_bigtt =pmap_df(list(ogtt_df, gender.f, bmi), 
+                             ~calculate_isi_bigtt(..1$time, ..1$glucose, ..1$insulin, gender=..2, bmi=..3)),
+         beta = map_df(ogtt_df, ~calculate_stumvoll_beta(.x$time, .x$glucose, .x$insulin)),
+         )
+
 
 ## -----------------------------------------------------------------------------
 calculate_bsa(weight = 70, height =  1.50, method = "Mosteller",
