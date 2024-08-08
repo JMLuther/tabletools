@@ -36,8 +36,8 @@
 #'
 #' @return Cederholm insulin sensitivity index as a single value (\eqn{mg \cdot L^2 \cdot mmol^{-1} \cdot mU^{-1} \cdot min{-1}})
 #' @export
-#' @examples 
 #' @md
+#' @examples 
 #' # individual objects for each item
 #' time=c(0, 30, 60, 90, 120)              # minutes
 #' glucose=c(93, 129, 178, 164, 97)        # mg/dL

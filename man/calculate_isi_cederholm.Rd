@@ -66,3 +66,43 @@ If using Plasma glucose measurements the formula used is:
 Therefore some of these conversion factors are not needed if using plasma
 glucose (eg YSI measurement) and already reporting glucose in mg/dL.
 }
+\examples{
+# individual objects for each item
+time=c(0, 30, 60, 90, 120)              # minutes
+glucose=c(93, 129, 178, 164, 97)        # mg/dL
+insulin=c(12.8, 30.7, 68.5, 74.1, 44.0) # uU/mL
+calculate_isi_cederholm(time, glucose, insulin, weight=70) # 20.1356
+
+# handling data stored in a dataframe
+ogtt1 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
+                    glucose=c(93, 129, 178, 164, 97),        # mg/dL
+                    insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
+calculate_isi_cederholm(ogtt1$time, ogtt1$glucose, ogtt1$insulin, weight=70)  # 20.1356
+
+
+
+# Convert units
+ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
+                    glucose = c(5.167, 7.167, 9.889, 9.111, 5.3889), # glucose in mmol/l
+                    insulin = c(76.8,184.2,411,444.6,264)) # insulin in pmol/l
+
+calculate_isi_cederholm(time =  ogtt5$time,
+                        glucose = ogtt5$glucose,
+                        insulin = ogtt5$insulin,
+                        weight=154, weight_units="lbs",
+                        time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
+                        
+dat <- data.frame( # data from Gutt. Diab Res Clin Pract. 2000 
+  stringsAsFactors = TRUE,
+cat = c("obese","obese","normal",
+        "normal","NGT","NGT","IGT","IGT","DM2","DM2"),
+        time = c(0L, 120L, 0L, 120L, 0L, 120L, 0L, 120L, 0L, 120L),
+        glucose = c(106.9,145.8,18,65,88.3,
+                    103.3,102.3,151.7,20.1,347.5),
+                    insulin = c(19.9,96.1,87,106.7,16.2,
+                                73.2,25.3,140.6,30.9,57.9))
+library(tidyverse)
+dat |> 
+  group_by(cat) |> 
+    summarise(isi_ceder = calculate_isi_cederholm(time, glucose, insulin, weight=70))
+}

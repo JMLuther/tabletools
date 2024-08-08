@@ -22,8 +22,24 @@ convert_weight_to_kg(150, weight_units = "lbs")
 convert_length_to_m(70, length_units = "in")
 
 ## -----------------------------------------------------------------------------
-ogtt_wide <- data(ogtt_wide)
-head(ogtt_wide)
+data(ogtt_wide)
+ogtt_wide |> head()
+
+## -----------------------------------------------------------------------------
+ogtt_long <- 
+  ogtt_wide |> 
+  select(id, starts_with("ogtt_")) |> 
+  pivot_longer(cols = -id,
+               names_to = c(".value", "time"),
+               names_pattern = "ogtt_(.*)_([0-9]+)",
+               values_to = ".value",
+               names_transform = list(time = ~as.integer(.x))) |> # could be more complicated if not integers
+  group_by(id) # wise to group by id at this point
+
+## -----------------------------------------------------------------------------
+ogtt_long |> 
+  nest(.key = "ogtt_df") |> # already grouped by id
+  head()
 
 ## -----------------------------------------------------------------------------
 data("ogtt_nested")

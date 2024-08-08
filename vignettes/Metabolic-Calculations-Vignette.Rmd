@@ -93,6 +93,8 @@ ogtt_long <-
                values_to = ".value",
                names_transform = list(time = ~as.integer(.x))) |> # could be more complicated if not integers
   group_by(id) # wise to group by id at this point
+
+ogtt_long |> head(10)
 ```
 
 This can then be "nested"
