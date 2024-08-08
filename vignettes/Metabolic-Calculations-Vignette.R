@@ -36,6 +36,8 @@ ogtt_long <-
                names_transform = list(time = ~as.integer(.x))) |> # could be more complicated if not integers
   group_by(id) # wise to group by id at this point
 
+ogtt_long |> head(10)
+
 ## -----------------------------------------------------------------------------
 ogtt_long |> 
   nest(.key = "ogtt_df") |> # already grouped by id
@@ -71,6 +73,35 @@ pl_insulin<- ogtt_long |>
   geom_line(aes(group=id), alpha=0.3)
 cowplot::plot_grid(pl_glucose, pl_insulin, nrow=1)
 
+
+## ----figheight=4, fig.width=6-------------------------------------------------
+pl_summary_glucose <- 
+  ogtt_long |> 
+  mutate(glucose_tolerance.f = factor_glucose_tolerance(glucose[time==120])) |> 
+  group_by(time, glucose_tolerance.f) |> 
+  my_summary(glucose)  |> 
+  ggplot(aes(time, glucose_mean, group=glucose_tolerance.f, color=glucose_tolerance.f)) +
+  geom_point() + geom_line() + 
+  geom_pointrange(aes(ymin=glucose_mean-glucose_sem, 
+                      ymax=glucose_mean+glucose_sem)) +
+  labs(y="Glucose (mg/dL)", color= "Glucose Tolerance:")
+  
+pl_summary_insulin <-
+  ogtt_long |> 
+  mutate(glucose_tolerance.f = factor_glucose_tolerance(glucose[time==120])) |> 
+  group_by(time, glucose_tolerance.f) |> 
+  my_summary(insulin)  |> 
+  ggplot(aes(time, insulin_mean, group=glucose_tolerance.f, color=glucose_tolerance.f)) +
+  geom_point() + geom_line() + 
+  geom_pointrange(aes(ymin=insulin_mean-insulin_sem, 
+                      ymax=insulin_mean+insulin_sem)) +
+  labs(y="Insulin (uU/mL)", color= "Glucose Tolerance:")
+  
+
+cowplot::plot_grid(pl_summary_glucose , 
+                   pl_summary_insulin ,
+                   rel_widths = c(1,1),
+                   nrow = 1) 
 
 ## -----------------------------------------------------------------------------
 # handling data stored in a dataframe
