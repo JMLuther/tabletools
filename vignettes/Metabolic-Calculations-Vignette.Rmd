@@ -155,7 +155,7 @@ cowplot::plot_grid(pl_glucose, pl_insulin, nrow=1)
 ```
 
 Summary plots
-```{r figheight=4, fig.width=6}
+```{r figheight=4, fig.width=8}
 pl_summary_glucose <- 
   ogtt_long |> 
   mutate(glucose_tolerance.f = factor_glucose_tolerance(glucose[time==120])) |> 
@@ -323,7 +323,8 @@ Calculations are most easily performed on individual OGTT data, or multiple OGTT
 
 *Caveat: functions used here have not all been validated against known results- use with caution and verify results yourself*
 ```{r message=FALSE, warning=FALSE}
-ogtt_nested |> 
+ogtt_isi <- 
+  ogtt_nested |>  
   mutate(glucose_0 = map_dbl(ogtt_df, ~.x$glucose[.x$time==0]),
          glucose_fasting.f = factor_glucose_fasting(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
          glucose_tolerance.f = factor_glucose_tolerance(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
@@ -341,7 +342,22 @@ ogtt_nested |>
                              ~calculate_isi_bigtt(..1$time, ..1$glucose, ..1$insulin, gender=..2, bmi=..3)),
          beta = map_df(ogtt_df, ~calculate_stumvoll_beta(.x$time, .x$glucose, .x$insulin)),
          )
+ogtt_isi |> select(id, glucose_tolerance.f, glucose_fasting.f, starts_with("isi_"), beta, )
+```
 
+### Summary Plots
+```{r fig.width=10, fig.height=8}
+ogtt_isi |> select(id, glucose_tolerance.f, glucose_fasting.f, starts_with("isi_"), beta) |> 
+  unnest() |> 
+  pivot_longer(cols = -c(id, glucose_tolerance.f, glucose_fasting.f),
+               names_to = "var",
+               values_to = "value") |> 
+    # group_by(glucose_tolerance.f, var) |> 
+  # my_summary(value)   
+  ggplot(aes(glucose_tolerance.f, value)) +
+  geom_boxplot(fill="steelblue", alpha=0.3) +
+  scale_y_log10() +
+  facet_wrap(~var, scales = "free_y")
 ```
 
 
