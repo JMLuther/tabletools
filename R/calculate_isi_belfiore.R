@@ -7,7 +7,8 @@
 #'
 #' Note the formula uses a population normalization factor representing a Normal
 #' average value for Glucose x Insulin during the OGTT, which does not have a
-#' commonly accepted standard. 
+#' commonly accepted standard. This function returns a value that is not
+#' adjusted for any population values. 
 #'
 #' Standard timepoints are 0, 60, and 120 min. Note: insulin unit conversion may
 #' differ differ depending on assay. Insulin (pmol/l) = insulin (uU/ml)*6
@@ -82,15 +83,13 @@ calculate_isi_belfiore <- function(time, glucose, insulin,
   g120 = glucose[ind120]
   ins120 = insulin[ind120]
   
-  # C= Reference value for mean(G)*mean(I) in normal population
-  C=638*11.36/2 # taken from Table1 Belfiore for 0-1-2
   g_bar = (g0/2 + g60 + g120/2)/2
   ins_bar = (ins0/2 + ins60 + ins120/2)/2
   
   # g_bar <- sfsmisc::integrate.xy(c(0,1,2), c(g0,g60,g120), use.spline = FALSE)/2
   # ins_bar <- sfsmisc::integrate.xy(c(0,1,2), c(ins0,ins60,ins120),use.spline = FALSE)/2
 
-  isi_belfiore = 2/((g_bar*ins_bar+1)/C)
+  isi_belfiore = 2/(g_bar*ins_bar+1)
   
     return(isi_belfiore)
 }

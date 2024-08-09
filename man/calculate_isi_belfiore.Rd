@@ -41,7 +41,8 @@ et al.}.
 \details{
 Note the formula uses a population normalization factor representing a Normal
 average value for Glucose x Insulin during the OGTT, which does not have a
-commonly accepted standard. 
+commonly accepted standard. This function returns a value that is not
+adjusted for any population values. 
 
 Standard timepoints are 0, 60, and 120 min. Note: insulin unit conversion may
 differ differ depending on assay. Insulin (pmol/l) = insulin (uU/ml)*6
