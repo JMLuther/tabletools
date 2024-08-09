@@ -1,7 +1,8 @@
 #' Quick Index of Insulin Sensitivity (QUICKI)
 #'
-#' uses the formula: 
+#' uses the formula by \href{https://pubmed.ncbi.nlm.nih.gov/10902785/}{Katz et al}: 
 #' \deqn{\frac{1}{(log_{10}(Glucose(md/dL)) + log_{10}(Insulin(uU/mL)))}}
+#' Note the original formula uses \eqn{log_{10}} instead of \eqn{log_e}, and resulting values are interchangeable using a converting factor, \eqn{log_{10}=2.303 \cdot log_e}
 #' 
 #' @param glucose fasting glucose (mg/dL)
 #' @param insulin fasting insulin (uU/mL)
