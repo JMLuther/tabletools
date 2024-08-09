@@ -61,7 +61,7 @@ ogtt_long <-
 head(ogtt_long,10)
 
 
-## ----figheight=4, fig.width=6-------------------------------------------------
+## ----figheight=4, fig.width=7-------------------------------------------------
 
 theme_set(theme_jml())
 pl_glucose <- 
@@ -74,7 +74,7 @@ pl_insulin<- ogtt_long |>
 cowplot::plot_grid(pl_glucose, pl_insulin, nrow=1)
 
 
-## ----figheight=4, fig.width=8-------------------------------------------------
+## ----figheight=4, fig.width=7-------------------------------------------------
 pl_summary_glucose <- 
   ogtt_long |> 
   mutate(glucose_tolerance.f = factor_glucose_tolerance(glucose[time==120])) |> 
@@ -154,25 +154,31 @@ calculate_isi_belfiore(ogtt1$time, ogtt1$glucose, ogtt1$insulin)
 ogtt_isi <- 
   ogtt_nested |>  
   mutate(glucose_0 = map_dbl(ogtt_df, ~.x$glucose[.x$time==0]),
+         insulin_0 = map_dbl(ogtt_df, ~.x$insulin[.x$time==0]),
          glucose_fasting.f = factor_glucose_fasting(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
          glucose_tolerance.f = factor_glucose_tolerance(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
-         
-         isi_stumvoll = map_dbl(ogtt_df, ~calculate_isi_stumvoll(.x$time, .x$glucose, .x$insulin)),
-         isi_stumvoll_dem = pmap_dbl(list(ogtt_df, bmi, age), 
-                             ~calculate_isi_stumvoll_dem(..1$time, ..1$glucose, ..1$insulin, bmi=..2, age=..3)),
-         isi_matsuda = map_dbl(ogtt_df, ~calculate_isi_matsuda(.x$time, .x$glucose, .x$insulin)),
-         isi_caumo = map2_dbl(ogtt_df, weight_kg, ~calculate_isi_caumo(.x$time, .x$glucose, .x$insulin, weight=.y)),
-         isi_cederholm = map2_dbl(ogtt_df, weight_kg, ~calculate_isi_cederholm(.x$time, .x$glucose, .x$insulin, weight=.y)),
-         isi_gutt = map2_dbl(ogtt_df, bmi, ~calculate_isi_gutt(.x$time, .x$glucose, .x$insulin, bmi=.y)),
+         isi_homair = map_dbl(ogtt_df, ~calculate_homair(.x$glucose[.x$time==0], .x$insulin[.x$time==0])),
+         isi_quicki = map_dbl(ogtt_df, ~calculate_quicki(.x$glucose[.x$time==0], .x$insulin[.x$time==0])), # Uses Log10 c/w Katz publication
+         isi_avignon = map2_df(ogtt_df, weight_kg, ~calculate_isi_avignon(.x$time, .x$glucose, .x$insulin, weight=.y)), # no match
+         isi_belfiore = map_dbl(ogtt_df, ~calculate_isi_belfiore(.x$time, .x$glucose, .x$insulin)), # no match
+         isi_bigtt =pmap_df(list(ogtt_df, gender.f, bmi),                                           # Match within rounding error
+                            ~calculate_isi_bigtt(..1$time, ..1$glucose, ..1$insulin, gender=..2, bmi=..3)),
+         isi_caumo = map2_dbl(ogtt_df, weight_kg, ~calculate_isi_caumo(.x$time, .x$glucose, .x$insulin, weight=.y)), 
+         isi_cederholm = map2_dbl(ogtt_df, weight_kg, ~calculate_isi_cederholm(.x$time, .x$glucose, .x$insulin, weight=.y)), # No match
+         isi_gutt = map2_dbl(ogtt_df, bmi, ~calculate_isi_gutt(.x$time, .x$glucose, .x$insulin, bmi=.y)), # Match
+         isi_stumvoll = map_dbl(ogtt_df, ~calculate_isi_stumvoll(.x$time, .x$glucose, .x$insulin)), # Match
+         isi_stumvoll_dem = pmap_dbl(list(ogtt_df, bmi, age),                                       # Match
+                                     ~calculate_isi_stumvoll_dem(..1$time, ..1$glucose, ..1$insulin, bmi=..2, age=..3)),
+         isi_matsuda = map_dbl(ogtt_df, ~calculate_isi_matsuda(.x$time, .x$glucose, .x$insulin)),   # No match
          isi_ogis = pmap_dbl(list(ogtt_df, height_cm/100, weight_kg), 
                              ~calculate_isi_ogis(..1$time, ..1$glucose, ..1$insulin, height=..2, weight=..3)),
-         isi_bigtt =pmap_df(list(ogtt_df, gender.f, bmi), 
-                             ~calculate_isi_bigtt(..1$time, ..1$glucose, ..1$insulin, gender=..2, bmi=..3)),
          beta = map_df(ogtt_df, ~calculate_stumvoll_beta(.x$time, .x$glucose, .x$insulin)),
-         )
-ogtt_isi |> select(id, glucose_tolerance.f, glucose_fasting.f, starts_with("isi_"), beta, )
+         igi_30 = map_dbl(ogtt_df, ~calculate_igi30(.x$time, .x$glucose, .x$insulin)),
+         
+  )
+ogtt_isi |> select(id, glucose_tolerance.f, glucose_fasting.f, glucose_0, insulin_0, starts_with("isi_"), beta, igi_30)
 
-## ----fig.width=10, fig.height=8-----------------------------------------------
+## ----fig.width=7, fig.height=6------------------------------------------------
 ogtt_isi |> select(id, glucose_tolerance.f, glucose_fasting.f, starts_with("isi_"), beta) |> 
   unnest() |> 
   pivot_longer(cols = -c(id, glucose_tolerance.f, glucose_fasting.f),
