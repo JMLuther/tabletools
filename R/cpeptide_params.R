@@ -1,7 +1,10 @@
 #' C-peptide parameters estimates from population data
 #'
-#' This function estimates C-peptide parameters from population data. Based on
-#' the regression models from \href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van Cauter et al}
+#' This function estimates C-peptide kinetic parameters from population data.
+#' Based on the regression models from
+#' \href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van Cauter et al}.
+#' Participants were considered "Obese" in this study if body weight was >15%
+#' above ideal body weight, rather than a commonly used BMI cutoff. 
 #'
 #' @param age Age in years
 #' @param gender Gender
@@ -11,7 +14,7 @@
 #' @param weight_units weight units, if not in kg
 #' @param height_units height units, if not in meters
 #'
-#' @return Dagta frame with Vd, halflife_short, halflife_long, fraction, bsa,
+#' @return Data frame with Vd, halflife_short, halflife_long, fraction, bsa,
 #'   k12, k21, k10
 #' @export
 #'

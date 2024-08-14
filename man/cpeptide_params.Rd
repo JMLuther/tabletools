@@ -30,12 +30,15 @@ cpeptide_params(
 \item{height_units}{height units, if not in meters}
 }
 \value{
-Dagta frame with Vd, halflife_short, halflife_long, fraction, bsa,
+Data frame with Vd, halflife_short, halflife_long, fraction, bsa,
   k12, k21, k10
 }
 \description{
-This function estimates C-peptide parameters from population data. Based on
-the regression models from \href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van Cauter et al}
+This function estimates C-peptide kinetic parameters from population data.
+Based on the regression models from
+\href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van Cauter et al}.
+Participants were considered "Obese" in this study if body weight was >15%
+above ideal body weight, rather than a commonly used BMI cutoff.
 }
 \examples{
 cpeptide_params(age=28.1, height = 1.744666, weight = 69.4, gender = "F", category = "normal")
