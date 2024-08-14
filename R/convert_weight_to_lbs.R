@@ -1,4 +1,5 @@
 #' Convert weight to lbs
+#' @export
 #' @rdname convert_weight_to_kg
 
 convert_weight_to_lbs <- function(weight, weight_units){
