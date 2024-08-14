@@ -4,7 +4,10 @@
 #' Based on the regression models from
 #' \href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van Cauter et al}.
 #' Participants were considered "Obese" in this study if body weight was >15%
-#' above ideal body weight, rather than a commonly used BMI cutoff. 
+#' above ideal body weight, rather than a commonly used BMI cutoff.
+#'
+#' The parameters can be used in calculations to estimate insulin secretion
+#' rates, shown in the example.
 #'
 #' @param age Age in years
 #' @param gender Gender
@@ -14,8 +17,8 @@
 #' @param weight_units weight units, if not in kg
 #' @param height_units height units, if not in meters
 #'
-#' @return Data frame with Vd, halflife_short, halflife_long, fraction, bsa,
-#'   k12, k21, k10
+#' @return Data frame with variables `cp_vd`, `cp_halflife_short`, `cp_halflife_long`,
+#'   `cp_fraction`, `cp_bsa`, `cp_k12`, `cp_k21`, `cp_k10`
 #' @export
 #'
 #' @examples
@@ -23,6 +26,25 @@
 #' cpeptide_params(age=28.1, height = 1.744666, weight = 69.4, gender = "M", category = "normal")
 #' cpeptide_params(age=35.2, height = 1.678461, weight = 107.9, gender = "F", category = "obese")
 #' cpeptide_params(age=35.2, height = 1.678461, weight = 107.9, gender = "M", category = "obese")
+#' 
+#' library(dplyr)
+#' dat <- data.frame(id =1:10,
+#'   age = rnorm(10, 50, sd=8),
+#'   gender = sample(c("M", "F"), 10, replace = T),
+#'   height = rnorm(10, 1.7, sd=0.2),
+#'   weight = rnorm(10, 100, sd=20),
+#'   cpeptide_0 =  abs(rnorm(10, 2.0, 0.91))  ) # ng/dL
+#'
+#' dat |>
+#'   mutate(ibw = calculate_ibw(height, gender, height_units = "m", weight_units = "kg"),
+#'          ibw_pct = (weight/ibw-1)*100,
+#'          ibw_15 = case_when(ibw_pct>15 ~ "obese", # if >15% above IBW then Obese
+#'                             TRUE ~ "normal"),
+#'          cpeptide_0_pmol = convert_cpeptide_to_pM(cpeptide_0, cpeptide_units="ng/ml"),
+#'          cpeptide_params(age, gender, height, weight, category = ibw_15),
+#'          # Basal Insulin Secretion Rate (pmol/min)
+#'          ISR_0 = cp_k10*cpeptide_0_pmol*cp_vd)
+
 
 cpeptide_params <- function(age, gender = NA, height, weight, 
                             category = "normal",
@@ -52,5 +74,10 @@ cpeptide_params <- function(age, gender = NA, height, weight,
   k10= a*b/k21                     # k2
   k12= a+b-k10-k21                 # k3
   
-  return (data.frame(Vd, halflife_short, halflife_long, fraction, bsa, k12, k21, k10))
+  return (data.frame("cp_vd" = Vd, 
+                     "cp_halflife_short"=halflife_short, 
+                     "cp_halflife_long"=halflife_long, 
+                     "cp_fraction"=fraction, 
+                     "cp_bsa"=bsa, 
+                     "cp_k12"=k12, "cp_k21"=k21, "cp_k10"=k10))
 }

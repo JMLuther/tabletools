@@ -17,7 +17,7 @@
 #'   "Devine", "Robinson", "Broca", "Miller", "Hammond")
 #'
 #' @returns a numeric vector with Ideal Body Weight (defaults to lbs)
-#' @export
+#' @export calculate_ibw
 #' @md
 #'
 #' @examples
@@ -39,25 +39,16 @@
 #' calculate_ibw(height = 1.778, gender="F", height_units = "m")
 #' calculate_ibw(height = 177.8, gender="F", height_units = "cm")
 #'
-#' # WARNING- DOES NOT WORK ON DATAFRAME
-#' # Solution- `Vectorize()` this function to use within `mutate`
 #'
 #' dat <- data.frame(id =1:10,
 #' gender = sample(c("M", "F", NA), 10, replace = T),
 #' height = rnorm(10, 1.7, sd=0.2),
 #' weight = rnorm(10, 100, sd=20))
+#' library(dplyr)
 #' dat |>
 #'   mutate(ibw = calculate_ibw(height, gender, height_units = "m"))
-#'   calc_ibw_vec = Vectorize(calculate_ibw)
-#'   dat |>
-#'     mutate(ibw = calc_ibw_vec(height, gender, height_units = "m"),
-#'     height_in = convert_length_to_in(height, length_units="m"),
-#'     weight_lbs = convert_weight_to_lbs(weight, weight_units="kg"),
-#'     bsa = calculate_bsa(weight, height),
-#'     bmi = calculate_bmi(height, height_units = "m", weight=weight, weight_units="kg"))
 
-
-calculate_ibw <- function(height, gender=NA,  
+calculate_ibw_nonvectorized <- function(height, gender=NA,  
                           weight_units = "kg",
                           height_units = "in", 
                           method = "Devine") {
@@ -103,3 +94,6 @@ calculate_ibw <- function(height, gender=NA,
                 stop("invalid weight_units; suggest lbs, kg, or g")))
   
 }
+
+# the function needs to be vectorized to work properly for multiple calculations
+calculate_ibw <- Vectorize(calculate_ibw_nonvectorized)
