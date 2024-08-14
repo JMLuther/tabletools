@@ -27,7 +27,6 @@
 #' sapply(ibw_methods, \(x)calculate_ibw(height = 70, gender="F", method = x))
 #' # if gender missing returns NA
 #' sapply(ibw_methods, \(x)calculate_ibw(height = 70,  method = x))
-#'
 #' # Change Units for desired IBW result
 #' # if not specified defaults to LBS
 #' sapply(ibw_methods, \(x)calculate_ibw(height = 70, gender="F", method = x))
