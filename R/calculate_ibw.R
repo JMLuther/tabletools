@@ -4,7 +4,10 @@
 #'   Hamwi), with several other available methods. Converts units if needed.
 #'   Available methods for IBW calculations are described in
 #'   \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4841935}{Peterson et
-#'   al.}:
+#'   al.}.
+#'
+#'   The function is not vectorized, so to perform multiple calculations, first
+#'   create a vectorized version of the function as in the examples below
 #'
 #' @param height Body Height (m)
 #' @param height_units If `height` is in Units other than m, specifiy here to
@@ -36,9 +39,27 @@
 #' # use different input height, indicate using "height_units" argument
 #' calculate_ibw(height = 1.778, gender="F", height_units = "m")
 #' calculate_ibw(height = 177.8, gender="F", height_units = "cm")
+#'
+#' # WARNING- DOES NOT WORK ON DATAFRAME
+#' # Solution- `Vectorize()` this function to use within `mutate`
+#'
+#' dat <- data.frame(id =1:10,
+#' gender = sample(c("M", "F", NA), 10, replace = T),
+#' height = rnorm(10, 1.7, sd=0.2),
+#' weight = rnorm(10, 100, sd=20))
+#' dat |>
+#'   mutate(ibw = calculate_ibw(height, gender, height_units = "m"))
+#'   calc_ibw_vec = Vectorize(calculate_ibw)
+#'   dat |>
+#'     mutate(ibw = calc_ibw_vec(height, gender, height_units = "m"),
+#'     height_in = convert_length_to_in(height, length_units="m"),
+#'     weight_lbs = convert_weight_to_lbs(weight, weight_units="kg"),
+#'     bsa = calculate_bsa(weight, height),
+#'     bmi = calculate_bmi(height, height_units = "m", weight=weight, weight_units="kg"))
+
 
 calculate_ibw <- function(height, gender=NA,  
-                          weight_units = "lbs",
+                          weight_units = "kg",
                           height_units = "in", 
                           method = "Devine") {
   
