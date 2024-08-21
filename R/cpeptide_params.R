@@ -1,32 +1,63 @@
-#' C-peptide parameters estimates from population data
+#'C-peptide parameters estimates from population data
 #'
-#' This function estimates C-peptide kinetic parameters from population data.
-#' Based on the regression models from
-#' \href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van Cauter et al}.
-#' Participants were considered "Obese" in this study if body weight was >15%
-#' above ideal body weight, rather than a commonly used BMI cutoff.
+#'`cpeptide_params` returns a dataframe with C-peptide kinetic parameters from
+#'population data. These parameters are commonly used for calculation of Insulin
+#'Secretion Rates.  Based on the
+#' regression models from \href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van
+#' Cauter et al}. Participants were considered "Obese" in this study if body
+#'weight was >15% above ideal body weight, rather than a commonly used BMI
+#'cutoff. The parameters can be used in calculations to estimate insulin
+#'secretion rates, shown in the example.
 #'
-#' The parameters can be used in calculations to estimate insulin secretion
-#' rates, shown in the example.
+#'@section Usage Notes:
 #'
-#' @param age Age in years
-#' @param gender Gender
-#' @param height Height in meters
-#' @param weight Weight in kg
-#' @param category Category ("Normal", "Obese", "NIDDM")
-#' @param weight_units weight units, if not in kg
-#' @param height_units height units, if not in meters
+#'  Parameter notation: the kinetic parameter notation (k12, k21, k10) differs
+#'  from the original Van Cauter notation, and metabolic modeling papers often
+#'  vary in their notation. I have used the standard pharmacokinetics notation
+#'  so that k12 indicates rate of movement from compartment 1 to compartment 2
+#'  (see \href{https://pubmed.ncbi.nlm.nih.gov/4607867/}{Gibaldi & Perrier}).
 #'
-#' @return Data frame with variables `cp_vd`, `cp_halflife_short`, `cp_halflife_long`,
-#'   `cp_fraction`, `cp_bsa`, `cp_k12`, `cp_k21`, `cp_k10`
-#' @export
+#'@section Results:
+#'
+#'  Parameters included in the output dataframe include the prefix `cp_` which
+#'  is intended to aid in variable selection:
+#' *  `cp_vd` C-peptide Volume of Distribution (L)
+#' *  `cp_halflife_short` C-peptide "short" half life (minutes)
+#' *  `cp_halflife_long` C-peptide "short" long life (minutes)
+#' *  `cp_fraction` Weighting factor for short/long half-life
+#' *  `cp_bsa` Body surface area (\eqn{m^2})
+#' *  `cp_k12` C-peptide Rate constant (plasma -> tissue), 1/min
+#' *  `cp_k21` C-peptide Rate constant (tissue -> plasma), 1/min
+#' *  `cp_k10` C-peptide Rate constant (plasma -> elimination), 1/min
+#'
+#'
+#'@section Basal Insulin Secretion Calculation:
+#'
+#'  The simplest calculation uses `k10` and `vd` to estimate basal insulin
+#' secretion: \eqn{Basal~Insulin~Secretion~(pmol/min) = k_{10} \cdot V_d \cdot
+#' C-peptide(nM)*1000} If C-peptide has already been converted to pmol/L, then
+#'  do not multiply by 1000. See examples for calculation example.
+#'
+#'@param age Age in years
+#'@param gender Gender
+#'@param height Height in meters
+#'@param weight Weight in kg
+#'@param category Category ("Normal", "Obese", "NIDDM")
+#'@param weight_units weight units, if not in kg
+#'@param height_units height units, if not in meters
+#'
+#'@md
+#'@return Data frame with variables `cp_vd`, `cp_halflife_short`,
+#'  `cp_halflife_long`, `cp_fraction`, `cp_bsa`, `cp_k12`, `cp_k21`, `cp_k10`
+#'@export
 #'
 #' @examples
+#' library(tabletools)
 #' cpeptide_params(age=28.1, height = 1.744666, weight = 69.4, gender = "F", category = "normal")
 #' cpeptide_params(age=28.1, height = 1.744666, weight = 69.4, gender = "M", category = "normal")
 #' cpeptide_params(age=35.2, height = 1.678461, weight = 107.9, gender = "F", category = "obese")
 #' cpeptide_params(age=35.2, height = 1.678461, weight = 107.9, gender = "M", category = "obese")
-#' 
+#'
 #' library(dplyr)
 #' dat <- data.frame(id =1:10,
 #'   age = rnorm(10, 50, sd=8),
@@ -74,10 +105,13 @@ cpeptide_params <- function(age, gender = NA, height, weight,
   k10= a*b/k21                     # k2
   k12= a+b-k10-k21                 # k3
   
-  return (data.frame("cp_vd" = Vd, 
-                     "cp_halflife_short"=halflife_short, 
-                     "cp_halflife_long"=halflife_long, 
-                     "cp_fraction"=fraction, 
-                     "cp_bsa"=bsa, 
-                     "cp_k12"=k12, "cp_k21"=k21, "cp_k10"=k10))
+  return (data.frame("cp_vd" = Vd, # L
+                     "cp_halflife_short"=halflife_short, # min
+                     "cp_halflife_long"=halflife_long,   # min
+                     "cp_fraction"=fraction,  # unitless fraction
+                     "cp_bsa"=bsa,  # m^2
+                     "cp_k12"=k12,  # 1/min
+                     "cp_k21"=k21,  # 1/min
+                     "cp_k10"=k10)) # 1/min
 }
+

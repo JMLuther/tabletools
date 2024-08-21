@@ -30,21 +30,57 @@ cpeptide_params(
 \item{height_units}{height units, if not in meters}
 }
 \value{
-Data frame with variables `cp_vd`, `cp_halflife_short`, `cp_halflife_long`,
-  `cp_fraction`, `cp_bsa`, `cp_k12`, `cp_k21`, `cp_k10`
+Data frame with variables \code{cp_vd}, \code{cp_halflife_short},
+\code{cp_halflife_long}, \code{cp_fraction}, \code{cp_bsa}, \code{cp_k12}, \code{cp_k21}, \code{cp_k10}
 }
 \description{
-This function estimates C-peptide kinetic parameters from population data.
-Based on the regression models from
-\href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van Cauter et al}.
-Participants were considered "Obese" in this study if body weight was >15%
-above ideal body weight, rather than a commonly used BMI cutoff.
+\code{cpeptide_params} returns a dataframe with C-peptide kinetic parameters from
+population data. These parameters are commonly used for calculation of Insulin
+Secretion Rates.  Based on the
+regression models from \href{https://pubmed.ncbi.nlm.nih.gov/1551497/}{Van
+Cauter et al}. Participants were considered "Obese" in this study if body
+weight was >15\% above ideal body weight, rather than a commonly used BMI
+cutoff. The parameters can be used in calculations to estimate insulin
+secretion rates, shown in the example.
 }
-\details{
-The parameters can be used in calculations to estimate insulin secretion
-rates, shown in the example.
+\section{Usage Notes}{
+
+
+Parameter notation: the kinetic parameter notation (k12, k21, k10) differs
+from the original Van Cauter notation, and metabolic modeling papers often
+vary in their notation. I have used the standard pharmacokinetics notation
+so that k12 indicates rate of movement from compartment 1 to compartment 2
+(see \href{https://pubmed.ncbi.nlm.nih.gov/4607867/}{Gibaldi & Perrier}).
 }
+
+\section{Results}{
+
+
+Parameters included in the output dataframe include the prefix \code{cp_} which
+is intended to aid in variable selection:
+\itemize{
+\item \code{cp_vd} C-peptide Volume of Distribution (L)
+\item \code{cp_halflife_short} C-peptide "short" half life (minutes)
+\item \code{cp_halflife_long} C-peptide "short" long life (minutes)
+\item \code{cp_fraction} Weighting factor for short/long half-life
+\item \code{cp_bsa} Body surface area (\eqn{m^2})
+\item \code{cp_k12} C-peptide Rate constant (plasma -> tissue), 1/min
+\item \code{cp_k21} C-peptide Rate constant (tissue -> plasma), 1/min
+\item \code{cp_k10} C-peptide Rate constant (plasma -> elimination), 1/min
+}
+}
+
+\section{Basal Insulin Secretion Calculation}{
+
+
+The simplest calculation uses \code{k10} and \code{vd} to estimate basal insulin
+secretion: \eqn{Basal~Insulin~Secretion~(pmol/min) = k_{10} \cdot V_d \cdot
+C-peptide(nM)*1000} If C-peptide has already been converted to pmol/L, then
+do not multiply by 1000. See examples for calculation example.
+}
+
 \examples{
+library(tabletools)
 cpeptide_params(age=28.1, height = 1.744666, weight = 69.4, gender = "F", category = "normal")
 cpeptide_params(age=28.1, height = 1.744666, weight = 69.4, gender = "M", category = "normal")
 cpeptide_params(age=35.2, height = 1.678461, weight = 107.9, gender = "F", category = "obese")
