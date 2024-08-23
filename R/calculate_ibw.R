@@ -21,6 +21,7 @@
 #' @md
 #'
 #' @examples
+#' library(tabletools)
 #' ibw_methods <- c("Hamwi", "Devine", "Robinson", "Broca", "Miller", "Hammond")
 #' names(ibw_methods) <- ibw_methods
 #' sapply(ibw_methods, \(x)calculate_ibw(height = 70, gender="M", method = x))
@@ -48,7 +49,8 @@
 #' dat |>
 #'   mutate(ibw = calculate_ibw(height, gender, height_units = "m"))
 
-calculate_ibw_nonvectorized <- function(height, gender=NA,  
+calculate_ibw <- Vectorize(
+  function(height, gender=NA,  
                           weight_units = "kg",
                           height_units = "in", 
                           method = "Devine") {
@@ -93,7 +95,7 @@ calculate_ibw_nonvectorized <- function(height, gender=NA,
                 grams=ibw_lbs/2.2*1000, g=ibw_lbs/2.2*1000, G=ibw_lbs/2.2*1000,
                 stop("invalid weight_units; suggest lbs, kg, or g")))
   
-}
+})
 
 # the function needs to be vectorized to work properly for multiple calculations
-calculate_ibw <- Vectorize(calculate_ibw_nonvectorized)
+# calculate_ibw <- Vectorize(calculate_ibw_nonvectorized)
