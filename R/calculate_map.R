@@ -6,7 +6,7 @@
 #' @param dbp Diastolic blood pressure, mmHg
 #'
 #' @return map as a single value, or vector of results 
-#' @export
+#' @export calculate_map
 #'
 #' @examples
 #' calculate_map(159, 46)
