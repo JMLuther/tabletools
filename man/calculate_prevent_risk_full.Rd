@@ -16,6 +16,8 @@ calculate_prevent_risk_full(
   UACR = NA,
   HbA1c = NA,
   SDI = NA,
+  zipcode = NA,
+  year = 2019,
   current_smoker = FALSE,
   using_antihypertensive_medication = FALSE,
   using_statin = FALSE,
@@ -45,6 +47,10 @@ calculate_prevent_risk_full(
 \item{HbA1c}{Hemoglobin A1C (percent)}
 
 \item{SDI}{Social Deprivation Index (SDI), decile}
+
+\item{zipcode}{Zipcode to use for SDI lookup, if SDI not provided}
+
+\item{year}{Year to use for SDI lookup, if SDI not provided}
 
 \item{current_smoker}{current_smoker, T/F}
 
@@ -105,6 +111,14 @@ Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic
                              UACR = 40, HbA1c = 7.5, SDI = 8,
                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
 
+# Lookup SDI by zipcode; defaults to year 2019
+ calculate_prevent_risk_full(risk="stroke",gender="male", age=50, Tc=200, HDL=45, SBP=160, eGFR=90,
+                             UACR = 40, HbA1c = 7.5, SDI = NA, zipcode=37220,
+                             using_antihypertensive_medication = TRUE, diabetes = TRUE)
+ calculate_prevent_risk_full(risk="stroke",gender="male", age=50, Tc=200, HDL=45, SBP=160, eGFR=90,
+                             UACR = 40, HbA1c = 7.5, SDI = 1, 
+                             using_antihypertensive_medication = TRUE, diabetes = TRUE)
+                             
  library(tidyverse)
  df <- crossing(
    gender=c("female", "male"),

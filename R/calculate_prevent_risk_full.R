@@ -19,6 +19,8 @@
 #' @param UACR Urine albumin/creatinine ratio (mg/g creatinine) 
 #' @param HbA1c Hemoglobin A1C (percent)
 #' @param SDI Social Deprivation Index (SDI), decile
+#' @param zipcode Zipcode to use for SDI lookup, if SDI not provided
+#' @param year Year to use for SDI lookup, if SDI not provided
 #' @param current_smoker current_smoker, T/F
 #' @param using_antihypertensive_medication HTN medication use, T/F
 #' @param using_statin Statin use, T/F
@@ -65,6 +67,14 @@
 #'                              UACR = 40, HbA1c = 7.5, SDI = 8,
 #'                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
 #'
+#' # Lookup SDI by zipcode; defaults to year 2019
+#'  calculate_prevent_risk_full(risk="stroke",gender="male", age=50, Tc=200, HDL=45, SBP=160, eGFR=90,
+#'                              UACR = 40, HbA1c = 7.5, SDI = NA, zipcode=37220,
+#'                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
+#'  calculate_prevent_risk_full(risk="stroke",gender="male", age=50, Tc=200, HDL=45, SBP=160, eGFR=90,
+#'                              UACR = 40, HbA1c = 7.5, SDI = 1, 
+#'                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
+#'                              
 #'  library(tidyverse)
 #'  df <- crossing(
 #'    gender=c("female", "male"),
@@ -103,7 +113,8 @@
 
 calculate_prevent_risk_full <- function(risk, gender, 
                                    age, Tc, HDL, SBP, eGFR, 
-                                   BMI=NA, UACR=NA, HbA1c=NA, SDI=NA,
+                                   BMI=NA, UACR=NA, HbA1c=NA, 
+                                   SDI=NA, zipcode=NA, year=2019,
                                    current_smoker=FALSE,
                                    using_antihypertensive_medication=FALSE,
                                    using_statin=FALSE,
@@ -112,7 +123,9 @@ calculate_prevent_risk_full <- function(risk, gender,
   
   BMI = ifelse(is.na(BMI), 0, BMI) # used only in HF calculations
   
-  SDI_missing = ifelse(is.na(SDI), TRUE, FALSE)
+  SDI =ifelse(!is.na(SDI), SDI,
+              ifelse(!is.na(zipcode), sdi_decile({{zipcode}}, {{year}}), NA))
+  SDI_missing =  ifelse(is.na(SDI) & is.na(zipcode), TRUE, FALSE)
   SDI4_6 = SDI>=4 & SDI<7
   SDI7_10 = SDI>=7
   

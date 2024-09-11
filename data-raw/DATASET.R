@@ -38,13 +38,27 @@ cfs_base30yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xl
 cfs_full30yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_full30yr")
 
 
-usethis::use_data(cfs_base10yr, cfs_full10yr, 
-                  cfs_base30yr, cfs_full30yr, 
-                  internal = TRUE,
-                  overwrite = TRUE)
+# usethis::use_data(cfs_base10yr, cfs_full10yr, 
+#                   cfs_base30yr, cfs_full30yr, 
+#                   internal = TRUE,
+#                   overwrite = TRUE)
 
 ## ├ SDI Zip code files ----
-sdi_files <- list.files(here::here("data-raw/SDI_zcta/"), full.names = T)
-readr::read_csv(sdi_files[1], n_max = 250) 
 
+library(data.table)
+df_sdi <-
+  tibble(fp = list.files(here::here("data-raw/SDI_zcta/"), full.names = T),
+         fn = list.files(here::here("data-raw/SDI_zcta/"), full.names = F)) |> 
+  mutate(year = gsub(".*-[0-9]+-([0-9]+)-.*.csv", "\\1", fn)) |> 
+  mutate(data = map(fp, ~fread(.x, select = c("ZCTA5_FIPS", "SDI_score" )) )) |> 
+  unnest(data) |> 
+  group_by(year) |> 
+  mutate(sdi_decile = ntile(SDI_score, 10))  |> 
+  select(year, ZCTA5_FIPS, SDI_score, sdi_decile)
 
+## ├ SAVE internal objects ----
+usethis::use_data(cfs_base10yr, cfs_full10yr, 
+                  cfs_base30yr, cfs_full30yr, 
+                  df_sdi,
+                  internal = TRUE,
+                  overwrite = TRUE)
