@@ -1,6 +1,6 @@
 ## code to prepare `DATASET` dataset goes here
 
-usethis::use_data(DATASET, overwrite = TRUE)
+# usethis::use_data(overwrite = FALSE)
 
 # Datasets ----
 ## ├ OGTT data ----
@@ -24,3 +24,22 @@ ogtt_nested <-
 
 usethis::use_data(ogtt_wide)
 usethis::use_data(ogtt_nested)
+
+# Internal Data ----
+# Internal data objects are all stored within a single .rda file (R/sysdata.rda) 
+# Internal data objects can be made available for use with `devtools::load_all()` 
+
+# original data files are stored in `data-raw` folder and are not exported in the package
+
+## ├ PREVENT coefficient tables ----
+cfs_base10yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_base10yr")
+cfs_full10yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_full10yr")
+cfs_base30yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_base30yr")
+cfs_full30yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_full30yr")
+
+
+usethis::use_data(cfs_base10yr, cfs_full10yr, 
+                  cfs_base30yr, cfs_full30yr, 
+                  internal = TRUE,
+                  overwrite = TRUE)
+
