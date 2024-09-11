@@ -5,7 +5,7 @@
 #' 30-year risk estimates for total CVD (composite of atherosclerotic CVD and
 #' heart failure), ASCVD (atherosclerotic CVD), Heart failure (HF), Coronary
 #' Artery Disease (CAD), and Stroke. Details
-#' provided in \href{https://pubmed.ncbi.nlm.nih.gov/37947085/}{Kan et al.,
+#' provided in \href{https://pubmed.ncbi.nlm.nih.gov/37947085/}{Khan et al.,
 #' Circulation. 2024}. Extended models incorporating urine albumin, A1C and socioeconomic risk (by Zip code) are available.
 #'
 #' @param risk Desired Risk Calculation ("cvd", "ascvd", "hf", "cad", "stroke")
@@ -23,7 +23,7 @@
 #' @param chol_units default = mg/dL; cholesterol units not in mg/dL then define
 #'   here for conversion
 #'
-#' @return 10- and 30-year Risk (%) in Dataframe format
+#' @return 10- and 30-year Risk (percent) in Dataframe format
 #' @export
 #'
 #' @examples
