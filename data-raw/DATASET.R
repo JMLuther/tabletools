@@ -43,3 +43,8 @@ usethis::use_data(cfs_base10yr, cfs_full10yr,
                   internal = TRUE,
                   overwrite = TRUE)
 
+## ├ SDI Zip code files ----
+sdi_files <- list.files(here::here("data-raw/SDI_zcta/"), full.names = T)
+readr::read_csv(sdi_files[1], n_max = 250) 
+
+
