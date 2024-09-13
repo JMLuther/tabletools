@@ -22,22 +22,36 @@
 #'  John R. Koethe1,2, Spyros A. Kalams1, Celestine N. Wanjalla1, Mona Mashayekhi1"
 #' clean_author_list(auth) 
 
-
-
 clean_author_list <- function(string_authors){
-  # require(stringr)
-  # remove numbers and whitespace
-  au1 <- gsub("[0-9\\*]+", "", trimws(string_authors))
-  au1 <- gsub("[ ]*and[ ]*", "", au1)
-  author_full = trimws(regmatches(au1, gregexpr("[^,]+", au1))[[1]])
-  name_last =  gsub(".* ([A-Za-z-]+)$", "\\1", author_full) # doesn't handle van
-  init_first =  gsub("^([A-Z]).* .*", "\\1", author_full)
-  # originally used stringr package but can be done in base R
-  init_middle = trimws(gsub("\\.", "", stringr::str_extract(author_full, " ([A-Z])\\.")))
-  # init_middle = trimws(gsub("\\.", "", regmatches(author_full, m = regexpr(" ([A-Z])\\.", author_full))))
-  init_middle[is.na(init_middle)] = ""
-  name_inits = paste0(name_last, " ", init_first, init_middle)
-  # data.frame(author_full, name_last, init_first, init_middle, name_inits) # checking
-  paste0(name_inits, collapse = ", ") # return value
+  # remove numbers, ., line breaks and whitespace
+  au1 <- gsub("[0-9\\*\\.\r\n]+", "", trimws(string_authors))
+  # remove "and" and whitespace
+  au1 <- gsub("and[ ]*", "", au1)
+  # extract names from list separated by commas
+  au1 <- strsplit(au1, ",")[[1]]
+  # remove leading and trailing whitespace
+  au1 <- trimws(au1)
+  # handle common last name prefix; will remove later
+  au1 <- gsub(" (del|van) ", " \\1:", au1, ignore.case = T)
+  # first initial; assumes Firstname ... Lastname format
+  ini_first <-   gsub("\\<([A-Za-z]).*", "\\1", au1)
+  
+  # get count of words in each element
+  word_n <- lengths(strsplit(au1, " "))
+  # if more than 2 words, get first letter of second word
+  ini_middle <- gsub(".* \\<([A-Za-z]).* .*", "\\1", au1)
+  
+  # ini_middle <- gsub(".* \\<(\p{L}).*", "\\1", au1)
+  ini_middle[word_n <=2] <- ""
+  
+  # last name; assumes Firstname ... Lastname format
+  name_last <- gsub(".* \\<(.*)$", "\\1", au1)
+  # remove placeholder :
+  name_last <- gsub("(:)", " ", name_last)
+  # paste together
+  name_inits <- paste0(name_last, " ", ini_first, ini_middle)
+  
+  # data.frame(au1, name_last, ini_first, ini_middle, name_inits) # checking
+  paste0(name_inits[name_inits != " "], collapse = ", ") # return value
 }
 
