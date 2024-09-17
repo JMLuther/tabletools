@@ -21,7 +21,9 @@ library(tidyr)
 
 # tabletools
 
-The goal of tabletools is to provide functions which are helpful for generating summary html tables.
+This package contains a group of convenience functions for metabolic, cardiovascular, and renal calculations, in addition to data summary functions useful for html table generation.
+
+The original goal of `tabletools` was to provide functions are helpful for generating summary html tables.
 For details on the functions, please see help documentation in the package.
 
 ## Installation
