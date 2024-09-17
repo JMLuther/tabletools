@@ -10,7 +10,6 @@
 #' @param age Age, in years
 #' @param sex Sex
 #' @param creatinine Serum Creatinine, mg/dL
-#'
 #' @returns a numeric vector with eGFR (ml/min/1.73m^2)
 #' @export calculate_egfr_krs
 #'
