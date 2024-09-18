@@ -1,6 +1,6 @@
 #' Calculate estimated GFR, European Kidney Function Consortium (EKFC) 2021 formula
 #'
-#' @description Calculates the European Kidney Function Consortium (EKFC) 2021 formula estimated
+#' Calculates the European Kidney Function Consortium (EKFC) 2021 formula estimated
 #'   glomerular filtration rate. Methods described in
 #'   \href{https://pubmed.ncbi.nlm.nih.gov/33166224/}{Pottel et al, Annals Int Med. 2021}.
 #'   An online calculator is found \href{https://ekfccalculator.pages.dev/?value=50&value=1&value=#results}{here}.
