@@ -83,7 +83,8 @@ calculate_prevent_risk <- function(risk, gender,
            ifelse(gender %in% c("male", "men", "ma", "m"), "male", NA))
   
   # 10 YEAR BASE MODEL  
-  cf10 <- cfs_base10yr[cfs_base10yr$risk=={{risk_query}} & cfs_base10yr$gender=={{gender}}, ]
+  # model coeffs stored in data frame tabletools:::cfs_base10yr
+  cf10 <- cfs_base10yr[cfs_base10yr$risk=={{risk_query}} & cfs_base10yr$gender=={{gender_query}}, ]
   
   # construct the model
   log_odds10 = 
@@ -118,7 +119,8 @@ calculate_prevent_risk <- function(risk, gender,
     cf10$age_egfr_int*(age-55) /10*(min(eGFR, 60)-60) / -15
   
   # 30 YEAR BASE MODEL  
-  cf30 <- cfs_base30yr[cfs_base30yr$risk=={{risk_query}} & cfs_base30yr$gender=={{gender}}, ]
+  # model coeffs stored in data frame tabletools:::cfs_base30yr
+  cf30 <- cfs_base30yr[cfs_base30yr$risk=={{risk_query}} & cfs_base30yr$gender=={{gender_query}}, ]
   
   # construct the model
   log_odds30 = 

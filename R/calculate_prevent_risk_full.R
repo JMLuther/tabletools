@@ -1,35 +1,36 @@
-#' Calculate AHA PREVENT Risk (full model)
+#'Calculate AHA PREVENT Risk (full model)
 #'
-#' Uses the PREVENT Full model incorporating urine albumin, A1C, and SDI if
-#' available into risk estimate: PREVENT (AHA Predicting Risk of CVD Events).
-#' The PREVENT equations enable 10 and 30-year risk estimates for total CVD
-#' (composite of atherosclerotic CVD and heart failure), ASCVD (atherosclerotic
-#' CVD), Heart failure (HF), Coronary Artery Disease (CAD), and Stroke. Details
+#'Uses the PREVENT Full model incorporating urine albumin, A1C, and SDI if
+#'available into risk estimate: PREVENT (AHA Predicting Risk of CVD Events). The
+#'PREVENT equations enable 10 and 30-year risk estimates for total CVD
+#'(composite of atherosclerotic CVD and heart failure), ASCVD (atherosclerotic
+#'CVD), Heart failure (HF), Coronary Artery Disease (CAD), and Stroke. Details
 #' provided in \href{https://pubmed.ncbi.nlm.nih.gov/37947085/}{Khan et al.,
-#' Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic risk (by Zip code) if available.
+#' Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic risk (by Zip code) if available. SDI lookup by zipcode is slightly off in SDI estimate- enter the SDI decile (1-10) for most accurate results.
 #'
-#' @param risk Desired Risk Calculation ("cvd", "ascvd", "hf", "cad", "stroke")
-#' @param gender Gender, (Female/Male)
-#' @param age Age in years
-#' @param Tc Total Cholesterol (mg/dL). converted to mmol/L internally
-#' @param HDL HDL  Cholesterol (mg/dL). converted to mmol/L internally
-#' @param SBP Systolic Blood Pressure, mmHg
-#' @param eGFR estimated GFR (ml/min/1.73m2)
-#' @param BMI Body Mass Index (kg/m2), used only in HF estimate
-#' @param UACR Urine albumin/creatinine ratio (mg/g creatinine) 
-#' @param HbA1c Hemoglobin A1C (percent)
-#' @param SDI Social Deprivation Index (SDI), decile
-#' @param zipcode Zipcode to use for SDI lookup, if SDI not provided
-#' @param year Year to use for SDI lookup, if SDI not provided
-#' @param current_smoker current_smoker, T/F
-#' @param using_antihypertensive_medication HTN medication use, T/F
-#' @param using_statin Statin use, T/F
-#' @param diabetes Diabetes, T/F
-#' @param chol_units default = mg/dL; cholesterol units not in mg/dL then define
-#'   here for conversion
 #'
-#' @return 10- and 30-year Risk (percent) in Dataframe format
-#' @export
+#'@param risk Desired Risk Calculation ("cvd", "ascvd", "hf", "cad", "stroke")
+#'@param gender Gender, (Female/Male)
+#'@param age Age in years
+#'@param Tc Total Cholesterol (mg/dL). converted to mmol/L internally
+#'@param HDL HDL  Cholesterol (mg/dL). converted to mmol/L internally
+#'@param SBP Systolic Blood Pressure, mmHg
+#'@param eGFR estimated GFR (ml/min/1.73m2)
+#'@param BMI Body Mass Index (kg/m2), used only in HF estimate
+#'@param UACR Urine albumin/creatinine ratio (mg/g creatinine)
+#'@param HbA1c Hemoglobin A1C (percent)
+#'@param SDI Social Deprivation Index (SDI), decile
+#'@param zipcode Zipcode to use for SDI lookup, if SDI not provided
+#'@param year Year to use for SDI lookup, if SDI not provided
+#'@param current_smoker current_smoker, T/F
+#'@param using_antihypertensive_medication HTN medication use, T/F
+#'@param using_statin Statin use, T/F
+#'@param diabetes Diabetes, T/F
+#'@param chol_units default = mg/dL; cholesterol units not in mg/dL then define
+#'  here for conversion
+#'
+#'@return 10- and 30-year Risk (percent) in Dataframe format
+#'@export
 #'
 #' @examples
 #'
@@ -72,9 +73,9 @@
 #'                              UACR = 40, HbA1c = 7.5, SDI = NA, zipcode=37220,
 #'                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
 #'  calculate_prevent_risk_full(risk="stroke",gender="male", age=50, Tc=200, HDL=45, SBP=160, eGFR=90,
-#'                              UACR = 40, HbA1c = 7.5, SDI = 1, 
+#'                              UACR = 40, HbA1c = 7.5, SDI = 1,
 #'                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
-#'                              
+#'
 #'  library(tidyverse)
 #'  df <- crossing(
 #'    gender=c("female", "male"),
@@ -122,21 +123,16 @@ calculate_prevent_risk_full <- function(risk, gender,
                                    chol_units = "mg/dL") {
   
   BMI = ifelse(is.na(BMI), 0, BMI) # used only in HF calculations
-  
   SDI =ifelse(!is.na(SDI), SDI,
               ifelse(!is.na(zipcode), sdi_decile({{zipcode}}, {{year}}), NA))
   SDI_missing =  ifelse(is.na(SDI) & is.na(zipcode), TRUE, FALSE)
   SDI4_6 = SDI>=4 & SDI<7
   SDI7_10 = SDI>=7
-  
   UACR_missing = ifelse(is.na(UACR), TRUE, FALSE)
-  
   HbA1c_missing = ifelse(is.na(HbA1c), TRUE, FALSE)
-  Tc = ifelse(chol_units == "mg/dL", Tc*0.02586, Tc)
-  # tabletools::convert_cholesterol_to_mM(Tc, cholesterol_units = chol_units)
-  HDL = ifelse(chol_units == "mg/dL", HDL*0.02586, HDL) 
-  # tabletools::convert_cholesterol_to_mM(HDL, cholesterol_units = chol_units)
-  
+  Tc = ifelse(chol_units == "mg/dL", Tc*0.02586, Tc) # convert to mmol/L
+  HDL = ifelse(chol_units == "mg/dL", HDL*0.02586, HDL)  # convert to mmol/L
+
   # validate risk request
   risk = tolower(risk)
   risk_query <- 
@@ -152,7 +148,7 @@ calculate_prevent_risk_full <- function(risk, gender,
            ifelse(gender %in% c("male", "men", "ma", "m"), "male", NA))
   
   # 10 YEAR BASE MODEL  
-  cf10 <- cfs_full10yr[cfs_full10yr$risk=={{risk_query}} & cfs_full10yr$gender=={{gender}}, ]
+  cf10 <- cfs_full10yr[cfs_full10yr$risk=={{risk_query}} & cfs_full10yr$gender=={{gender_query}}, ]
   
   # construct the model
   log_odds10 = 
@@ -189,7 +185,7 @@ calculate_prevent_risk_full <- function(risk, gender,
                   ifelse(!diabetes, cf10$a1c_nondm*(HbA1c-5.3)))) 
 
   # # 30 YEAR BASE MODEL  
-  cf30 <- cfs_full30yr[cfs_full30yr$risk=={{risk_query}} & cfs_full30yr$gender=={{gender}}, ]
+  cf30 <- cfs_full30yr[cfs_full30yr$risk=={{risk_query}} & cfs_full30yr$gender=={{gender_query}}, ]
 
   # construct the model
   log_odds30 = 

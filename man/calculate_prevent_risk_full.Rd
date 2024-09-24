@@ -68,12 +68,12 @@ here for conversion}
 }
 \description{
 Uses the PREVENT Full model incorporating urine albumin, A1C, and SDI if
-available into risk estimate: PREVENT (AHA Predicting Risk of CVD Events).
-The PREVENT equations enable 10 and 30-year risk estimates for total CVD
+available into risk estimate: PREVENT (AHA Predicting Risk of CVD Events). The
+PREVENT equations enable 10 and 30-year risk estimates for total CVD
 (composite of atherosclerotic CVD and heart failure), ASCVD (atherosclerotic
 CVD), Heart failure (HF), Coronary Artery Disease (CAD), and Stroke. Details
 provided in \href{https://pubmed.ncbi.nlm.nih.gov/37947085/}{Khan et al.,
-Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic risk (by Zip code) if available.
+Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic risk (by Zip code) if available. SDI lookup by zipcode is slightly off in SDI estimate- enter the SDI decile (1-10) for most accurate results.
 }
 \examples{
 
@@ -116,9 +116,9 @@ Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic
                              UACR = 40, HbA1c = 7.5, SDI = NA, zipcode=37220,
                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
  calculate_prevent_risk_full(risk="stroke",gender="male", age=50, Tc=200, HDL=45, SBP=160, eGFR=90,
-                             UACR = 40, HbA1c = 7.5, SDI = 1, 
+                             UACR = 40, HbA1c = 7.5, SDI = 1,
                              using_antihypertensive_medication = TRUE, diabetes = TRUE)
-                             
+
  library(tidyverse)
  df <- crossing(
    gender=c("female", "male"),
