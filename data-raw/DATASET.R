@@ -31,12 +31,28 @@ usethis::use_data(ogtt_nested)
 
 # original data files are stored in `data-raw` folder and are not exported in the package
 
+## ├ Omnipaque Table ----
+# US brand = 300 or 350
+df_omnipaque <- 
+  data.frame(
+  omnipaque_v = c(350L, 300L, 240L, 180L, 140L),
+  iohexol_mg_ml = c(755L, 647L, 518L, 388L, 302L),
+  omnipaque_specgrav = c(1406L, 1349L, 1280L, 1209L, 1164L),
+  iohexol_mg_5ml = c(3775L, 3235L, 2594L, 1940L, 1510L)
+)
+saveRDS(df_omnipaque, here::here("data-raw/df_omnipaque.rds"))
+
+
 ## ├ PREVENT coefficient tables ----
 cfs_base10yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_base10yr")
 cfs_full10yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_full10yr")
 cfs_base30yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_base30yr")
 cfs_full30yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_full30yr")
 
+saveRDS(cfs_base10yr, here::here("data-raw/cfs_base10yr.rds"))
+saveRDS(cfs_full10yr, here::here("data-raw/cfs_full10yr.rds"))
+saveRDS(cfs_base30yr, here::here("data-raw/cfs_base30yr.rds"))
+saveRDS(cfs_full30yr, here::here("data-raw/cfs_full30yr.rds"))
 
 # usethis::use_data(cfs_base10yr, cfs_full10yr, 
 #                   cfs_base30yr, cfs_full30yr, 
@@ -56,9 +72,22 @@ df_sdi <-
   mutate(sdi_decile = ntile(SDI_score, 10))  |> 
   select(year, ZCTA5_FIPS, SDI_score, sdi_decile)
 
+saveRDS(df_sdi, here::here("data-raw/df_sdi.rds"))
+
+
+# LOAD AND SAVE/UPDATE INTERNAL DATA ----
+df_omnipaque <- readRDS(here::here("data-raw/df_omnipaque.rds"))
+cfs_base10yr <- readRDS(here::here("data-raw/cfs_base10yr.rds"))
+cfs_full10yr <- readRDS(here::here("data-raw/cfs_full10yr.rds"))
+cfs_base30yr <- readRDS(here::here("data-raw/cfs_base30yr.rds"))
+cfs_full30yr <- readRDS(here::here("data-raw/cfs_full30yr.rds"))
+df_sdi       <- readRDS(here::here("data-raw/df_sdi.rds"))
+
+
 ## ├ SAVE internal objects ----
-usethis::use_data(cfs_base10yr, cfs_full10yr, 
+usethis::use_data(df_omnipaque,
+                  cfs_base10yr, cfs_full10yr, 
                   cfs_base30yr, cfs_full30yr, 
-                  df_sdi,
+                  df_sdi, 
                   internal = TRUE,
                   overwrite = TRUE)
