@@ -1,4 +1,4 @@
-#' Iohexol Single Sample estimate of GFR
+#' Iohexol Single Sample (SS) estimate of GFR
 #'
 #' This method uses a single sample measurement of iohexol to determine GFR
 #' (glomerular filtration rate), by optimizing 3 equations initially described
@@ -7,22 +7,22 @@
 #' \href{https://pubmed.ncbi.nlm.nih.gov/39097002/}{European Kidney Function
 #' Consortium statment paper}. The R script is modified from the supplemental methods supplied in that paper, which also supplies an excel spreadsheet which can be used for comparison. One minor difference is the use of a newer and more accurate formula to estimate ECV.
 #'
-#' @param egfr Model-based estimate of GFR (eg CKD-EPI eGFR)
+#' @param egfr Model-based estimate of GFR (eg CKD-EPI eGFR). Used as a starting point for estimation.
 #' @param height Height, cm  
 #' @param weight Weight, kg
-#' @param weight_units Weight units, if not in kg
-#' @param height_units Height units, if not in cm
 #' @param sex Sex (M/F)
 #' @param age Age, years
-#' @param ecv_method ECV Formula (default =  "Faucon"; also can use "Granerus")
 #' @param iohexol_m Iohexol dose injected (mcg)
 #' @param iohexol_ss Iohexol concentration (mcg/mL)
 #' @param time_ss Time of iohexol sample (minutes)
+#' @param weight_units Weight units, if not in kg
+#' @param height_units Height units, if not in cm
+#' @param ecv_method ECV Formula (default =  "Faucon"; also can use "Granerus")
 #'
-#' @return data.frame with `mgfr_ss` (non-indexed) and `mgfr_ss_bsa` (GFR indexed to BSA 1.73m2)
+#' @return data.frame with `mgfr_ss` (non-indexed) and `mgfr_ss_bsa` (GFR indexed to standard BSA of 1.73m2)
 #' @export calculate_mgfr_ss
 #' @seealso 
-#'  [calculate_ecv()] for ECV calclulation
+#'  [calculate_ecv()] for ECV calculation
 #'  [calculate_bsa()] for BSA calculation
 #'
 #' @examples 

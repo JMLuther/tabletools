@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculate_mgfr_ss.R
 \name{calculate_mgfr_ss}
 \alias{calculate_mgfr_ss}
-\title{Iohexol Single Sample estimate of GFR}
+\title{Iohexol Single Sample (SS) estimate of GFR}
 \usage{
 calculate_mgfr_ss(
   egfr,
@@ -19,7 +19,7 @@ calculate_mgfr_ss(
 )
 }
 \arguments{
-\item{egfr}{Model-based estimate of GFR (eg CKD-EPI eGFR)}
+\item{egfr}{Model-based estimate of GFR (eg CKD-EPI eGFR). Used as a starting point for estimation.}
 
 \item{height}{Height, cm}
 
@@ -42,7 +42,7 @@ calculate_mgfr_ss(
 \item{ecv_method}{ECV Formula (default =  "Faucon"; also can use "Granerus")}
 }
 \value{
-data.frame with `mgfr_ss` (non-indexed) and `mgfr_ss_bsa` (GFR indexed to BSA 1.73m2)
+data.frame with `mgfr_ss` (non-indexed) and `mgfr_ss_bsa` (GFR indexed to standard BSA of 1.73m2)
 }
 \description{
 This method uses a single sample measurement of iohexol to determine GFR
@@ -70,6 +70,6 @@ calculate_mgfr_ss(egfr=40,
 
 }
 \seealso{
-[calculate_ecv()] for ECV calclulation
+[calculate_ecv()] for ECV calculation
  [calculate_bsa()] for BSA calculation
 }
