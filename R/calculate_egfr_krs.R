@@ -4,8 +4,7 @@
 #'   glomerular filtration rate. Methods described in
 #'   \href{https://pubmed.ncbi.nlm.nih.gov/37257905/}{Raynaud et al. BMJ. 2023}.
 #'   An online calculator is found at
-#'   \href{https://transplant-prediction-system.shinyapps.io/eGFR_equation_KTX/}
-#'
+#'   \href{https://transplant-prediction-system.shinyapps.io/eGFR_equation_KTX/}{here}.
 #'
 #' @param age Age, in years
 #' @param sex Sex
