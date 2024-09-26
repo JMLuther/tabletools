@@ -39,7 +39,7 @@
 #' @export calculate_mgfr_msp
 #'
 #' @examples
-#' XLSX example data
+#' # XLSX example data
 #' df1_dem <- data.frame(height=168,     # cm
 #'                       weight=87,      # kg
 #'                       ioh_inj_wt = 6.82594, # injected weight g; syringe wt pre-post

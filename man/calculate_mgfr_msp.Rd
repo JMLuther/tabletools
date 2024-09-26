@@ -65,7 +65,7 @@ The function can be compared against an excel spreadsheet provided in the
 supplemental material.
 }
 \examples{
-XLSX example data
+# XLSX example data
 df1_dem <- data.frame(height=168,     # cm
                       weight=87,      # kg
                       ioh_inj_wt = 6.82594, # injected weight g; syringe wt pre-post
