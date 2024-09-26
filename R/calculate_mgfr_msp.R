@@ -24,10 +24,7 @@
 #' @param height_units Height units, if not in cm
 #' @param weight_units Weight units, if not in kg
 #'
-<<<<<<< HEAD
 #' @md
-=======
->>>>>>> 499a298cac1bbaac7a7de1bfdf7b0eb67a2f4a66
 #' @return Data.frame containing results with calculated values for the
 #'   following variables:
 #'
