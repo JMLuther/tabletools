@@ -55,7 +55,6 @@
 #'   single value of BSA adjusted GFR (`gfr`), an `nls object` for model fit
 #'   (`fit`), or a plot with observed values, model fit curve, and summary
 #'   results in the figure legend (`plot`)
-#' @export
 #' @md
 #'
 #' @examples
