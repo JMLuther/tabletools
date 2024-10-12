@@ -17,6 +17,7 @@ calculate_mgfr_2c(
   height_units = "m",
   weight = NA,
   weight_units = "kg",
+  nls_weights = TRUE,
   output = "summary"
 )
 }
@@ -48,6 +49,10 @@ preferred; use if weights not available)}
 \item{weight}{Patient Weight, kg}
 
 \item{weight_units}{Weight units, if not in kg}
+
+\item{nls_weights}{Use weights in nls model, defaults to \code{TRUE}. Uses
+1/iohexol^2 as weights, which more heavily weight lower concentrations
+obtained at later time points}
 
 \item{output}{Desired output, defaults to \code{summary} of model. Alternatively
 can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
@@ -90,11 +95,12 @@ results in the figure legend (\code{plot})
 This method requires multiple early (alpha phase, typically <120 min) and
 late (beta phase) sample measurements of iohexol to determine GFR (glomerular
 filtration rate). This function uses nonlinear modeling via the \code{nls()}
-function to fit the 2-compartment model of iohexol kinetics using the formula \eqn{C=A*e^(- \alpha * t) +
-B*e^(- \beta * t) }. The general method and provided examples are
+function to fit the 2-compartment model of iohexol kinetics using the formula \eqn{C=A*exp^{- \alpha * t} +
+B*e^{(}- \beta * t) } and weighted by \eqn{1/Iohexol^2}. The general method and provided examples are
 modified from \href{https://pubmed.ncbi.nlm.nih.gov/16612328/}{Schwartz et al.
-Kidney Int. 2006.}. Results are returned as a non-indexed value for GFR (\code{mgfr_2c}) and also indexed to BSA of 1.73m2 if height and weight are provided (\code{mgfr_2c_bsa}).
-The summary provides estimates of kinetic parameters (k10, k21, k12) which can be used in ODE models, but is not implemented here.
+Kidney Int. 2006.}. Further discussion and details regarding methods of fitting the 2-compartment models can be found at \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8101203/}{Pottel et al.} Results are returned as a non-indexed value for GFR (\code{mgfr_2c}) and also indexed to BSA of 1.73m2 if height and weight are provided (\code{mgfr_2c_bsa}).
+The summary provides estimates of kinetic parameters (k10, k21, k12) which
+can be used in ODE models, but is not implemented here.
 }
 \examples{
 ## ├ Scwartz Data ----
@@ -116,6 +122,7 @@ calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_i
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="gfr_bsa")
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit")
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
+calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_weights = FALSE)
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", id="Name-IDnumber-Date")
 
 # examples with fewer time points
@@ -128,7 +135,7 @@ calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70,
 dat_7p <- dat[dat$time \%in\% c(10, 20, 30, 60, 240, 300, 360), ]
 calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 
-# ODE MODEL FOR COMPARISON; 
+# ODE MODEL FOR COMPARISON;
 # Example only to verify ODE parameter estimates, not required for GFR calculation
 # This model uses solution from the nls model to get the kinetic parameters
 library(deSolve)

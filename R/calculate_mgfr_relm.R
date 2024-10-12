@@ -58,6 +58,8 @@
 #' @md
 #'
 #' @examples
+#' calculate_mgfr_relm(df_rel_a$time, df_rel_a$relmapirazin_ng_ml, height = 1.6002, weight = 71.698, output="plot")
+#' calculate_mgfr_relm(df_rel_a$time, df_rel_a$relmapirazin_ng_ml, height = 1.6002, weight = 71.698, output="plot", nls_weights = FALSE)
 #' 
 #' # ODE MODEL FOR COMPARISON; 
 #' # Example only to verify ODE parameter estimates, not required for GFR calculation
@@ -182,11 +184,3 @@ calculate_mgfr_relm <- function(time, relmipirazin_conc,
     }
     plot_nls_fit(fit, time_min, relmipirazin)}
 }
-calculate_mgfr_relm(df_rel_a$time, df_rel_a$relmapirazin_ng_ml, height = 1.6002, weight = 71.698, output="plot")
-calculate_mgfr_relm(df_rel_a$time, df_rel_a$relmapirazin_ng_ml, height = 1.6002, weight = 71.698, output="plot", nls_weights = FALSE)
-
-df_relmapirazin |> 
-  mutate(res = map(data, ~calculate_mgfr_relm(.x$time, .x$relmapirazin_ng_ml, height = 1.6002, weight = 71.698, output="summary"))) |> 
-  unnest(res) |> View()
-
-tabletools::df_relmapirazin
