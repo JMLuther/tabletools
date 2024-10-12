@@ -161,7 +161,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                        B = B_start,
                        a =0.03,
                        b =0.004),
-            weights = if(nls_weights) wt else NULL)
+            weights = if (nls_weights) wt else NULL)
   A  = coef(fit)[["A"]]
   a  = coef(fit)[["a"]]
   B  = coef(fit)[["B"]]
