@@ -3,8 +3,8 @@
 #' This method requires multiple early (alpha phase, typically <120 min) and
 #' late (beta phase) sample measurements of iohexol to determine GFR (glomerular
 #' filtration rate). This function uses nonlinear modeling via the `nls()`
-#' function to fit the 2-compartment model of iohexol kinetics using the formula \eqn{C=A*exp^{- \alpha * t} +
-#' B*e^{(}- \beta * t) } and weighted by \eqn{1/Iohexol^2}. The general method and provided examples are
+#' function to fit the 2-compartment model of iohexol kinetics using the formula \eqn{C=A \cdot exp^{- \alpha \cdot t} +
+#' B*e^{- \beta \cdot t} } and weighted by \eqn{1/Iohexol^2}. The general method and provided examples are
 #' modified from \href{https://pubmed.ncbi.nlm.nih.gov/16612328/}{Schwartz et al. 
 #' Kidney Int. 2006.}. Further discussion and details regarding methods of fitting the 2-compartment models can be found at \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8101203/}{Pottel et al.} Results are returned as a non-indexed value for GFR (`mgfr_2c`) and also indexed to BSA of 1.73m2 if height and weight are provided (`mgfr_2c_bsa`).
 #' The summary provides estimates of kinetic parameters (k10, k21, k12) which
@@ -161,7 +161,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                        B = B_start,
                        a =0.03,
                        b =0.004),
-            weights = if(nls_weights) wt else NULL)
+            weights = if (nls_weights) wt else NULL)
   A  = coef(fit)[["A"]]
   a  = coef(fit)[["a"]]
   B  = coef(fit)[["B"]]
