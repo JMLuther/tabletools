@@ -25,6 +25,21 @@ ogtt_nested <-
 usethis::use_data(ogtt_wide)
 usethis::use_data(ogtt_nested)
 
+## ├ Relmapirazin Data ----
+df_relmapirazin_dat <-
+  readr::read_csv(here::here("data-raw/relmapirazin/mgfr_data_dorshow_2024.csv")) |> 
+  filter(!is.na(subject_number)) |>
+  nest(data = c(time, relmapirazin_ng_ml)) |> 
+  select(-mgfr)
+df_relmapirazin_ids <-
+  readr::read_csv(here::here("data-raw/relmapirazin/mgfr_data_dorshow_2024_ids.csv")) |> 
+  select(-panel)
+df_relmapirazin <-
+  left_join(df_relmapirazin_dat, df_relmapirazin_ids, by = c("subject_number" = "subject_number")) 
+
+usethis::use_data(df_relmapirazin)
+
+  
 # Internal Data ----
 # Internal data objects are all stored within a single .rda file (R/sysdata.rda) 
 # Internal data objects can be made available for use with `devtools::load_all()` 
