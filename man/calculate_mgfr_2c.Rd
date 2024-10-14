@@ -18,6 +18,8 @@ calculate_mgfr_2c(
   weight = NA,
   weight_units = "kg",
   nls_weights = TRUE,
+  t_late = 120,
+  t_early = 100,
   output = "summary"
 )
 }
@@ -50,15 +52,22 @@ preferred; use if weights not available)}
 
 \item{weight_units}{Weight units, if not in kg}
 
-\item{nls_weights}{Use weights in nls model, defaults to \code{TRUE}. Uses
+\item{nls_weights}{Use weights in nls model (T/F), defaults to \code{TRUE}. Uses
 1/iohexol^2 as weights, which more heavily weight lower concentrations
 obtained at later time points}
+
+\item{t_late}{Time point (minutes) to split early and late phase, defaults to
+\code{120}}
+
+\item{t_early}{Time point (minutes) to split early and late phase, defaults
+to \code{100}}
 
 \item{output}{Desired output, defaults to \code{summary} of model. Alternatively
 can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
 
 \code{summary} results include the named variables:
 \itemize{
+\item \code{mgfr_method} Method used for GFR calculation (NLLS or NLLS-w)
 \item \code{mgfr_2c} The measured GFR (mL/min)
 \item \code{mgfr_2c_bsa} The measured GFR (mL/min/1.73 m2) indexed to body surface area (BSA calculated by DuBois equation)
 \item \code{iohexol_m}   Iohexol mass (ucg) injected. Determined either by user-provided syringe weight or volume injected.
@@ -70,9 +79,14 @@ can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
 \item \code{B} Model parameter B
 \item \code{b} Model parameter b, or \beta
 \item \code{model_r2} Model Pseudo-R2, calculated as the linear regression R2 for predicted~observed values
+\item \code{ssr} Sum of squared residuals
+\item \code{sse} Sum of squared residuals for early time points
+\item \code{ssl} Sum of squared residuals for late time points
 \item \code{k10} Iohexol elimination rate constant from central compartment (1/min)
 \item \code{k21} Iohexol transfer rate constant from peripheral to central compartment (1/min)
 \item \code{k12} Iohexol transfer rate constant from central to peripheral compartment (1/min)
+\item \code{n_early} Number of early time points used in model
+\item \code{n_late} Number of late time points used in model
 }
 
 \code{gfr} returns a single \code{mgfr_2c} value, the measured GFR (mL/min).
@@ -94,9 +108,10 @@ results in the figure legend (\code{plot})
 \description{
 This method requires multiple early (alpha phase, typically <120 min) and
 late (beta phase) sample measurements of iohexol to determine GFR (glomerular
-filtration rate). This function uses nonlinear modeling via the \code{nls()}
+filtration rate). This function uses nonlinear modeling via
+Levenberg-Marquardt method in the \code{gsl_nsl} package and the \code{gslnls()}
 function to fit the 2-compartment model of iohexol kinetics using the formula \eqn{C=A \cdot exp^{- \alpha \cdot t} +
-B*e^{- \beta \cdot t} } and weighted by \eqn{1/Iohexol^2}. The general method and provided examples are
+B*e^{- \beta \cdot t} } and weighted by \eqn{1/Iohexol^2}. Use of the \code{gsl_nsl} package allows for better support of parameter constraints (constrained to positive values) and other methods (e.g. \code{predict} methods using fit object) compared to the base \code{nls()} function.  The general method and provided examples are
 modified from \href{https://pubmed.ncbi.nlm.nih.gov/16612328/}{Schwartz et al.
 Kidney Int. 2006.}. Further discussion and details regarding methods of fitting the 2-compartment models can be found at \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8101203/}{Pottel et al.} Results are returned as a non-indexed value for GFR (\code{mgfr_2c}) and also indexed to BSA of 1.73m2 if height and weight are provided (\code{mgfr_2c_bsa}).
 The summary provides estimates of kinetic parameters (k10, k21, k12) which
@@ -124,6 +139,16 @@ calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_i
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_weights = FALSE)
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", id="Name-IDnumber-Date")
+
+# Example for adding a prediction interval
+calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
+test_fit =calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit")
+test_pred <- predict(test_fit, interval = "prediction", newdata = data.frame(time_min = 0:360), level = 0.95) |> as.data.frame()
+test_pred$time <- 0:360
+polygon(x = c(test_pred$time, rev(test_pred$time)),
+        y = c(test_pred$upr, rev(test_pred$lwr)), 
+        col =  adjustcolor("dodgerblue", alpha.f = 0.10), border = NA)
+
 
 # examples with fewer time points
 dat_5p <- dat[dat$time \%in\% c(10, 20, 30, 120, 300), ]
