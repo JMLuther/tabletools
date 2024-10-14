@@ -179,7 +179,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   
   # Omnipaqe calcs; from lookup table stored internally as tabletools:::df_omnipaque
   # Note: standard 5mL injection of Iohexol iohexol_v = 5 # mL = 3235 mg Iohexol.
-  df_omnipaque=tabletools:::df_omnipaque # available in internal data
+  # df_omnipaque=tabletools:::df_omnipaque # available in internal data
   ioh_spgrav = df_omnipaque$omnipaque_specgrav[df_omnipaque$omnipaque_v==omnipaque_v]/1000 # g/ml
   iohexol_mg_ml = df_omnipaque$iohexol_mg_ml[df_omnipaque$omnipaque_v==omnipaque_v] # mg/ml
   if (!is.null(ioh_inj_wt) & !is.null(ioh_inj_vol)) stop("If iohexol injection weight is provided, assign `ioh_inj_vol=NULL` and exact iohexol mass will be calculated.")
@@ -214,7 +214,6 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   A_start <-  exp(coef(lm_early))[["(Intercept)"]]
   a_start <- -coef(lm_early)[["time"]]
   
-  # INSERT SI CALCS HERE________________________
   if (nls_v == "SI"){
     A = A_start # use initial SI estimate
     a = a_start # use initial SI estimate
@@ -240,7 +239,6 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     ssr = sum(dat$resid^2)
     sse = sum(dat$resid[dat$time <= t_early]^2)
     ssl = sum(dat$resid[dat$time >= t_late]^2)
-    
     res = data.frame("mgfr_method" = mgfr_method,
                      "mgfr_2c"     = mgfr_2c,
                      "mgfr_2c_bsa" = mgfr_2c_bsa,
@@ -410,4 +408,3 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     plot_nls_fit(fit, time_min, iohexol)}
   
 }
-
