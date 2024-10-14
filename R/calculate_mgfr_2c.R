@@ -194,7 +194,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   a_start <- -coef(lm_early)[["time"]]
   
   # 2C NLS model fit
-  nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) ) }
+  nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
   fit = gslnls::gsl_nls(iohexol~nonlin2c(time_min, A, a, B, b), 
                         data=data.frame(time_min, iohexol),
                         lower = c(A=0, B=0, a=0, b=0),
@@ -285,4 +285,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                       bquote(pseudo-R^2==.(model_r2))) )
     }
     plot_nls_fit(fit, time_min, iohexol)}
-}
+
+  }
+
+nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
