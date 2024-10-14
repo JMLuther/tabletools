@@ -27,24 +27,34 @@
 #' @param ioh_units Iohexol concentration units, defaults to `ug/mL`
 #' @param id Study identifier (optional, passed to plot title)
 #' @param time_units Time units, defaults to `min`
-#' @param t_early Time point (minutes) to split early and late phase, defaults
+#' @param t_early Last Time point (minutes) to use in the "Early" distribution phase, defaults
 #'   to `100`
-#' @param t_late Time point (minutes) to split early and late phase, defaults to
+#' @param t_late First Time point (minutes) to use in the "Late" elimination phase, defaults to
 #'   `120`
-#' @param nls_weights Use weights in nls model (T/F), defaults to `TRUE`. Uses
+#' @param nls_v Model estimation method (defaults to `gslnls`).  Can also use
+#'   `SI` or `base`
+#' @param nls_weights Use weights in nls model (`TRUE` or `FALSE`), defaults to `TRUE`. Uses
 #'   1/iohexol^2 as weights, which more heavily weight lower concentrations
 #'   obtained at later time points
 #' @param output Desired output, defaults to `summary` of model. Alternatively
 #'   can specify `gfr`, `gfr_bsa`, `fit`, or `plot`
 #'
-#'   `summary` results include the named variables:
-#'    * `mgfr_method` Method used for GFR calculation (NLLS or NLLS-w)
-#'    * `mgfr_2c` The measured GFR (mL/min)
+#'   The estimation method can have the following options:
+#'    * `SI` Slope-Intercept method obtained by performing two linear regressions of log(iohexol) vs time for early and late time points. Obtained by setting `nls_v = "SI"`
+#'    * `modified-SI` SI method with shared time-point(s) between early and late periods (ie overlapping `t_early` = `t_late`). Obtained by setting, for example `nls_v = "SI", t_early=120, t_late=120` or another option with overlapping times.
+#'    * `NLLS-gslnls-weighted` NLS fit using the `gslnls()` function from the `gsl_nls` package. Obtained by setting `nls_v = "gslnls", nls_weights=T`
+#'    * `NLLS-base-weighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=T`
+#'    * `NLLS-gslnls-unweighted` NLS fit using the `gslnls()` function from the `gsl_nls` package. Obtained by setting `nls_v = "gslnls", nls_weights=F`
+#'    * `NLLS-base-unweighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=F`
+#'
+#'   For `output = "summary"` results returned includes the named variables:
+#'    * `mgfr_method` Method used for GFR calculation (see above). Results should be similar.
+#'    * `mgfr_2c` Measured GFR (mL/min)
 #'    * `mgfr_2c_bsa` The measured GFR (mL/min/1.73 m2) indexed to body surface area (BSA calculated by DuBois equation)
 #'    * `iohexol_m`   Iohexol mass (ucg) injected. Determined either by user-provided syringe weight or volume injected.
 #'    * `iohexol_0`   Iohexol concentration at t=0 calculated by A+B (theoretical, not measured)
 #'    * `iohexol_vd`  Iohexol Volume of distribution estimated by Dose/Iohexol[t0]
-#'    * `ioh_auc`  Iohexol calculated AUC from t=0 to Infinity, estimated by A/a + B/b
+#'    * `ioh_auc`  Iohexol calculated AUC from t=0 to Infinity, estimated by A/a + B/b. 
 #'    * `A` Model parameter A
 #'    * `a` Model parameter a, or \alpha
 #'    * `B` Model parameter B
@@ -56,8 +66,8 @@
 #'    * `k10` Iohexol elimination rate constant from central compartment (1/min)
 #'    * `k21` Iohexol transfer rate constant from peripheral to central compartment (1/min)
 #'    * `k12` Iohexol transfer rate constant from central to peripheral compartment (1/min)
-#'    * `n_early` Number of early time points used in model
-#'    * `n_late` Number of late time points used in model
+#'    * `n_early` Number of early time points measured and used in model
+#'    * `n_late` Number of late time points measured and used in model
 #'
 #'   `gfr` returns a single `mgfr_2c` value, the measured GFR (mL/min).
 #'   `gfr_bsa` returns a single `mgfr_2c_bsa` value, the measured GFR
@@ -70,9 +80,9 @@
 #'   time, and summary measures in the legend.
 #'
 #' @return Desired output with either a data.frame of results (`summary`), a
-#'   single value of BSA adjusted GFR (`gfr`), an `nls object` for model fit
-#'   (`fit`), or a plot with observed values, model fit curve, and summary
-#'   results in the figure legend (`plot`)
+#'   single value of BSA adjusted GFR (`gfr` or `gfr_bsa`), an `nls object` for
+#'   model fit (`fit`), or a plot with observed values, model fit curve, and
+#'   summary results in the figure legend (`plot`)
 #' @export
 #' @importFrom gslnls gsl_nls
 #' @md
@@ -93,13 +103,32 @@
 #'                       223.1121251,111.1086272,61.88251616,
 #'                       37.43137242,21.79250307,12.75996292)  )
 #'
-#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5)
+#' # Comparison of Output options
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5) # Default
 #' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="gfr")
 #' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="gfr_bsa")
 #' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit")
-#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
-#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_weights = FALSE)
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit", nls_v="base") 
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit", nls_v="SI") # two fits
+#'
+#' # Plot options: ideally pass the ID information
 #' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", id="Name-IDnumber-Date")
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "SI") # fit not found
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "SI", t_early = 120, t_late = 120)
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "gslnls")
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base")
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "gslnls", nls_weights = F)
+#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base", nls_weights = F)
+#'
+#' # Comparison of estimates from all available methods
+#' rbind(
+#'   calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "SI"),
+#'   calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "SI", t_early = 120, t_late = 120),
+#'   calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "gslnls"),
+#'   calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "base"),
+#'   calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "gslnls", nls_weights = F),
+#'   calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "base", nls_weights = F))
 #'
 #' # examples with fewer time points
 #' dat_5p <- dat[dat$time %in% c(10, 20, 30, 120, 300), ]
@@ -141,7 +170,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                               id=NULL,
                               height=NA, height_units = "m", 
                               weight=NA, weight_units = "kg",
-                              nls_weights = TRUE, 
+                              nls_weights = TRUE, nls_v = "gslnls",
                               t_late = 120, t_early = 100,
                               output="summary"){
   # Subject calcs
@@ -150,6 +179,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   
   # Omnipaqe calcs; from lookup table stored internally as tabletools:::df_omnipaque
   # Note: standard 5mL injection of Iohexol iohexol_v = 5 # mL = 3235 mg Iohexol.
+  df_omnipaque=tabletools:::df_omnipaque # available in internal data
   ioh_spgrav = df_omnipaque$omnipaque_specgrav[df_omnipaque$omnipaque_v==omnipaque_v]/1000 # g/ml
   iohexol_mg_ml = df_omnipaque$iohexol_mg_ml[df_omnipaque$omnipaque_v==omnipaque_v] # mg/ml
   if (!is.null(ioh_inj_wt) & !is.null(ioh_inj_vol)) stop("If iohexol injection weight is provided, assign `ioh_inj_vol=NULL` and exact iohexol mass will be calculated.")
@@ -184,37 +214,33 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   A_start <-  exp(coef(lm_early))[["(Intercept)"]]
   a_start <- -coef(lm_early)[["time"]]
   
-  # 2C NLS model fit
-  nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
-  fit = gslnls::gsl_nls(iohexol~nonlin2c(time_min, A, a, B, b), 
-                        data=data.frame(time_min, iohexol),
-                        lower = c(A=0, B=0, a=0, b=0),
-                        weights = wt,
-                        start=list(A = A_start,
-                                   B = B_start,
-                                   a = a_start,
-                                   b = b_start))
-  # Model Results
-  A  = coef(fit)[["A"]]
-  a  = coef(fit)[["a"]]
-  B  = coef(fit)[["B"]]
-  b  = coef(fit)[["b"]]
-  AUC_inf <- A/a + B/b  # AUC_inf 
-  mgfr_2c = iohexol_m/AUC_inf  # Dose/AUC_inf = mL/minutes (not indexed to BSA)
-  mgfr_2c_bsa = ifelse(!is.na(bsa), mgfr_2c*1.73/bsa, NA)  # indexed to BSA
-  iohexol_vd = iohexol_m/1000/(A+B) # volume of distribution, L
-  # ODE micro parameters:
-  k10 = iohexol_m/iohexol_vd/AUC_inf/1000 # 1/min
-  k21 = a*b/k10
-  k12 = a+b - k10 - k21
-  # model fit parameters
-  model_r2 = summary(lm(iohexol ~ predict(fit)))[["r.squared"]]   # this is a pseudo-r2
-  ssr = sum(residuals(fit)^2)
-  sse = sum(residuals(fit)[time_min<=t_early]^2)
-  ssl = sum(residuals(fit)[time_min>=t_late]^2)
-  mgfr_method = if (nls_weights) {"NLLS-w"} else {"NLLS"}
-  
-  if (output == "summary") {
+  # INSERT SI CALCS HERE________________________
+  if (nls_v == "SI"){
+    A = A_start # use initial SI estimate
+    a = a_start # use initial SI estimate
+    B = B_start # use initial SI estimate
+    b = b_start # use initial SI estimate
+    
+    mgfr_method = if (length(intersect(dat_early$time, dat_late$time))>0) {"modified-SI"} else {"SI"}
+    AUC_inf <- A/a + B/b  # AUC_inf 
+    mgfr_2c = iohexol_m/AUC_inf  # Dose/AUC_inf = mL/minutes (not indexed to BSA)
+    mgfr_2c_bsa = ifelse(!is.na(bsa), mgfr_2c*1.73/bsa, NA)  # indexed to BSA
+    iohexol_vd = iohexol_m/1000/(A+B) # volume of distribution, L
+    
+    # model fit parameters
+    fit_SI_vals <- function(t, A, a, B, b) {A*exp(-a*t)+B*exp(-b*t) }
+    dat$pred <- fit_SI_vals(dat$time, A, a, B, b)
+    dat$resid <- dat$iohexol - dat$pred
+    # ODE micro parameters:
+    k10 = iohexol_m/iohexol_vd/AUC_inf/1000 # 1/min
+    k21 = a*b/k10
+    k12 = a+b - k10 - k21
+    
+    model_r2 =  summary(lm(pred ~ iohexol, data = dat))[["r.squared"]]  # this is a pseudo-r2
+    ssr = sum(dat$resid^2)
+    sse = sum(dat$resid[dat$time <= t_early]^2)
+    ssl = sum(dat$resid[dat$time >= t_late]^2)
+    
     res = data.frame("mgfr_method" = mgfr_method,
                      "mgfr_2c"     = mgfr_2c,
                      "mgfr_2c_bsa" = mgfr_2c_bsa,
@@ -234,34 +260,140 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                      "k21"         = k21,
                      "k12"         = k12,
                      "n_early"     = length(dat_early$time),
-                     "n_late"     = length(dat_late$time)
-    ) 
-    return(res)}  
+                     "n_late"     = length(dat_late$time))
+    
+  }  
+  #______________________________________________  
+  if (nls_v == "gslnls") {
+    # 2C NLS model fit
+    fit = gslnls::gsl_nls(iohexol ~ A*exp(-a*time_min) + B*exp(-b*time_min),
+                          data=data.frame(time_min, iohexol),
+                          lower = c(A=0, B=0, a=0, b=0),
+                          weights = wt,
+                          start=list(A = A_start,
+                                     B = B_start,
+                                     a = a_start,
+                                     b = b_start))  
+    
+    # Model Results
+    A  = coef(fit)[["A"]]
+    a  = coef(fit)[["a"]]
+    B  = coef(fit)[["B"]]
+    b  = coef(fit)[["b"]]
+    AUC_inf <- A/a + B/b  # AUC_inf 
+    mgfr_2c = iohexol_m/AUC_inf  # Dose/AUC_inf = mL/minutes (not indexed to BSA)
+    mgfr_2c_bsa = ifelse(!is.na(bsa), mgfr_2c*1.73/bsa, NA)  # indexed to BSA
+    iohexol_vd = iohexol_m/1000/(A+B) # volume of distribution, L
+    # ODE micro parameters:
+    k10 = iohexol_m/iohexol_vd/AUC_inf/1000 # 1/min
+    k21 = a*b/k10
+    k12 = a+b - k10 - k21
+    # model fit parameters
+    model_r2 = summary(lm(iohexol ~ predict(fit)))[["r.squared"]]   # this is a pseudo-r2
+    ssr = sum(residuals(fit)^2)
+    sse = sum(residuals(fit)[time_min<=t_early]^2)
+    ssl = sum(residuals(fit)[time_min>=t_late]^2)
+    mgfr_method =
+      if (nls_weights & nls_v=="gslnls") {"NLLS-gslnls-weighted"
+      } else if (nls_weights & nls_v=="base") {"NLLS-base-weighted"
+      } else if (!nls_weights & nls_v=="base") {"NLLS-base-unweighted"
+      } else if (!nls_weights & nls_v=="gslnls") {"NLLS-gslnls-unweighted"}
+    res = data.frame("mgfr_method" = mgfr_method,
+                     "mgfr_2c"     = mgfr_2c,
+                     "mgfr_2c_bsa" = mgfr_2c_bsa,
+                     "iohexol_m"   = iohexol_m,
+                     "iohexol_0"   =  A+B,
+                     "iohexol_vd"  = iohexol_vd,
+                     "ioh_auc"     = AUC_inf,
+                     "A"           = A,
+                     "a"           = a,
+                     "B"           = B,
+                     "b"           = b,
+                     "model_r2"    = model_r2, # this is a pseudo-r2
+                     "ssr"         = ssr,
+                     "sse"         = sse,
+                     "ssl"         = ssl,
+                     "k10"         = k10,
+                     "k21"         = k21,
+                     "k12"         = k12,
+                     "n_early"     = length(dat_early$time),
+                     "n_late"     = length(dat_late$time)    ) 
+  } 
+  if (nls_v == "base") {
+    fit = nls(iohexol  ~ A*exp(-a*time_min) + B*exp(-b*time_min) , 
+              data=data.frame(time_min, iohexol),
+              weights = wt,
+              start=list(A = A_start,
+                         B = B_start,
+                         a = a_start,
+                         b = b_start))  
+    # Model Results
+    A  = coef(fit)[["A"]]
+    a  = coef(fit)[["a"]]
+    B  = coef(fit)[["B"]]
+    b  = coef(fit)[["b"]]
+    AUC_inf <- A/a + B/b  # AUC_inf 
+    mgfr_2c = iohexol_m/AUC_inf  # Dose/AUC_inf = mL/minutes (not indexed to BSA)
+    mgfr_2c_bsa = ifelse(!is.na(bsa), mgfr_2c*1.73/bsa, NA)  # indexed to BSA
+    iohexol_vd = iohexol_m/1000/(A+B) # volume of distribution, L
+    # ODE micro parameters:
+    k10 = iohexol_m/iohexol_vd/AUC_inf/1000 # 1/min
+    k21 = a*b/k10
+    k12 = a+b - k10 - k21
+    # model fit parameters
+    model_r2 = summary(lm(iohexol ~ predict(fit)))[["r.squared"]]   # this is a pseudo-r2
+    ssr = sum(residuals(fit)^2)
+    sse = sum(residuals(fit)[time_min<=t_early]^2)
+    ssl = sum(residuals(fit)[time_min>=t_late]^2)
+    mgfr_method =
+      if (nls_weights & nls_v=="gslnls") {"NLLS-gslnls-weighted"
+      } else if (nls_weights & nls_v=="base") {"NLLS-base-weighted"
+      } else if (!nls_weights & nls_v=="base") {"NLLS-base-unweighted"
+      } else if (!nls_weights & nls_v=="gslnls") {"NLLS-gslnls-unweighted"}    
+    res = data.frame("mgfr_method" = mgfr_method,
+                     "mgfr_2c"     = mgfr_2c,
+                     "mgfr_2c_bsa" = mgfr_2c_bsa,
+                     "iohexol_m"   = iohexol_m,
+                     "iohexol_0"   =  A+B,
+                     "iohexol_vd"  = iohexol_vd,
+                     "ioh_auc"     = AUC_inf,
+                     "A"           = A,
+                     "a"           = a,
+                     "B"           = B,
+                     "b"           = b,
+                     "model_r2"    = model_r2, # this is a pseudo-r2
+                     "ssr"         = ssr,
+                     "sse"         = sse,
+                     "ssl"         = ssl,
+                     "k10"         = k10,
+                     "k21"         = k21,
+                     "k12"         = k12,
+                     "n_early"     = length(dat_early$time),
+                     "n_late"     = length(dat_late$time)    ) 
+  } 
+  if (output == "summary") {return(res)}  
   if (output == "gfr") return(mgfr_2c) # mGFR adjusted to 1.73m2 BSA
   if (output == "gfr_bsa") return(mgfr_2c_bsa) # mGFR adjusted to 1.73m2 BSA
-  if (output == "fit") return(fit)
+  if (output == "fit"){ 
+    if (nls_v == "SI") {return(list("Early"=lm_early, "Late"=lm_late))} else if (nls_v != "SI") {return(fit)}
+    }
   if (output == "plot") {
     plot_nls_fit <- function(model, time, iohexol) {
       # Main plot:
       time_range = 0:max(time)
       plot(time, iohexol, pch=16, xlab = "Time after injection (minutes)", ylab="Iohexol (ug/mL)")
-      lines(predict(model, list(time_min=0:max(time))), col="red", lty=2)
+      if (nls_v != "SI") {lines(predict(model, list(time_min=0:max(time))), col="red", lty=2)
+      } else if (nls_v == "SI") {
+        lines(0:max(time), fit_SI_vals(0:max(time), A, a, B, b), col="red", lty=2)        }
       title(main = ifelse(!is.null(id),      # add subtitle with subject identifier
                           paste0("Study: ",id, "\nIohexol measured GFR, 2-Compartment model\nMethod: ", mgfr_method), 
                           paste0("Iohexol measured GFR, 2-Compartment model\nMethod: ", mgfr_method)), 
             adj = 0)
-      # test_pred <- tryCatch(as.data.frame( predict(model, interval = "prediction", newdata = data.frame(time = 0:360), level = 0.95) ),
-      #                       error = function(e) {})
-      # test_pred$time <- 0:360
-      # polygon(x = c(test_pred$time, rev(test_pred$time)),
-      #         y = c(test_pred$upr, rev(test_pred$lwr)),
-      #         col =  adjustcolor("dodgerblue", alpha.f = 0.10), border = NA)
-      
-      # model summary values:
-      A  = coef(model)[["A"]] |> round(1)
-      a  = coef(model)[["a"]] |> round(4)
-      B  = coef(model)[["B"]] |> round(1)
-      b  = coef(model)[["b"]] |> round(4)
+      # Build Legend - model summary values:
+      A  = A |> round(1)
+      a  = a |> round(4)
+      B  = B |> round(1)
+      b  = b |> round(4)
       mgfr_2c = mgfr_2c |> round(1)
       mgfr_2c_bsa = mgfr_2c_bsa |> round(1)
       AUC_inf = AUC_inf |> round(1)
@@ -276,7 +408,6 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                       bquote(pseudo-R^2==.(model_r2))) )
     }
     plot_nls_fit(fit, time_min, iohexol)}
+  
+}
 
-  }
-
-# nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
