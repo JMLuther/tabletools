@@ -141,16 +141,6 @@ calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_i
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_weights = FALSE)
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", id="Name-IDnumber-Date")
 
-# Example for adding a prediction interval
-calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
-test_fit =calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit")
-test_pred <- predict(test_fit, interval = "prediction", newdata = data.frame(time_min = 0:360), level = 0.95) |> as.data.frame()
-test_pred$time <- 0:360
-polygon(x = c(test_pred$time, rev(test_pred$time)),
-        y = c(test_pred$upr, rev(test_pred$lwr)), 
-        col =  adjustcolor("dodgerblue", alpha.f = 0.10), border = NA)
-
-
 # examples with fewer time points
 dat_5p <- dat[dat$time \%in\% c(10, 20, 30, 120, 300), ]
 calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")

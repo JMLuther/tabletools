@@ -150,6 +150,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   
   # Omnipaqe calcs; from lookup table stored internally as tabletools:::df_omnipaque
   # Note: standard 5mL injection of Iohexol iohexol_v = 5 # mL = 3235 mg Iohexol.
+  # df_omnipaque=tabletools:::df_omnipaque # available in internal data
   ioh_spgrav = df_omnipaque$omnipaque_specgrav[df_omnipaque$omnipaque_v==omnipaque_v]/1000 # g/ml
   iohexol_mg_ml = df_omnipaque$iohexol_mg_ml[df_omnipaque$omnipaque_v==omnipaque_v] # mg/ml
   if (!is.null(ioh_inj_wt) & !is.null(ioh_inj_vol)) stop("If iohexol injection weight is provided, assign `ioh_inj_vol=NULL` and exact iohexol mass will be calculated.")
@@ -185,8 +186,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   a_start <- -coef(lm_early)[["time"]]
   
   # 2C NLS model fit
-  nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
-  fit = gslnls::gsl_nls(iohexol~nonlin2c(time_min, A, a, B, b), 
+  fit = gslnls::gsl_nls(iohexol ~ A*exp(-a*time_min) + B*exp(-b*time_min),
                         data=data.frame(time_min, iohexol),
                         lower = c(A=0, B=0, a=0, b=0),
                         weights = wt,
@@ -279,4 +279,3 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
 
   }
 
-# nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
