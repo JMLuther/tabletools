@@ -78,7 +78,8 @@
 #' @md
 #'
 #' @examples
-#' ## ├ Scwartz Data ----
+#' library(tabletools)
+#' ## ├ Schwartz Data ----
 #' # Data extracted from Schwartz Fig1 PMID: 16612328
 #' # Iohexol 5mL IV injection (Omnipaque 300, 5mL ~3235mg Iohexol)
 #' # sampling at 10, 20, 30, 60, 120, 240, 300, 360 min
@@ -99,16 +100,6 @@
 #' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 #' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_weights = FALSE)
 #' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", id="Name-IDnumber-Date")
-#' 
-#' # Example for adding a prediction interval
-#' calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
-#' test_fit =calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit")
-#' test_pred <- predict(test_fit, interval = "prediction", newdata = data.frame(time_min = 0:360), level = 0.95) |> as.data.frame()
-#' test_pred$time <- 0:360
-#' polygon(x = c(test_pred$time, rev(test_pred$time)),
-#'         y = c(test_pred$upr, rev(test_pred$lwr)), 
-#'         col =  adjustcolor("dodgerblue", alpha.f = 0.10), border = NA)
-#' 
 #'
 #' # examples with fewer time points
 #' dat_5p <- dat[dat$time %in% c(10, 20, 30, 120, 300), ]
@@ -261,10 +252,10 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
             adj = 0)
       # test_pred <- tryCatch(as.data.frame( predict(model, interval = "prediction", newdata = data.frame(time = 0:360), level = 0.95) ),
       #                       error = function(e) {})
-      test_pred$time <- 0:360
+      # test_pred$time <- 0:360
       # polygon(x = c(test_pred$time, rev(test_pred$time)),
-      # y = c(test_pred$upr, rev(test_pred$lwr)), 
-      # col =  adjustcolor("dodgerblue", alpha.f = 0.10), border = NA)
+      #         y = c(test_pred$upr, rev(test_pred$lwr)),
+      #         col =  adjustcolor("dodgerblue", alpha.f = 0.10), border = NA)
       
       # model summary values:
       A  = coef(model)[["A"]] |> round(1)
@@ -288,4 +279,4 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
 
   }
 
-nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
+# nonlin2c <- function(t, A, a, B, b) { A*(exp(-a*t)) + B*(exp(-b*t) )  }
