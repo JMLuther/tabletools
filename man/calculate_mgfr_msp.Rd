@@ -6,53 +6,100 @@
 \usage{
 calculate_mgfr_msp(
   time,
-  iohexol,
+  iohexol_conc,
   omnipaque_v = 300,
+  ioh_inj_vol = 5,
   ioh_inj_wt = NULL,
-  ioh_inj_vol = NULL,
-  height,
-  weight,
-  height_units = "cm",
-  weight_units = "kg"
+  ioh_units = "ug/mL",
+  time_units = "min",
+  id = NULL,
+  height = NA,
+  height_units = "m",
+  weight = NA,
+  weight_units = "kg",
+  method_adj = "BM",
+  t_late = 120,
+  output = "summary"
 )
 }
 \arguments{
 \item{time}{A vector of time values (minutes)}
 
-\item{iohexol}{A vector of Iohexol concentrations (mcg/mL) determined at the
-provided times. These values should not be log transformed}
+\item{iohexol_conc}{A vector of Iohexol plasma measurements (ug/mL)}
 
 \item{omnipaque_v}{Omnipaque version (eg 300 = Omnipaque 300 recommended).
 Other versions commonly available include 300 and 350 (USA) and 140, 280,
 240 (other areas)}
 
-\item{ioh_inj_wt}{Iohexol injection Weight by syringe weight determination
-(Pre-Post weight difference; recommnded method) in grams}
-
 \item{ioh_inj_vol}{Iohexol injection Volume by syringe volume injected (Not
 preferred; use if weights not available)}
 
-\item{height}{Patient Height, cm}
+\item{ioh_inj_wt}{Iohexol injection Weight by syringe weight determination
+(Pre-Post weight difference; recommnded method) in grams}
 
-\item{weight}{Patient Weight, kg}
+\item{ioh_units}{Iohexol concentration units, defaults to \code{ug/mL}}
+
+\item{time_units}{Time units, defaults to \code{min}}
+
+\item{id}{Study identifier (optional, passed to plot title)}
+
+\item{height}{Patient Height, cm}
 
 \item{height_units}{Height units, if not in cm}
 
+\item{weight}{Patient Weight, kg}
+
 \item{weight_units}{Weight units, if not in kg}
-}
-\value{
-Data.frame containing results with calculated values for the
-following variables:
+
+\item{t_late}{First Time point (minutes) to use in the "Late" elimination
+phase, defaults to \code{120}}
+
+\item{output}{Desired output, defaults to \code{summary} of model. Alternatively
+can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
+
+The estimation method can have the following options:
 \itemize{
-\item \code{iohexol_m} Iohexol dose (mcg Iodine)
-\item \code{iohexol_0} Iohexol intercept (mcg/mL)
-\item \code{iohexol_k} Iohexol elimination constant (k)
-\item \code{rsq} Iohexol model R-sqaured value (recommend > 0.97)
-\item \code{ioh_auc} Iohexol area under the curve (AUC, mcg min / mL)
-\item \code{ioh_CL} Iohexol Clearance (dose/area)
-\item \code{mGFR_1c} GFR (mL/min) determined by Iohexol clearance
-\item \code{mGFR_1c_bsa} GFR indexed to BSA (mL/min/1.73 m2 bsa)
+\item \code{SI} Slope-Intercept method obtained by performing two linear regressions of log(iohexol) vs time for early and late time points. Obtained by setting \code{nls_v = "SI"}
+\item \code{modified-SI} SI method with shared time-point(s) between early and late periods (ie overlapping \code{t_early} = \code{t_late}). Obtained by setting, for example \verb{nls_v = "SI", t_early=120, t_late=120} or another option with overlapping times.
+\item \code{NLLS-gslnls-weighted} NLS fit using the \code{gslnls()} function from the \code{gsl_nls} package. Obtained by setting \verb{nls_v = "gslnls", nls_weights=T}
+\item \code{NLLS-base-weighted} NLS fit using the \code{nls()} function from the base \code{stats} package. Obtained by setting \verb{nls_v = "base", nls_weights=T}
+\item \code{NLLS-gslnls-unweighted} NLS fit using the \code{gslnls()} function from the \code{gsl_nls} package. Obtained by setting \verb{nls_v = "gslnls", nls_weights=F}
+\item \code{NLLS-base-unweighted} NLS fit using the \code{nls()} function from the base \code{stats} package. Obtained by setting \verb{nls_v = "base", nls_weights=F}
 }
+
+For \code{output = "summary"} results returned includes the named variables:
+\itemize{
+\item \code{mgfr_method} Method used for GFR calculation (see above). Results should be similar.
+\item \code{mgfr_2c} Measured GFR (mL/min)
+\item \code{mgfr_2c_bsa} The measured GFR (mL/min/1.73 m2) indexed to body surface area (BSA calculated by DuBois equation)
+\item \code{iohexol_m}   Iohexol mass (ucg) injected. Determined either by user-provided syringe weight or volume injected.
+\item \code{iohexol_0}   Iohexol concentration at t=0 calculated by A+B (theoretical, not measured)
+\item \code{iohexol_vd}  Iohexol Volume of distribution estimated by Dose/Iohexol\link{t0}
+\item \code{ioh_auc}  Iohexol calculated AUC from t=0 to Infinity, estimated by A/a + B/b.
+\item \code{A} Model parameter A
+\item \code{a} Model parameter a, or \alpha
+\item \code{B} Model parameter B
+\item \code{b} Model parameter b, or \beta
+\item \code{model_r2} Model Pseudo-R2, calculated as the linear regression R2 for predicted~observed values
+\item \code{ssr} Sum of squared residuals
+\item \code{sse} Sum of squared residuals for early time points
+\item \code{ssl} Sum of squared residuals for late time points
+\item \code{k10} Iohexol elimination rate constant from central compartment (1/min)
+\item \code{k21} Iohexol transfer rate constant from peripheral to central compartment (1/min)
+\item \code{k12} Iohexol transfer rate constant from central to peripheral compartment (1/min)
+\item \code{n_early} Number of early time points measured and used in model
+\item \code{n_late} Number of late time points measured and used in model
+}
+
+\code{gfr} returns a single \code{mgfr_2c} value, the measured GFR (mL/min).
+\code{gfr_bsa} returns a single \code{mgfr_2c_bsa} value, the measured GFR
+(mL/min/1.73 m2) indexed to body surface area (BSA calculated by DuBois
+equation).
+
+\code{fit} returns the non-linear regression model fit object.
+
+\code{plot} returns a base-R plot of observed and predicted regression curve vs
+time, and summary measures in the legend.}
 }
 \description{
 This method uses multiple sample measurements of iohexol to determine GFR

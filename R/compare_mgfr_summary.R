@@ -23,6 +23,7 @@
 #'                       223.1121251,111.1086272,61.88251616,
 #'                       37.43137242,21.79250307,12.75996292)  )
 #' # from Pottel Supplemental document
+#' # Pottel examples highlight difficult model fits 
 #' dat10 <- data.frame(
 #'   id = c(10L, 10L, 10L, 10L, 10L, 10L, 10L, 10L),
 #'   time = c(30L, 60L, 90L, 120L, 150L, 180L, 240L, 300L),
@@ -41,11 +42,13 @@
 #' compare_mgfr_plot(dat_tondel$time, dat_tondel$conc, ioh_inj_vol = 2.08, weight = 13, height = 0.9)
 #' 
 #' # Comparisons of available methods: published studies
-#' # Schwartz data in kids
+#' # Schwartz data in kids; note don't have subject details (height, weight, inj_vol)
 #' compare_mgfr_summary(dat$time, dat$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
 #' compare_mgfr_plot(dat$time, dat$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
 #' 
 #' # Pottel ID#10 Difficult fit
+#' # Negative value using unconstrained parameters (NLLS-base-unweighted)
+#' # caused by early outlier data points (t=60 most likely)
 #' compare_mgfr_summary(dat10$time, dat10$conc, height = 1.67, weight = 70)
 #' compare_mgfr_plot(dat10$time, dat10$conc, height = 1.67, weight = 70)
 #' 
