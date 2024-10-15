@@ -430,8 +430,6 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
 #' @return Table of mGFR summary values, using combination of available methods
 #' @export
 #' @rdname calculate_mgfr_2c
-#'
-#' @examples
 compare_mgfr_summary <- function(time, iohexol_conc, height, weight, ioh_inj_vol=5, t_early=100, t_late=120){
   rbind(
     calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI"),
@@ -447,7 +445,6 @@ compare_mgfr_summary <- function(time, iohexol_conc, height, weight, ioh_inj_vol
 #' @return Table of mGFR summary Plots, using combination of available methods
 #' @export
 #' @rdname calculate_mgfr_2c
-#'
 compare_mgfr_plot <- function(time, iohexol_conc, height, weight, ioh_inj_vol=5, t_common=120,...){
   if (is.null(t_common)) {stop("Provide a value for 't_common' for m-SI method")}
   par(mfrow = c(3, 2))
