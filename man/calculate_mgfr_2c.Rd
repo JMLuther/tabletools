@@ -133,6 +133,7 @@ can be used in ODE models, but is not implemented here.
 }
 \examples{
 library(tabletools)
+# PUBLISHED IOHEXOL DATA ----
 ## ├ Schwartz Data ----
 # Data extracted from Schwartz Fig1 PMID: 16612328
 # Iohexol 5mL IV injection (Omnipaque 300, 5mL ~3235mg Iohexol)
@@ -146,6 +147,18 @@ dat <-
     iohexol_ug_ml = c(656.1168132,477.1163595,371.3542728,
                       223.1121251,111.1086272,61.88251616,
                       37.43137242,21.79250307,12.75996292)  )
+## ├ Pottel data ----
+# from Supplemental document
+dat10 <- data.frame(
+  id = c(10L, 10L, 10L, 10L, 10L, 10L, 10L, 10L),
+  time = c(30L, 60L, 90L, 120L, 150L, 180L, 240L, 300L),
+  conc = c(239.9117,217.3945,178.215,159.4682,
+           143.1718,130.3613,113.6223,98.6295))
+dat17 <- data.frame(
+  id = c(17L, 17L, 17L, 17L, 17L, 17L, 17L, 17L),
+  time = c(30L,60L,90L,120L,150L,180L,240L,300L),
+  conc = c(264.529,170.6695,143.0782,118.5563,
+           102.927,89.5715,67.937,51.058))
 
 # Comparison of Output options
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5) # Default
@@ -165,14 +178,18 @@ calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_i
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "gslnls", nls_weights = F)
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base", nls_weights = F)
 
-# Comparison of estimates from all available methods
-rbind(
-  calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "SI"),
-  calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "SI", t_early = 120, t_late = 120),
-  calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "gslnls"),
-  calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "base"),
-  calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "gslnls", nls_weights = F),
-  calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="summary", nls_v = "base", nls_weights = F))
+# Comparisons of available methods: published studies
+# Schwartz data in kids
+compare_mgfr_summary(dat$time, dat$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
+compare_mgfr_plot(dat$time, dat$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
+
+# Pottel ID#10 Difficult fit
+compare_mgfr_summary(dat10$time, dat10$conc, height = 1.67, weight = 70)
+compare_mgfr_plot(dat10$time, dat10$conc, height = 1.67, weight = 70)
+
+# Pottel ID#17 Difficult fit
+compare_mgfr_summary(dat17$time, dat17$conc, height = 1.67, weight = 70)
+compare_mgfr_plot(dat17$time, dat17$conc, height = 1.67, weight = 70)
 
 # examples with fewer time points
 dat_5p <- dat[dat$time \%in\% c(10, 20, 30, 120, 300), ]
