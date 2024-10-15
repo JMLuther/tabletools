@@ -2,7 +2,7 @@
 #'
 #' This method uses multiple sample measurements of iohexol to determine GFR
 #' (glomerular filtration rate), using a single compartment model of the late
-#' slope and adjustment using the Brochner-Mortenson correction equation.
+#' slope and adjustment using the Brochner-Mortenson correction equation (.
 #' Relevant Methods and recommendations are detailed in the
 #' \href{https://pubmed.ncbi.nlm.nih.gov/39097002/}{European Kidney Function
 #' Consortium statment paper}.

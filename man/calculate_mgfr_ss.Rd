@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculate_mgfr_ss.R
 \name{calculate_mgfr_ss}
 \alias{calculate_mgfr_ss}
-\title{Iohexol Single Sample (SS) estimate of GFR}
+\title{Iohexol Single Sample (SS) measure of GFR}
 \usage{
 calculate_mgfr_ss(
   egfr,
