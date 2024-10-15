@@ -10,7 +10,7 @@
 #' @inheritParams calculate_mgfr_2c
 #' @param time
 #'
-#' @return Table of mGFR summary values, using combination of available methods
+#' @return `compare_mgfr_summary()` returns a Table of mGFR summary values, using combination of available methods
 #' @export
 #' @examples
 #' library(tabletools)
@@ -88,7 +88,7 @@ compare_mgfr_summary <- function(time, iohexol_conc, height, weight, ioh_inj_vol
 }
 
 #' @inheritParams calculate_mgfr_2c
-#' @return Table of mGFR summary Plots, using combination of available methods
+#' @return `compare_mgfr_plot()` returns a 3x2 grid of mGFR summary Plots, using combination of available methods
 #' @export
 #' @rdname compare_mgfr_summary
 compare_mgfr_plot <- function(time, iohexol_conc, height, weight, ioh_inj_vol=5, t_common=120,...){

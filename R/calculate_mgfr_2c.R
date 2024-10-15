@@ -4,12 +4,13 @@
 #' late (beta phase) sample measurements of iohexol to determine GFR (glomerular
 #' filtration rate). This function uses nonlinear modeling via
 #' Levenberg-Marquardt method in the `gsl_nsl` package and the `gslnls()`
-#' function to fit the 2-compartment model of iohexol kinetics using the formula \eqn{C=A \cdot exp^{- \alpha \cdot t} +
-#' B*e^{- \beta \cdot t} } and weighted by \eqn{1/Iohexol^2}. Use of the `gsl_nsl` package allows for better support of parameter constraints (constrained to positive values) and other methods (e.g. `predict` methods using fit object) compared to the base `nls()` function.  The general method and provided examples are
+#' function to fit the 2-compartment model of iohexol kinetics. The NLLS methods use the formula \eqn{C=A \cdot exp^{- \alpha \cdot t} +
+#' B*e^{- \beta \cdot t} } and weighted by \eqn{1/Iohexol^2}. Initial estimates for early (A, a) and late (B, b) parameters used for NLLS estimation are obtained using standard "Slope-Intercept" methods for linear regresion of \eqn{log(Iohexol)~time} for two lines for the early and late portions. Results for this model can be obtained using the `nls_v="SI"` option. Use of the `gsl_nsl` package allows for better support of parameter constraints (constrained to positive values) and other methods (e.g. `predict` methods using fit object) compared to the base `nls()` function.  The general method and provided examples are
 #' modified from \href{https://pubmed.ncbi.nlm.nih.gov/16612328/}{Schwartz et al.
 #' Kidney Int. 2006.}. Further discussion and details regarding methods of fitting the 2-compartment models can be found at \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8101203/}{Pottel et al.} Results are returned as a non-indexed value for GFR (`mgfr_2c`) and also indexed to BSA of 1.73m2 if height and weight are provided (`mgfr_2c_bsa`).
 #' The summary provides estimates of kinetic parameters (k10, k21, k12) which
-#' can be used in ODE models, but is not implemented here.
+#' can be used in ODE models (see example in [compare_mgfr_summary]), but is not
+#' implemented here.
 #'
 #' @param time A vector of time values (minutes)
 #' @param iohexol_conc A vector of Iohexol plasma measurements (ug/mL)
@@ -87,8 +88,8 @@
 #' @importFrom gslnls gsl_nls
 #' @md
 #' @seealso [compare_mgfr_summary()] for quick Table of results calculated by
-#' available methods. [compare_mgfr_plot()] for quick Visual comparison of plots
-#' calculated by available methods.
+#'   available methods. [compare_mgfr_plot()] for quick Visual comparison of
+#'   plots calculated by available methods.
 #'
 #' @examples
 #' library(tabletools)
