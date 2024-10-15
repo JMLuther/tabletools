@@ -1,4 +1,4 @@
-#' Iohexol Single Sample (SS) estimate of GFR
+#' Iohexol Single Sample (SS) measure of GFR
 #'
 #' This method uses a single sample measurement of iohexol to determine GFR
 #' (glomerular filtration rate), by optimizing 3 equations initially described
