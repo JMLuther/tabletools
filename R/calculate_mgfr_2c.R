@@ -426,7 +426,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   
 }
 
-#' @inherit calculate_mgfr_2c param
+#' @inheritParams calculate_mgfr_2c
 #' @return Table of mGFR summary values, using combination of available methods
 #' @export
 #' @rdname calculate_mgfr_2c
@@ -443,7 +443,7 @@ compare_mgfr_summary <- function(time, iohexol_conc, height, weight, ioh_inj_vol
   )
 }
 
-#' @inherit calculate_mgfr_2c param
+#' @inheritParams calculate_mgfr_2c
 #' @return Table of mGFR summary Plots, using combination of available methods
 #' @export
 #' @rdname calculate_mgfr_2c
