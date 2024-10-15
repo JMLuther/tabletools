@@ -2,6 +2,8 @@
 % Please edit documentation in R/calculate_mgfr_2c.R
 \name{calculate_mgfr_2c}
 \alias{calculate_mgfr_2c}
+\alias{compare_mgfr_summary}
+\alias{compare_mgfr_plot}
 \title{Iohexol measured GFR with 2-compartment model (early and late sampling)}
 \usage{
 calculate_mgfr_2c(
@@ -22,6 +24,26 @@ calculate_mgfr_2c(
   t_late = 120,
   t_early = 100,
   output = "summary"
+)
+
+compare_mgfr_summary(
+  time,
+  iohexol_conc,
+  height,
+  weight,
+  ioh_inj_vol = 5,
+  t_early = 100,
+  t_late = 120
+)
+
+compare_mgfr_plot(
+  time,
+  iohexol_conc,
+  height,
+  weight,
+  ioh_inj_vol = 5,
+  t_common = 120,
+  ...
 )
 }
 \arguments{
@@ -118,6 +140,10 @@ Desired output with either a data.frame of results (\code{summary}), a
 single value of BSA adjusted GFR (\code{gfr} or \code{gfr_bsa}), an \verb{nls object} for
 model fit (\code{fit}), or a plot with observed values, model fit curve, and
 summary results in the figure legend (\code{plot})
+
+Table of mGFR summary values, using combination of available methods
+
+Table of mGFR summary Plots, using combination of available methods
 }
 \description{
 This method requires multiple early (alpha phase, typically <120 min) and
