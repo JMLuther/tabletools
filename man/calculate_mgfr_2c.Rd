@@ -2,8 +2,6 @@
 % Please edit documentation in R/calculate_mgfr_2c.R
 \name{calculate_mgfr_2c}
 \alias{calculate_mgfr_2c}
-\alias{compare_mgfr_summary}
-\alias{compare_mgfr_plot}
 \title{Iohexol measured GFR with 2-compartment model (early and late sampling)}
 \usage{
 calculate_mgfr_2c(
@@ -24,26 +22,6 @@ calculate_mgfr_2c(
   t_late = 120,
   t_early = 100,
   output = "summary"
-)
-
-compare_mgfr_summary(
-  time,
-  iohexol_conc,
-  height,
-  weight,
-  ioh_inj_vol = 5,
-  t_early = 100,
-  t_late = 120
-)
-
-compare_mgfr_plot(
-  time,
-  iohexol_conc,
-  height,
-  weight,
-  ioh_inj_vol = 5,
-  t_common = 120,
-  ...
 )
 }
 \arguments{
@@ -75,18 +53,18 @@ preferred; use if weights not available)}
 
 \item{weight_units}{Weight units, if not in kg}
 
-\item{nls_weights}{Use weights in nls model (\code{TRUE} or \code{FALSE}), defaults to \code{TRUE}. Uses
-1/iohexol^2 as weights, which more heavily weight lower concentrations
-obtained at later time points}
+\item{nls_weights}{Use weights in nls model (\code{TRUE} or \code{FALSE}), defaults to
+\code{TRUE}. Uses 1/iohexol^2 as weights, which more heavily weight lower
+concentrations obtained at later time points}
 
 \item{nls_v}{Model estimation method (defaults to \code{gslnls}).  Can also use
 \code{SI} or \code{base}}
 
-\item{t_late}{First Time point (minutes) to use in the "Late" elimination phase, defaults to
-\code{120}}
+\item{t_late}{First Time point (minutes) to use in the "Late" elimination
+phase, defaults to \code{120}}
 
-\item{t_early}{Last Time point (minutes) to use in the "Early" distribution phase, defaults
-to \code{100}}
+\item{t_early}{Last Time point (minutes) to use in the "Early" distribution
+phase, defaults to \code{100}}
 
 \item{output}{Desired output, defaults to \code{summary} of model. Alternatively
 can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
@@ -140,10 +118,6 @@ Desired output with either a data.frame of results (\code{summary}), a
 single value of BSA adjusted GFR (\code{gfr} or \code{gfr_bsa}), an \verb{nls object} for
 model fit (\code{fit}), or a plot with observed values, model fit curve, and
 summary results in the figure legend (\code{plot})
-
-Table of mGFR summary values, using combination of available methods
-
-Table of mGFR summary Plots, using combination of available methods
 }
 \description{
 This method requires multiple early (alpha phase, typically <120 min) and
@@ -186,12 +160,17 @@ dat17 <- data.frame(
   conc = c(264.529,170.6695,143.0782,118.5563,
            102.927,89.5715,67.937,51.058))
 
+## ├ Tondel data ----
+# full example data provided by Tondel in Table 2: https://pubmed.ncbi.nlm.nih.gov/29134449/
+dat_tondel <- data.frame(time=c(10,30,120,180,210,240,300),
+                         conc=c(464,343,156,100,84,72,51))
+
 # Comparison of Output options
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5) # Default
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="gfr")
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="gfr_bsa")
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit")
-calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit", nls_v="base") 
+calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit", nls_v="base")
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="fit", nls_v="SI") # two fits
 
 # Plot options: ideally pass the ID information
@@ -204,19 +183,6 @@ calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_i
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "gslnls", nls_weights = F)
 calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base", nls_weights = F)
 
-# Comparisons of available methods: published studies
-# Schwartz data in kids
-compare_mgfr_summary(dat$time, dat$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
-compare_mgfr_plot(dat$time, dat$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
-
-# Pottel ID#10 Difficult fit
-compare_mgfr_summary(dat10$time, dat10$conc, height = 1.67, weight = 70)
-compare_mgfr_plot(dat10$time, dat10$conc, height = 1.67, weight = 70)
-
-# Pottel ID#17 Difficult fit
-compare_mgfr_summary(dat17$time, dat17$conc, height = 1.67, weight = 70)
-compare_mgfr_plot(dat17$time, dat17$conc, height = 1.67, weight = 70)
-
 # examples with fewer time points
 dat_5p <- dat[dat$time \%in\% c(10, 20, 30, 120, 300), ]
 calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
@@ -227,26 +193,9 @@ calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70,
 dat_7p <- dat[dat$time \%in\% c(10, 20, 30, 60, 240, 300, 360), ]
 calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 
-# ODE MODEL FOR COMPARISON;
-# Example only to verify ODE parameter estimates, not required for GFR calculation
-# This model uses solution from the nls model to get the kinetic parameters
-library(deSolve)
-m2c <- function(Time, State, Pars) {
-  with(as.list(c(State, Pars)), {
-    dIohexol <- -k10*Iohexol - k12*Iohexol + k21*C2 # Central Conc
-    dC2 <-  k12*Iohexol - k21*C2                    # Peripheral Conc
-    return(list(c(dIohexol, dC2)))
-  })
 }
-# get parameters from nls model
-ioh_nlfit <- calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5)
-pars  <- c(k10 = ioh_nlfit$k10, k21 = ioh_nlfit$k21, k12 = ioh_nlfit$k12)
-# plug into the ODE model solution
-yini  <- c(Iohexol = ioh_nlfit$A+ioh_nlfit$B, C2=0)
-times <- seq(0, 360, by = 1)
-out   <- ode(yini, times, m2c, pars)
-out_df <- as.data.frame(out)
-# Plot to verfiy kinetic parameters vs nls model
-calculate_mgfr_2c(dat$time, dat$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
-lines(out_df$time, out_df$Iohexol, lty=2)
+\seealso{
+\code{\link[=compare_mgfr_summary]{compare_mgfr_summary()}} for quick Table of results calculated by
+available methods. \code{\link[=compare_mgfr_plot]{compare_mgfr_plot()}} for quick Visual comparison of plots
+calculated by available methods.
 }
