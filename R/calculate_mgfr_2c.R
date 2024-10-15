@@ -84,8 +84,6 @@
 #'   model fit (`fit`), or a plot with observed values, model fit curve, and
 #'   summary results in the figure legend (`plot`)
 #' @export calculate_mgfr_2c
-#' @export compare_mgfr_plot 
-#' @export compare_mgfr_summary
 #' @importFrom gslnls gsl_nls
 #' @md
 #'
@@ -428,26 +426,37 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   
 }
 
-compare_mgfr_summary <- function(t, y, height, weight, ioh_inj_vol=5,...){
+#' @inherit calculate_mgfr_2c param
+#' @return Table of mGFR summary values, using combination of available methods
+#' @export
+#' @rdname calculate_mgfr_2c
+#'
+#' @examples
+compare_mgfr_summary <- function(time, iohexol_conc, height, weight, ioh_inj_vol=5, t_early=100, t_late=120){
   rbind(
-    calculate_mgfr_2c(t, y, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI"),
-    calculate_mgfr_2c(t, y, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI", t_early = 120, t_late = 120),
-    calculate_mgfr_2c(t, y, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls"),
-    calculate_mgfr_2c(t, y, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base"),
-    calculate_mgfr_2c(t, y, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls", nls_weights = F),
-    calculate_mgfr_2c(t, y, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base", nls_weights = F)
+    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI"),
+    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI", t_early = t_early, t_late = t_late),
+    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls"),
+    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base"),
+    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls", nls_weights = F),
+    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base", nls_weights = F)
   )
 }
 
-compare_mgfr_plot <- function(t, y, height, weight, ioh_inj_vol=5, t_common=120,...){
+#' @inherit calculate_mgfr_2c param
+#' @return Table of mGFR summary Plots, using combination of available methods
+#' @export
+#' @rdname calculate_mgfr_2c
+#'
+compare_mgfr_plot <- function(time, iohexol_conc, height, weight, ioh_inj_vol=5, t_common=120,...){
   if (is.null(t_common)) {stop("Provide a value for 't_common' for m-SI method")}
   par(mfrow = c(3, 2))
-  calculate_mgfr_2c(t, y, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI")
-  calculate_mgfr_2c(t, y, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI", t_early = 120, t_late = 120)
-  calculate_mgfr_2c(t, y, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls")
-  calculate_mgfr_2c(t, y, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base")
-  calculate_mgfr_2c(t, y, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls", nls_weights = F)
-  calculate_mgfr_2c(t, y, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base", nls_weights = F)
+  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI")
+  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI", t_early = 120, t_late = 120)
+  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls")
+  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base")
+  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls", nls_weights = F)
+  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base", nls_weights = F)
   par(mfrow=c(1,1))
 }
 
