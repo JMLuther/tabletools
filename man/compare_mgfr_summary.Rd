@@ -44,9 +44,9 @@ phase, defaults to \code{100}}
 phase, defaults to \code{120}}
 }
 \value{
-Table of mGFR summary values, using combination of available methods
+`compare_mgfr_summary()` returns a Table of mGFR summary values, using combination of available methods
 
-Table of mGFR summary Plots, using combination of available methods
+`compare_mgfr_plot()` returns a 3x2 grid of mGFR summary Plots, using combination of available methods
 }
 \description{
 Useful to analyze outlier or inconsistent results. Note most variation occurs
