@@ -9,6 +9,7 @@ calculate_isi_matsuda(
   glucose,
   insulin,
   time_units = "min",
+  sample_times = c(0, 30, 60, 90, 120),
   glucose_units = "mg/dl",
   insulin_units = "uU/ml"
 )
@@ -20,29 +21,44 @@ calculate_isi_matsuda(
 
 \item{insulin}{Vector of insulin values (in uU/mL)}
 
-\item{time_units}{if units are not in "min", can indicate here for unit conversion (options "min" or "hr")}
+\item{time_units}{if units are not in "min", can indicate here for unit
+conversion (options "min" or "hr")}
 
-\item{glucose_units}{if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l")}
+\item{sample_times}{Timepoints to use for calculation (default =
+c(0,30,60,90,120)). Timepoints not listed will be dropped.}
 
-\item{insulin_units}{if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")}
+\item{glucose_units}{if units are not in "mg/dl", can indicate here for unit
+conversion (options "mg/dl" or "mmol/l")}
+
+\item{insulin_units}{if units are not in "uU/ml", can indicate here for unit
+conversion (options "uU/ml" or "pmol/l")}
 }
 \value{
 Matsuda index as a single value ()
 }
 \description{
-This function calculates the Matsuda index using glucose and insulin 
-sampled during a standard 75g oral glucose tolerance test.
-Results can be checked using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online calculator}.
+This function calculates the Matsuda index using glucose and insulin sampled
+during a standard 75g oral glucose tolerance test. Results can be checked
+using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online
+calculator}. Examples with reduced sampling times have been validated using the online calculator.
 }
 \details{
-Standard timepoints are 0, 30, 60, 90, and 120 min.
-Note: insulin unit conversion may differ differ depending on assay. 
-Insulin (pmol/l) = insulin (uU/ml)*6 
+Standard timepoints (`sample_times`) are 0, 30, 60, 90, and 120 min. This
+option can be changed to use alternative sampling times, and if extra
+timepoints are provided, they will be dropped for analysis with a warning.
 
-`calculate_isi_matsuda()` accepts 3 separate vectors for time, glucose, insulin. 
+If time is provided out of order, it will be reordered and trigger a warning.
 
-The formula used for this calculation is described in \href{https://pubmed.ncbi.nlm.nih.gov/10480510/}{Matsuda et al.}:
-\deqn{10,000 \cdot \sqrt{Glucose_{0} \cdot Insulin_{0} \cdot Glucose_{mean} \cdot Insulin_{mean} }}
+Note: insulin unit conversion may differ differ depending on assay. Insulin
+(pmol/l) = insulin (uU/ml)*6
+
+`calculate_isi_matsuda()` accepts 3 separate vectors for time, glucose,
+insulin.
+
+The formula used for this calculation is described in
+\href{https://pubmed.ncbi.nlm.nih.gov/10480510/}{Matsuda et al.}:
+\deqn{10,000 \cdot \sqrt{Glucose_{0} \cdot Insulin_{0} \cdot Glucose_{mean}
+\cdot Insulin_{mean} }}
 }
 \examples{
 # individual objects for each item
@@ -57,8 +73,6 @@ ogtt1 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
                     insulin=c(12.8, 30.7, 68.5, 74.1, 44.0)) # uU/mL
 calculate_isi_matsuda(ogtt1$time, ogtt1$glucose, ogtt1$insulin) # 3.43125
 
-
-
 # Convert units
 ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
                     glucose = c(5.167, 7.167, 9.889, 9.111, 5.3889), # glucose in mmol/l
@@ -68,4 +82,11 @@ calculate_isi_matsuda(time =  ogtt5$time,
                         glucose = ogtt5$glucose,
                         insulin = ogtt5$insulin,
                         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
+
+# Handle different time points
+calculate_isi_matsuda(time, glucose, insulin, sample_times = c(0,30,60,90)) # 3.43125
+calculate_isi_matsuda(time, glucose, insulin, sample_times = c(0,30,60,120)) # 3.68
+calculate_isi_matsuda(time, glucose, insulin, sample_times = c(0,30,120)) # 4.72
+calculate_isi_matsuda(time, glucose, insulin, sample_times = c(0,60,120)) # 3.56
+calculate_isi_matsuda(time, glucose, insulin, sample_times = c(0,120)) # 5.58
 }

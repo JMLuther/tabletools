@@ -24,11 +24,14 @@ calculate_isi_avignon(
 
 \item{weight}{Weight (kg)}
 
-\item{time_units}{if units are not in "min", can indicate here for unit conversion (options "min" or "hr")}
+\item{time_units}{if units are not in "min", can indicate here for unit
+conversion (options "min" or "hr")}
 
-\item{glucose_units}{if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l")}
+\item{glucose_units}{if units are not in "mg/dl", can indicate here for unit
+conversion (options "mg/dl" or "mmol/l")}
 
-\item{insulin_units}{if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")}
+\item{insulin_units}{if units are not in "uU/ml", can indicate here for unit
+conversion (options "uU/ml" or "pmol/l")}
 
 \item{weight_units}{weight units, if not in kg}
 }
