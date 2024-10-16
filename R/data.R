@@ -13,7 +13,6 @@
 #'  `glucose_000`, `glucose_030`). `ogtt_nested` contains time, glucose, and
 #'  insulin in long format a dataframe stored in a list-column for each
 #'  participant.
-#'  @md 
 #'  Demographic data includes:
 #' \describe{
 #' \item{age}{Age, years}
@@ -28,10 +27,11 @@
 #' \item{`ogtt_df`}{A nested dataframe with a single OGTT result per row in the nested dataset (`ogtt_nested`), Time points, in minutes (0, 30, 60, 90, 120) denoted either in the variable name (`_000`, `_030`) or in the time column of the nested dataset}
 #'}
 #'@source Primary data collected from multiple studies
+#'@md 
+
 "ogtt_wide"
 
 #' @rdname ogtt_wide
-#' @md 
 #' @format `ogtt_wide` A dataframe with 184 OGTT results, with a nested
 #'   dataframe with each participant result (time, glucose, insulin)
 "ogtt_nested"
