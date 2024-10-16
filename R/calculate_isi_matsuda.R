@@ -13,9 +13,9 @@
 #' The formula used for this calculation is described in \href{https://pubmed.ncbi.nlm.nih.gov/10480510/}{Matsuda et al.}:
 #' \deqn{10,000 \cdot \sqrt{Glucose_{0} \cdot Insulin_{0} \cdot Glucose_{mean} \cdot Insulin_{mean} }}
 #'  
-#' @param time  a column name (unquoted) indicating time values (in minutes)
-#' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
-#' @param insulin a column name (unquoted) storing insulin values (in uU/mL)
+#' @param time  Vector of time values (in minutes)
+#' @param glucose Vector of glucose values (in mg/dL)
+#' @param insulin Vector of insulin values (in uU/mL)
 #' @param time_units if units are not in "min", can indicate here for unit conversion (options "min" or "hr")
 #' @param glucose_units if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l") 
 #' @param insulin_units if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")
@@ -49,8 +49,9 @@
 #'                         insulin = ogtt5$insulin,
 #'                         time_units = "hr", insulin_units = "pmol/l", glucose_units = "mmol/l")
 
-calculate_isi_matsuda <- function(time, glucose, insulin, time_units = "min", 
-                                    glucose_units = "mg/dl", insulin_units = "uU/ml") {
+calculate_isi_matsuda <- function(time, glucose, insulin, 
+                                  time_units = "min", 
+                                  glucose_units = "mg/dl", insulin_units = "uU/ml") {
 
   if (any(is.na(time)) | any(is.na(glucose)) | any(is.na(insulin))) {
     rlang::warn("Check for missing values in time, glucose, and insulin")

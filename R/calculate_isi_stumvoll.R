@@ -14,17 +14,9 @@
 #' BMI and age are required. Note the demographic version only utilizes Insulin
 #' at t=120 and dose not incorporate glucose.
 #'
-#' @param time  a column name (unquoted) indicating time values (in minutes)
-#' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
-#' @param insulin a column name (unquoted) storing insulin values (in uU/mL)
-#' @param bmi body mass index (\eqn{kg/m^2})
-#' @param age age (years)
-#' @param time_units if units are not in "min", can indicate here for unit
-#'   conversion (options "min" or "hr")
-#' @param glucose_units if units are not in "mg/dl", can indicate here for unit
-#'   conversion (options "mg/dl" or "mmol/l")
-#' @param insulin_units if units are not in "uU/ml", can indicate here for unit
-#'   conversion (options "uU/ml" or "pmol/l")
+#' @inheritParams calculate_isi_matsuda
+#' @param bmi Body mass index (\eqn{kg/m^2})
+#' @param age Age (years)
 #'
 #' @return Stumvoll Insulin Sensitivity Index as a single value
 #' @export
@@ -46,7 +38,7 @@
 #'                     glucose=c(100, 160, 160, 160, 140),      # mg/dL
 #'                     insulin=c(5, 10, 10, 10, 5))             # uU/mL
 #' calculate_isi_stumvoll(ogtt2$time, ogtt2$glucose, ogtt2$insulin) #
-#' calculate_matsuda_index(ogtt2$time, ogtt2$glucose, ogtt2$insulin)
+#' calculate_isi_matsuda(ogtt2$time, ogtt2$glucose, ogtt2$insulin)
 #'
 #' # Convert units
 #' ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
