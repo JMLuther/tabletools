@@ -43,10 +43,10 @@
 #'   The `mgfr_method` describes the method for estimation, which can have the following options:
 #'    * `SI` Slope-Intercept method obtained by performing two linear regressions of log(iohexol) vs time for early and late time points. Obtained by setting `nls_v = "SI"`
 #'    * `modified-SI` SI method with shared time-point(s) between early and late periods (ie overlapping `t_early` = `t_late`). Obtained by setting, for example `nls_v = "SI", t_early=120, t_late=120` or another option with overlapping times.
-#'    * `NLLS-gslnls-weighted` NLS fit using the `gslnls()` function from the `gsl_nls` package. Obtained by setting `nls_v = "gslnls", nls_weights=T`
-#'    * `NLLS-base-weighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=T`
+#'    * `NLLS-gslnls-weighted` (Default method) NLS fit using the `gslnls()` function from the `gsl_nls` package. Obtained by setting `nls_v = "gslnls", nls_weights=T`
+#'    * `NLLS-base-weighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=T`. Similar to `gslnls` method, except that parameter constraints cannot be set with `nls()`, and so implausible estimates (negative for a, b) may be obtained.
 #'    * `NLLS-gslnls-unweighted` NLS fit using the `gslnls()` function from the `gsl_nls` package. Obtained by setting `nls_v = "gslnls", nls_weights=F`
-#'    * `NLLS-base-unweighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=F`
+#'    * `NLLS-base-unweighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=F`. This method weights heavily to early time points (higher concentration). Also, parameter constraints cannot be set with `nls()`, and so implausible estimates (negative for a, b) may be obtained.
 #'    * `MLS-BM` The Multiple Late Sample (MLS) estimate using Late time points only (>120 minutes post injection). Adjustment made using the Brochner-Mortenson correction equation.
 #'    * `SS-Jacobbson` Single Sample estimate of GFR
 #'
