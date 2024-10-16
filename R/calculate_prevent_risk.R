@@ -163,6 +163,3 @@ calculate_prevent_risk <- function(risk, gender,
   return(res)
   
 }
-
-
-                
