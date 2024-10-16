@@ -14,11 +14,11 @@ calculate_isi_matsuda(
 )
 }
 \arguments{
-\item{time}{a column name (unquoted) indicating time values (in minutes)}
+\item{time}{Vector of time values (in minutes)}
 
-\item{glucose}{a column name (unquoted) storing glucose values (in mg/dL)}
+\item{glucose}{Vector of glucose values (in mg/dL)}
 
-\item{insulin}{a column name (unquoted) storing insulin values (in uU/mL)}
+\item{insulin}{Vector of insulin values (in uU/mL)}
 
 \item{time_units}{if units are not in "min", can indicate here for unit conversion (options "min" or "hr")}
 

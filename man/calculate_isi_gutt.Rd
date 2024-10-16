@@ -15,22 +15,19 @@ calculate_isi_gutt(
 )
 }
 \arguments{
-\item{time}{a column name (unquoted) indicating time values (in minutes)}
+\item{time}{Vector of time values (in minutes)}
 
-\item{glucose}{a column name (unquoted) storing glucose values (in mg/dL)}
+\item{glucose}{Vector of glucose values (in mg/dL)}
 
-\item{insulin}{a column name (unquoted) storing insulin values (in uU/mL)}
+\item{insulin}{Vector of insulin values (in uU/mL)}
 
 \item{bmi}{body mass index (\eqn{kg/m^2})}
 
-\item{time_units}{if units are not in "min", can indicate here for unit
-conversion (options "min" or "hr")}
+\item{time_units}{if units are not in "min", can indicate here for unit conversion (options "min" or "hr")}
 
-\item{glucose_units}{if units are not in "mg/dl", can indicate here for unit
-conversion (options "mg/dl" or "mmol/l")}
+\item{glucose_units}{if units are not in "mg/dl", can indicate here for unit conversion (options "mg/dl" or "mmol/l")}
 
-\item{insulin_units}{if units are not in "uU/ml", can indicate here for unit
-conversion (options "uU/ml" or "pmol/l")}
+\item{insulin_units}{if units are not in "uU/ml", can indicate here for unit conversion (options "uU/ml" or "pmol/l")}
 }
 \value{
 Insulin Sensitivity-Gutt (mL/kg/min) as a single value
@@ -67,7 +64,7 @@ ogtt2 <- data.frame(time=c(0, 30, 60, 90, 120),              # minutes
                     glucose=c(100, 160, 160, 160, 140),      # mg/dL
                     insulin=c(5, 10, 10, 10, 5))             # uU/mL
 calculate_isi_gutt(ogtt2$time, ogtt2$glucose, ogtt2$insulin, bmi=30)
-calculate_matsuda_index(ogtt2$time, ogtt2$glucose, ogtt2$insulin)
+calculate_isi_matsuda(ogtt2$time, ogtt2$glucose, ogtt2$insulin)
 
 # Convert units
 ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
