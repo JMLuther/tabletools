@@ -6,12 +6,12 @@
 \alias{ogtt_nested}
 \title{Oral Glucose Tolerance Datasets}
 \format{
-## `ogtt_wide` A dataframe with 184 OGTT results contains glucose and
+`ogtt_wide` A dataframe with 184 OGTT results contains glucose and
  insulin in wide format with time noted in the variable name (e.g.,
  `glucose_000`, `glucose_030`). `ogtt_nested` contains time, glucose, and
  insulin in long format a dataframe stored in a list-column for each
  participant.
-
+ @md 
  Demographic data includes:
 \describe{
 \item{age}{Age, years}
@@ -26,8 +26,8 @@
 \item{`ogtt_df`}{A nested dataframe with a single OGTT result per row in the nested dataset (`ogtt_nested`), Time points, in minutes (0, 30, 60, 90, 120) denoted either in the variable name (`_000`, `_030`) or in the time column of the nested dataset}
 }
 
-# `ogtt_wide` A dataframe with 184 OGTT results, with a nested
-  dataframe with each participant result (time, glucose, insulin)
+\code{ogtt_wide} A dataframe with 184 OGTT results, with a nested
+dataframe with each participant result (time, glucose, insulin)
 }
 \source{
 Primary data collected from multiple studies

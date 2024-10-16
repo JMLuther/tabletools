@@ -8,12 +8,12 @@
 #'  Plasma Insulin (mU/L or uU/mL). All OGTTs were dones prior to any
 #'  intervention (ie, participants were not on study medications).
 #'
-#'@format ## `ogtt_wide` A dataframe with 184 OGTT results contains glucose and
+#'@format `ogtt_wide` A dataframe with 184 OGTT results contains glucose and
 #'  insulin in wide format with time noted in the variable name (e.g.,
 #'  `glucose_000`, `glucose_030`). `ogtt_nested` contains time, glucose, and
 #'  insulin in long format a dataframe stored in a list-column for each
 #'  participant.
-#'
+#'  @md 
 #'  Demographic data includes:
 #' \describe{
 #' \item{age}{Age, years}
@@ -31,8 +31,7 @@
 "ogtt_wide"
 
 #' @rdname ogtt_wide
-#' @format # `ogtt_wide` A dataframe with 184 OGTT results, with a nested
+#' @md 
+#' @format `ogtt_wide` A dataframe with 184 OGTT results, with a nested
 #'   dataframe with each participant result (time, glucose, insulin)
 "ogtt_nested"
-
-#'@md 
