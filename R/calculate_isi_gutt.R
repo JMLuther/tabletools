@@ -12,16 +12,8 @@
 #'
 #' `calculate_isi_gutt()` accepts 3 separate vectors for time, glucose, insulin.
 #'
-#' @param time  a column name (unquoted) indicating time values (in minutes)
-#' @param glucose a column name (unquoted) storing glucose values (in mg/dL)
-#' @param insulin a column name (unquoted) storing insulin values (in uU/mL)
+#' @inheritParams calculate_isi_matsuda
 #' @param bmi body mass index (\eqn{kg/m^2})
-#' @param time_units if units are not in "min", can indicate here for unit
-#'   conversion (options "min" or "hr")
-#' @param glucose_units if units are not in "mg/dl", can indicate here for unit
-#'   conversion (options "mg/dl" or "mmol/l")
-#' @param insulin_units if units are not in "uU/ml", can indicate here for unit
-#'   conversion (options "uU/ml" or "pmol/l")
 #'
 #' @return Insulin Sensitivity-Gutt (mL/kg/min) as a single value
 #' @export
@@ -43,7 +35,7 @@
 #'                     glucose=c(100, 160, 160, 160, 140),      # mg/dL
 #'                     insulin=c(5, 10, 10, 10, 5))             # uU/mL
 #' calculate_isi_gutt(ogtt2$time, ogtt2$glucose, ogtt2$insulin, bmi=30)
-#' calculate_matsuda_index(ogtt2$time, ogtt2$glucose, ogtt2$insulin)
+#' calculate_isi_matsuda(ogtt2$time, ogtt2$glucose, ogtt2$insulin)
 #'
 #' # Convert units
 #' ogtt5 <- data.frame(time = c(0,0.5,1,1.5,2), # time in hours
