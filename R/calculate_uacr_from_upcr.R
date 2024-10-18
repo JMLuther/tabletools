@@ -27,10 +27,7 @@ calculate_uacr_from_upcr <- function(PCR, gender,
                                      PCR_units = "mg/g") {
   
   # validate gender
-  gender = tolower(gender)
-  gender_query =
-    ifelse(gender %in% c("female", "women", "fe", "f"), "female",
-           ifelse(gender %in% c("male", "men", "ma", "m"), "male", NA))
+  gender_query = tolower(handle_sex(gender))
   female = gender_query =="female"
   
   # convert PCR units if needed (normal <150 mg/g)

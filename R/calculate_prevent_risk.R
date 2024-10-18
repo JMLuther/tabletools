@@ -77,11 +77,8 @@ calculate_prevent_risk <- function(risk, gender,
                          ifelse(risk%in% c("cad", "coronary artery disease", "mi", "myocardial infarction", "heart attack"), "cad",
                                 ifelse(risk%in% c("stroke", "cva"), "stroke", NA)))))
   # validate gender
-  gender = tolower(gender)
-  gender_query =
-    ifelse(gender %in% c("female", "women", "fe", "f"), "female",
-           ifelse(gender %in% c("male", "men", "ma", "m"), "male", NA))
-  
+  gender_query = tolower(handle_sex(gender))
+
   # 10 YEAR BASE MODEL  
   # model coeffs stored in data frame tabletools:::cfs_base10yr
   cf10 <- cfs_base10yr[cfs_base10yr$risk=={{risk_query}} & cfs_base10yr$gender=={{gender_query}}, ]

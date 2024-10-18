@@ -45,4 +45,17 @@ available.
 calculate_ecv(age=85, sex = "m", height = 187, weight=85)
 calculate_ecv(age=85, sex = "m", height = 187, weight=85, method="Granerus")
 calculate_ecv(age=85, sex = "f", height = 187, weight=85, method="Granerus")
+n=5
+df_test <-
+  tibble(age=rnorm(n,50),
+         height_cm=rnorm(n,167),
+         height_m=rnorm(n,1.67),
+         weight_kg=rnorm(n,80),
+         sex=c(sample(c("M","F"), n, replace = T))
+  )
+df_test |> 
+  mutate(calculate_ecv(age=age, 
+                       height=height_cm,
+                       weight=weight_kg,
+                       sex=sex))
 }

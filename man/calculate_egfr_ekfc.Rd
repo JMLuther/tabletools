@@ -39,13 +39,13 @@ calculate_egfr_krs(age=75, sex="Female", creatinine=1)
 
 # EKFC 2021: 
 calculate_egfr_ekfc(1.2, age=50, sex="Male")
-calculate_egfr_ekfc(1.2, age=19, sex="Male")
-calculate_egfr_ekfc(1.2, age=15, sex="Male")
+calculate_egfr_ekfc(1.2, age=19, sex="Ma")
+calculate_egfr_ekfc(1.2, age=15, sex="male")
 
-calculate_egfr_ekfc(1.2, age=50, sex="Female")
+calculate_egfr_ekfc(1.2, age=50, sex="fe")
 calculate_egfr_ekfc(1.2, age=19, sex="Female")
-calculate_egfr_ekfc(1.2, age=15, sex="Female")
-calculate_egfr_ekfc(1.2, age=10, sex="Female")
+calculate_egfr_ekfc(1.2, age=15, sex="FE")
+calculate_egfr_ekfc(1.2, age=10, sex="FEMALE")
 calculate_egfr_ekfc(1.2, age=5, sex="Female")
 
 # original has been vectorized to handle multiple results

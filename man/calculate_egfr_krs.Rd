@@ -35,4 +35,5 @@ calculate_egfr_krs(age=50, sex="Male", creatinine=1)
 calculate_egfr_krs(age=50, sex="Female", creatinine=1)
 calculate_egfr_krs(age=75, sex="Male", creatinine=1)
 calculate_egfr_krs(age=75, sex="Female", creatinine=1)
+calculate_egfr_krs(age=c(75,75), sex=c("Female","Male"), creatinine=c(1,1))
 }

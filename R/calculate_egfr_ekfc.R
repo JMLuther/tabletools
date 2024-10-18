@@ -30,13 +30,13 @@
 #' 
 #' # EKFC 2021: 
 #' calculate_egfr_ekfc(1.2, age=50, sex="Male")
-#' calculate_egfr_ekfc(1.2, age=19, sex="Male")
-#' calculate_egfr_ekfc(1.2, age=15, sex="Male")
+#' calculate_egfr_ekfc(1.2, age=19, sex="Ma")
+#' calculate_egfr_ekfc(1.2, age=15, sex="male")
 #' 
-#' calculate_egfr_ekfc(1.2, age=50, sex="Female")
+#' calculate_egfr_ekfc(1.2, age=50, sex="fe")
 #' calculate_egfr_ekfc(1.2, age=19, sex="Female")
-#' calculate_egfr_ekfc(1.2, age=15, sex="Female")
-#' calculate_egfr_ekfc(1.2, age=10, sex="Female")
+#' calculate_egfr_ekfc(1.2, age=15, sex="FE")
+#' calculate_egfr_ekfc(1.2, age=10, sex="FEMALE")
 #' calculate_egfr_ekfc(1.2, age=5, sex="Female")
 #' 
 #' # original has been vectorized to handle multiple results
@@ -48,6 +48,7 @@
 
 calculate_egfr_ekfc_nonv <- function(creatinine, age, sex, 
                            creatinine_units = "mg/dL") {
+  
   # creatinine and Q must be same units, doesn't matter which
   creatinine = convert_creatinine_to_uM(creatinine, creatinine_units)
   Q = get_Q_uM(age, sex)
@@ -60,6 +61,7 @@ calculate_egfr_ekfc <- Vectorize(calculate_egfr_ekfc_nonv)
 # not matter, since internally the main function converts units of creatinine to
 # umol/L for consistency
 get_Q_uM <- function(age, sex){
+  sex = handle_sex(sex)
   if (age <2){stop("estimation not possible for age <2")}
   if (age<=40 & age >=2){
     if (sex == "Male") {

@@ -4,7 +4,7 @@
 \alias{calculate_egfr_mdrd}
 \title{Calculate estimated GFR by MDRD}
 \usage{
-calculate_egfr_mdrd(age, sex = "Male", race = "White", creatinine)
+calculate_egfr_mdrd(age, sex, race = NA, creatinine)
 }
 \arguments{
 \item{age}{Age, in years}
@@ -40,5 +40,6 @@ calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1.5) # 56
 calculate_egfr_mdrd(age=50, sex="Male", creatinine=1.5) # 49
 
 calculate_egfr_ckdepi(age=50, sex="Male", creatinine=2.0) # 40
-calculate_egfr_mdrd(age=50, sex="Male", creatinine=2.0) # 35.5
+calculate_egfr_mdrd(age=50, sex="Male", race="white", creatinine=2.0) # 35.5
+calculate_egfr_mdrd(age=50, sex="Male",  creatinine=2.0) # 35.5
 }

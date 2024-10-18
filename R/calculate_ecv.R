@@ -23,15 +23,30 @@
 #' calculate_ecv(age=85, sex = "m", height = 187, weight=85)
 #' calculate_ecv(age=85, sex = "m", height = 187, weight=85, method="Granerus")
 #' calculate_ecv(age=85, sex = "f", height = 187, weight=85, method="Granerus")
+#' n=5
+#' df_test <-
+#'   tibble(age=rnorm(n,50),
+#'          height_cm=rnorm(n,167),
+#'          height_m=rnorm(n,1.67),
+#'          weight_kg=rnorm(n,80),
+#'          sex=c(sample(c("M","F"), n, replace = T))
+#'   )
+#' df_test |> 
+#'   mutate(calculate_ecv(age=age, 
+#'                        height=height_cm,
+#'                        weight=weight_kg,
+#'                        sex=sex))
+
 
 calculate_ecv <- function(age, height, weight, sex, 
                           weight_units="kg",
                           height_units="cm",
                           method="Faucon"){
+  sex = handle_sex(sex)
   weight_kg = convert_weight_to_kg(weight=weight, weight_units = weight_units)
   height_cm = convert_length_to_m(height, length_units = height_units)*100
-  alpha = ifelse(tolower(sex) %in% c("male", "m"), -2.6631,
-                 ifelse(tolower(sex) %in% c("female", "f"), -3.3407, NA))
+  alpha = ifelse(sex == "Male", -2.6631,
+                 ifelse(sex == "Female", -3.3407, NA))
   if (method=="Faucon") {
     # Faucon Formula
     ecv = (alpha + 0.1393*weight_kg + 0.0455*height_cm + 0.0125*age)*1000 # in mL

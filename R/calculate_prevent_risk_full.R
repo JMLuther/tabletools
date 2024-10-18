@@ -110,7 +110,7 @@
 #'                                       using_antihypertensive_medication = using_antihypertensive_medication,
 #'                                       diabetes=diabetes)
 #'    ) 
-
+#' df_risk
 
 calculate_prevent_risk_full <- function(risk, gender, 
                                    age, Tc, HDL, SBP, eGFR, 
@@ -142,11 +142,8 @@ calculate_prevent_risk_full <- function(risk, gender,
                          ifelse(risk%in% c("cad", "coronary artery disease", "mi", "myocardial infarction", "heart attack"), "cad",
                                 ifelse(risk%in% c("stroke", "cva"), "stroke", NA)))))
   # validate gender
-  gender = tolower(gender)
-  gender_query =
-    ifelse(gender %in% c("female", "women", "fe", "f"), "female",
-           ifelse(gender %in% c("male", "men", "ma", "m"), "male", NA))
-  
+  gender_query= tolower(handle_sex(gender))
+
   # 10 YEAR BASE MODEL  
   cf10 <- cfs_full10yr[cfs_full10yr$risk=={{risk_query}} & cfs_full10yr$gender=={{gender_query}}, ]
   

@@ -52,9 +52,9 @@ calculate_egfr(age=70, sex="Male", creatinine=0.8, method="CKD-EPI") # 95.2
 calculate_egfr(age=50, sex="Female", creatinine=1.0, method="CKD-EPI") # 68.6  
 # CKD-EPI 2021 version (new race-free creatinine-based equation)
 # https://www.kidney.org/professionals/kdoqi/gfr_calculator
-calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 95.2
+calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 
 calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8, version = "2021") # 95.2
-calculate_egfr_ckdepi(age=70, sex="Female", creatinine=0.8, version = "2021") # 95.2
+calculate_egfr_ckdepi(age=70, sex="Female", creatinine=0.8, version = "2021") # 
 
 # use of race-incorporated version not recommended (ASR);
 # if you want to use race, use version = "original".

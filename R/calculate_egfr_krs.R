@@ -24,17 +24,17 @@
 #' calculate_egfr_krs(age=50, sex="Female", creatinine=1)
 #' calculate_egfr_krs(age=75, sex="Male", creatinine=1)
 #' calculate_egfr_krs(age=75, sex="Female", creatinine=1)
-
+#' calculate_egfr_krs(age=c(75,75), sex=c("Female","Male"), creatinine=c(1,1))
 
 
 calculate_egfr_krs <- function(age, sex, creatinine) {
+  sex = handle_sex(sex)
     a = 4.4275492
     b = 0.8230475*log(creatinine) # mg/dL
     c = 0.0124264*creatinine^2 # mg/dL
     d = 0.0055068*age # years
-    sex.f = 
-      ifelse(sex %in% c("Female", "F", "female"), 0,
-             ifelse(sex %in% c("Male", "M", "male"), 0.1806494, NA))
+    sex.f = ifelse(sex =="Female", 0,
+             ifelse(sex == "Male", 0.1806494, NA))
     eGFR = exp(4.4275492-b-c-d+sex.f)
   return(eGFR)
 }

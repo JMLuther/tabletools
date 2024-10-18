@@ -32,10 +32,7 @@ calculate_uacr_from_ua <- function(ua_protein, gender,
                                    hypertensive=NA) {
 
   # validate gender
-  gender = tolower(gender)
-  gender_query =
-    ifelse(gender %in% c("female", "women", "fe", "f"), "female",
-           ifelse(gender %in% c("male", "men", "ma", "m"), "male", NA))
+  gender_query = tolower(handle_sex(gender))
   female = gender_query =="female"
 
   # Estimate UACR from dipstick
