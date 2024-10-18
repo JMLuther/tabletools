@@ -29,14 +29,20 @@
 #' calculate_egfr_mdrd(age=50, sex="Male", creatinine=1.5) # 49
 #' 
 #' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=2.0) # 40
-#' calculate_egfr_mdrd(age=50, sex="Male", creatinine=2.0) # 35.5
+#' calculate_egfr_mdrd(age=50, sex="Male", race="white", creatinine=2.0) # 35.5
+#' calculate_egfr_mdrd(age=50, sex="Male",  creatinine=2.0) # 35.5
 
 
 
-calculate_egfr_mdrd <- function(age, sex="Male", race="White", creatinine) {
-  F = switch(sex, "Female" = 0.742, "Male"=1)
+calculate_egfr_mdrd <- function(age, sex, race=NA, creatinine) {
+  sex=handle_sex(sex)
+  race=handle_race(race)
+  if (is.na(race)) {
+    race="White"
+    rlang::warn("Race is missing, defaulting to MDRD calculation using White race")}
+  F.sex = switch(sex, "Female" = 0.742, "Male"=1)
   R = switch(race, "Black" = 1.212, "White"=1)
-  eGFR = 175 * creatinine ^(-1.154) * age^(-0.203) * R * F
+  eGFR = 175 * creatinine ^(-1.154) * age^(-0.203) * R * F.sex
     return(eGFR)
 }
 

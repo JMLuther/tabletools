@@ -55,7 +55,7 @@ Consortium statment paper}. The R script is modified from the supplemental metho
 \examples{
 calculate_mgfr_ss(egfr=40, 
                   height = 168, weight = 87, 
-                  sex="M", age=80, 
+                  sex="mALE", age=80, 
                   iohexol_m = 3273820,
                   iohexol_ss= 60,
                   time_ss=390)
@@ -63,7 +63,7 @@ calculate_mgfr_ss(egfr=40,
 # used alternate ECV calculation (doesn't make much difference)
 calculate_mgfr_ss(egfr=40, 
                   height = 168, weight = 87, 
-                  sex="M", age=80, ecv_method = "Granerus",
+                  sex="male", age=80, ecv_method = "Granerus",
                   iohexol_m = 3273820,
                   iohexol_ss= 60,
                   time_ss=390)

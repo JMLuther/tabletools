@@ -28,7 +28,7 @@
 #' @examples 
 #' calculate_mgfr_ss(egfr=40, 
 #'                   height = 168, weight = 87, 
-#'                   sex="M", age=80, 
+#'                   sex="mALE", age=80, 
 #'                   iohexol_m = 3273820,
 #'                   iohexol_ss= 60,
 #'                   time_ss=390)
@@ -36,7 +36,7 @@
 #' # used alternate ECV calculation (doesn't make much difference)
 #' calculate_mgfr_ss(egfr=40, 
 #'                   height = 168, weight = 87, 
-#'                   sex="M", age=80, ecv_method = "Granerus",
+#'                   sex="male", age=80, ecv_method = "Granerus",
 #'                   iohexol_m = 3273820,
 #'                   iohexol_ss= 60,
 #'                   time_ss=390)
@@ -46,6 +46,7 @@ calculate_mgfr_ss <- function(egfr, height, weight, sex, age,
                     iohexol_m, iohexol_ss, time_ss,
                     weight_units="kg",  height_units = "cm", ecv_method="Faucon"
                     ){
+  sex=handle_sex(sex)
   iohexol_volume = calculate_ecv(age = age, height = height, weight=weight, sex=sex,
                                  height_units = height_units, weight_units = weight_units,
                                  method=ecv_method) # mL

@@ -153,4 +153,5 @@ Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic
                                       using_antihypertensive_medication = using_antihypertensive_medication,
                                       diabetes=diabetes)
    ) 
+df_risk
 }

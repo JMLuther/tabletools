@@ -26,9 +26,9 @@
 #' @examples
 #' # CKD-EPI 2021 version (new race-free creatinine-based equation)
 #' # https://www.kidney.org/professionals/kdoqi/gfr_calculator
-#' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 95.2
+#' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 
 #' calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8, version = "2021") # 95.2
-#' calculate_egfr_ckdepi(age=70, sex="Female", creatinine=0.8, version = "2021") # 95.2
+#' calculate_egfr_ckdepi(age=70, sex="Female", creatinine=0.8, version = "2021") # 
 #' 
 #' # use of race-incorporated version not recommended (ASR);
 #' # if you want to use race, use version = "original".
@@ -111,27 +111,28 @@
 
 
 calculate_egfr_ckdepi <- function(age, sex, creatinine, race=NULL, version="2021") {
+  sex = handle_sex(sex)
   creat.f = switch(sex,
                    "Female" = as.character(cut(creatinine, breaks=c(0, 0.7, Inf), labels=c("<=0.7", ">0.7"))),
                    "Male"   = as.character(cut(creatinine, breaks=c(0, 0.9, Inf), labels=c("<=0.9", ">0.9"))))
   if (version=="2021" & is.null(race)) {
-    k = switch(sex, "Female"=0.7, "female"=0.7, "Male"=0.9, "male"=0.9) # same for CKD-EPI and CKD-EPI Cystatin-C
+    k = switch(sex, "Female"=0.7, "Male"=0.9) # same for CKD-EPI and CKD-EPI Cystatin-C
     a = switch(sex, "Female" = -0.241, "Male"= -0.302)
-    F = switch(sex, "Female" = 1.012, "Male"=1)
+    F.sex = switch(sex, "Female" = 1.012, "Male"=1)
     
     # CKD-EPI Age, Sex Equation (2021) (Age, Sex- refit Eq without Race) - Recommended, Default
     # results verified against publication, Inker NEJM table S11
-    eGFR = 142*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.200) * 0.9938^age * F
+    eGFR = 142*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.200) * 0.9938^age * F.sex
   } else if (version=="2021" & !is.null(race)) { 
     stop("Race is not used in the 2021 CKD-EPI equation. use 'race=NULL' (default) or do not specify this argument.
          To use the Race-based equation, specify version='original' ")
   } else if (version=="original") { # 2009 CKD-EPI
     k = switch(sex, "Female" = 0.7, "Male"=0.9) # same for CKD-EPI and CKD-EPI Cystatin-C
     a = switch(sex, "Female" = -0.329, "Male"= -0.411)
-    F = switch(sex, "Female" = 1.018, "Male"=1)
+    F.sex = switch(sex, "Female" = 1.018, "Male"=1)
     R = switch(race, "Black" = 1.159, "White"=1,
                stop("No race specified. use race='Black' or 'White'"))
-    eGFR = 141*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.209) * 0.9929^age * F * R
+    eGFR = 141*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.209) * 0.9929^age * F.sex * R
   }  else {eGFR = NA}
   return(eGFR)
 }

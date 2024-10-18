@@ -24,8 +24,17 @@
 #' calculate_egfr_ckdepi_cysc(age=50, sex = "Male", creatinine=0.6, cystatin=0.7) # 123
 #' calculate_egfr_ckdepi_cysc(age=50, sex = "Female", creatinine=0.6, cystatin=0.8) # 111
 #' calculate_egfr_ckdepi_cysc(age=50, sex = "Male", creatinine=0.6, cystatin=0.8) # 118
+#' 
+#' # original has been vectorized to handle multiple results
+#' data.frame(age=c(5,10,15,35, 50),
+#'            sex=rep("Male",5),
+#'            creatinine=abs(rnorm(5, 1.2)),
+#'            CysC=rep(1.2,5)) |>
+#'   dplyr::mutate(egfr= calculate_egfr_ckdepi_cysc_V(age, sex, creatinine, CysC))
 
-calculate_egfr_ckdepi_cysc <- function(age, sex, creatinine, cystatin) {
+
+calculate_egfr_ckdepi_cysc_nonv <- function(age, sex, creatinine, cystatin) {
+  sex = handle_sex(sex)
   args = data.frame(stringsAsFactors = FALSE,
                     sex = c("Female","Female","Female",
                             "Female","Male","Male","Male","Male"),
@@ -47,8 +56,10 @@ calculate_egfr_ckdepi_cysc <- function(age, sex, creatinine, cystatin) {
   B = args$B[args$sex=={{sex}} & args$creat_bin==creat.f & args$cys_bin==cystc.f]
   C = 0.8
   D = args$D[args$sex=={{sex}} & args$creat_bin==creat.f & args$cys_bin==cystc.f]
-  F = switch(sex, "Female" = 0.963, "Male"=1)
+  F.sex = switch(sex, "Female" = 0.963, "Male"=1)
   
-  eGFR = 135 * (creatinine/A)^B * (cystatin/C)^D * 0.9961^age * F
+  eGFR = 135 * (creatinine/A)^B * (cystatin/C)^D * 0.9961^age * F.sex
   return(eGFR)
 }
+calculate_egfr_ckdepi_cysc <- Vectorize(calculate_egfr_ckdepi_cysc_nonv)
+
