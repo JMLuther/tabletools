@@ -71,6 +71,11 @@ calculate_isi_matsuda <- function(time, glucose, insulin,
                                   time_units = "min", 
                                   sample_times = c(0,30,60,90,120),
                                   glucose_units = "mg/dl", insulin_units = "uU/ml") {
+
+  # convert hrs to minutes
+  if (!tolower(time_units) %in% c("min", "minutes", "min.")) {
+    time = convert_time_to_min(time, time_units)
+  }
   
   # check time points and keep only sample times:
   indx_t_valid <- time %in% sample_times # valid time points T/F
@@ -109,7 +114,7 @@ calculate_isi_matsuda <- function(time, glucose, insulin,
     return(NA_real_)}
   
   # convert units; 
-  time = convert_time_to_min(time, time_units)
+  # time = convert_time_to_min(time, time_units)
   glucose = convert_glucose_to_mgdl(glucose, glucose_units)
   insulin = convert_insulin_to_uU_ml(insulin, insulin_units)
   
