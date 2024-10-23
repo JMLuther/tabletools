@@ -190,6 +190,7 @@ calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70,
 # if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning)
 dat_ebert
 calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
+calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output="plot")
 calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
 }
 \seealso{
