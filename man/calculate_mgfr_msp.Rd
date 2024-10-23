@@ -57,7 +57,8 @@ phase, defaults to \code{120}}
 \item{output}{Desired output, defaults to \code{summary} of model. Alternatively
 can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
 
-The \code{mgfr_method} describes the method for estimation, which can have the following options:
+The \code{mgfr_method} describes the method for estimation, which can have the
+following options:
 \itemize{
 \item \code{SI} Slope-Intercept method obtained by performing two linear regressions of log(iohexol) vs time for early and late time points. Obtained by setting \code{nls_v = "SI"}
 \item \code{modified-SI} SI method with shared time-point(s) between early and late periods (ie overlapping \code{t_early} = \code{t_late}). Obtained by setting, for example \verb{nls_v = "SI", t_early=120, t_late=120} or another option with overlapping times.
@@ -65,7 +66,7 @@ The \code{mgfr_method} describes the method for estimation, which can have the f
 \item \code{NLLS-base-weighted} NLS fit using the \code{nls()} function from the base \code{stats} package. Obtained by setting \verb{nls_v = "base", nls_weights=T}. Similar to \code{gslnls} method, except that parameter constraints cannot be set with \code{nls()}, and so implausible estimates (negative for a, b) may be obtained.
 \item \code{NLLS-gslnls-unweighted} NLS fit using the \code{gslnls()} function from the \code{gsl_nls} package. Obtained by setting \verb{nls_v = "gslnls", nls_weights=F}
 \item \code{NLLS-base-unweighted} NLS fit using the \code{nls()} function from the base \code{stats} package. Obtained by setting \verb{nls_v = "base", nls_weights=F}. This method weights heavily to early time points (higher concentration). Also, parameter constraints cannot be set with \code{nls()}, and so implausible estimates (negative for a, b) may be obtained.
-\item \code{MLS-BM} The Multiple Late Sample (MLS) estimate using Late time points only (>120 minutes post injection). Adjustment made using the Brochner-Mortenson correction equation.
+\item \code{MSP-BM} The Multiple Sample Protocol (MSP), or Multiple Late Sample (MLS) estimate using 1-compartment analysis of Late time points only (>120 minutes post injection). Adjustment made using the Brochner-Mortenson correction equation to correct for unmeasured early time points.
 \item \code{SS-Jacobbson} Single Sample estimate of GFR
 }
 

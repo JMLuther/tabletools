@@ -33,21 +33,24 @@
 #' @param t_late First Time point (minutes) to use in the "Late" elimination
 #'   phase, defaults to `120`
 #' @param nls_v Model estimation method (defaults to `gslnls`).  Can also use
-#'   `SI`, `base`, or `MSP`. If `MSP` is selected, only "late" time points will be used and "early" time points will be discarded. If no early timepoints are available, method defaults to `MSP`.
+#'   `SI`, `base`, or `MSP`. If `MSP` is selected, only "late" time points will
+#'   be used and "early" time points will be discarded. If no early timepoints
+#'   are available, method defaults to `MSP`.
 #' @param nls_weights Use weights in nls model (`TRUE` or `FALSE`), defaults to
 #'   `TRUE`. Uses 1/iohexol^2 as weights, which more heavily weight lower
 #'   concentrations obtained at later time points
 #' @param output Desired output, defaults to `summary` of model. Alternatively
 #'   can specify `gfr`, `gfr_bsa`, `fit`, or `plot`
 #'
-#'   The `mgfr_method` describes the method for estimation, which can have the following options:
+#'   The `mgfr_method` describes the method for estimation, which can have the
+#'   following options:
 #'    * `SI` Slope-Intercept method obtained by performing two linear regressions of log(iohexol) vs time for early and late time points. Obtained by setting `nls_v = "SI"`
 #'    * `modified-SI` SI method with shared time-point(s) between early and late periods (ie overlapping `t_early` = `t_late`). Obtained by setting, for example `nls_v = "SI", t_early=120, t_late=120` or another option with overlapping times.
 #'    * `NLLS-gslnls-weighted` (Default method) NLS fit using the `gslnls()` function from the `gsl_nls` package. Obtained by setting `nls_v = "gslnls", nls_weights=T`
 #'    * `NLLS-base-weighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=T`. Similar to `gslnls` method, except that parameter constraints cannot be set with `nls()`, and so implausible estimates (negative for a, b) may be obtained.
 #'    * `NLLS-gslnls-unweighted` NLS fit using the `gslnls()` function from the `gsl_nls` package. Obtained by setting `nls_v = "gslnls", nls_weights=F`
 #'    * `NLLS-base-unweighted` NLS fit using the `nls()` function from the base `stats` package. Obtained by setting `nls_v = "base", nls_weights=F`. This method weights heavily to early time points (higher concentration). Also, parameter constraints cannot be set with `nls()`, and so implausible estimates (negative for a, b) may be obtained.
-#'    * `MLS-BM` The Multiple Late Sample (MLS) estimate using Late time points only (>120 minutes post injection). Adjustment made using the Brochner-Mortenson correction equation.
+#'    * `MSP-BM` The Multiple Sample Protocol (MSP), or Multiple Late Sample (MLS) estimate using 1-compartment analysis of Late time points only (>120 minutes post injection). Adjustment made using the Brochner-Mortenson correction equation to correct for unmeasured early time points.
 #'    * `SS-Jacobbson` Single Sample estimate of GFR
 #'
 #'   For `output = "summary"` results returned includes the named variables:
@@ -96,7 +99,7 @@
 #' @examples
 #' library(tabletools)
 #' # PUBLISHED IOHEXOL DATA ----
-#' # data available in package by calling 
+#' # data available in package by calling
 #' ## ├ Schwartz Data ----
 #' # Data extracted from Schwartz Fig1 https://pubmed.ncbi.nlm.nih.gov/16612328/
 #' # Iohexol 5mL IV injection (Omnipaque 300, 5mL ~3235mg Iohexol)
@@ -105,7 +108,7 @@
 #' # Iohexol (ug/ml)
 #' # age, height, weight not known for the example
 #' dat_schwartz
-#' 
+#'
 #' ## ├ Pottel data ----
 #' # from Supplemental document in https://pubmed.ncbi.nlm.nih.gov/33952185/
 #' dat10
@@ -142,8 +145,8 @@
 #'
 #' dat_7p <- dat_schwartz[dat_schwartz$time %in% c(10, 20, 30, 60, 240, 300, 360), ]
 #' calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
-#' 
-#' # if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning) 
+#'
+#' # if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning)
 #' dat_ebert
 #' calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
 #' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
@@ -209,7 +212,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     A_start <-  exp(coef(lm_early))[["(Intercept)"]]
     a_start <- -coef(lm_early)[["time"]]}
   
-  if (nls_v == "SI"){
+  if (tolower(nls_v) == "si"){
     A = A_start # use initial SI estimate
     a = a_start # use initial SI estimate
     B = B_start # use initial SI estimate
@@ -257,7 +260,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     
   }  
   #______________________________________________  
-  if (nls_v == "gslnls") {
+  if (tolower(nls_v) == "gslnls") {
     # 2C NLS model fit
     fit = gslnls::gsl_nls(iohexol ~ A*exp(-a*time_min) + B*exp(-b*time_min),
                           data=data.frame(time_min, iohexol),
@@ -287,10 +290,10 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     sse = sum(residuals(fit)[time_min<=t_early]^2)
     ssl = sum(residuals(fit)[time_min>=t_late]^2)
     mgfr_method =
-      if (nls_weights & nls_v=="gslnls") {"NLLS-gslnls-weighted"
-      } else if (nls_weights & nls_v=="base") {"NLLS-base-weighted"
-      } else if (!nls_weights & nls_v=="base") {"NLLS-base-unweighted"
-      } else if (!nls_weights & nls_v=="gslnls") {"NLLS-gslnls-unweighted"}
+      if (nls_weights & tolower(nls_v)=="gslnls") {"NLLS-gslnls-weighted"
+      } else if (nls_weights & tolower(nls_v)=="base") {"NLLS-base-weighted"
+      } else if (!nls_weights & tolower(nls_v)=="base") {"NLLS-base-unweighted"
+      } else if (!nls_weights & tolower(nls_v)=="gslnls") {"NLLS-gslnls-unweighted"}
     res = data.frame("mgfr_method" = mgfr_method,
                      "mgfr_2c"     = mgfr_2c,
                      "mgfr_2c_bsa" = mgfr_2c_bsa,
@@ -312,7 +315,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                      "n_early"     = length(dat_early$time),
                      "n_late"     = length(dat_late$time)    ) 
   } 
-  if (nls_v == "base") {
+  if (tolower(nls_v) == "base") {
     fit = nls(iohexol  ~ A*exp(-a*time_min) + B*exp(-b*time_min) , 
               data=data.frame(time_min, iohexol),
               weights = wt,
@@ -339,10 +342,10 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     sse = sum(residuals(fit)[time_min<=t_early]^2)
     ssl = sum(residuals(fit)[time_min>=t_late]^2)
     mgfr_method =
-      if (nls_weights & nls_v=="gslnls") {"NLLS-gslnls-weighted"
-      } else if (nls_weights & nls_v=="base") {"NLLS-base-weighted"
-      } else if (!nls_weights & nls_v=="base") {"NLLS-base-unweighted"
-      } else if (!nls_weights & nls_v=="gslnls") {"NLLS-gslnls-unweighted"}    
+      if (nls_weights & tolower(nls_v)=="gslnls") {"NLLS-gslnls-weighted"
+      } else if (nls_weights & tolower(nls_v)=="base") {"NLLS-base-weighted"
+      } else if (!nls_weights & tolower(nls_v)=="base") {"NLLS-base-unweighted"
+      } else if (!nls_weights & tolower(nls_v)=="gslnls") {"NLLS-gslnls-unweighted"}
     res = data.frame("mgfr_method" = mgfr_method,
                      "mgfr_2c"     = mgfr_2c,
                      "mgfr_2c_bsa" = mgfr_2c_bsa,

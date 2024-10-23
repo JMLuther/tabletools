@@ -58,7 +58,9 @@ preferred; use if weights not available)}
 concentrations obtained at later time points}
 
 \item{nls_v}{Model estimation method (defaults to \code{gslnls}).  Can also use
-\code{SI}, \code{base}, or \code{MSP}. If \code{MSP} is selected, only "late" time points will be used and "early" time points will be discarded. If no early timepoints are available, method defaults to \code{MSP}.}
+\code{SI}, \code{base}, or \code{MSP}. If \code{MSP} is selected, only "late" time points will
+be used and "early" time points will be discarded. If no early timepoints
+are available, method defaults to \code{MSP}.}
 
 \item{t_late}{First Time point (minutes) to use in the "Late" elimination
 phase, defaults to \code{120}}
@@ -69,7 +71,8 @@ phase, defaults to \code{100}}
 \item{output}{Desired output, defaults to \code{summary} of model. Alternatively
 can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
 
-The \code{mgfr_method} describes the method for estimation, which can have the following options:
+The \code{mgfr_method} describes the method for estimation, which can have the
+following options:
 \itemize{
 \item \code{SI} Slope-Intercept method obtained by performing two linear regressions of log(iohexol) vs time for early and late time points. Obtained by setting \code{nls_v = "SI"}
 \item \code{modified-SI} SI method with shared time-point(s) between early and late periods (ie overlapping \code{t_early} = \code{t_late}). Obtained by setting, for example \verb{nls_v = "SI", t_early=120, t_late=120} or another option with overlapping times.
@@ -77,7 +80,7 @@ The \code{mgfr_method} describes the method for estimation, which can have the f
 \item \code{NLLS-base-weighted} NLS fit using the \code{nls()} function from the base \code{stats} package. Obtained by setting \verb{nls_v = "base", nls_weights=T}. Similar to \code{gslnls} method, except that parameter constraints cannot be set with \code{nls()}, and so implausible estimates (negative for a, b) may be obtained.
 \item \code{NLLS-gslnls-unweighted} NLS fit using the \code{gslnls()} function from the \code{gsl_nls} package. Obtained by setting \verb{nls_v = "gslnls", nls_weights=F}
 \item \code{NLLS-base-unweighted} NLS fit using the \code{nls()} function from the base \code{stats} package. Obtained by setting \verb{nls_v = "base", nls_weights=F}. This method weights heavily to early time points (higher concentration). Also, parameter constraints cannot be set with \code{nls()}, and so implausible estimates (negative for a, b) may be obtained.
-\item \code{MLS-BM} The Multiple Late Sample (MLS) estimate using Late time points only (>120 minutes post injection). Adjustment made using the Brochner-Mortenson correction equation.
+\item \code{MSP-BM} The Multiple Sample Protocol (MSP), or Multiple Late Sample (MLS) estimate using 1-compartment analysis of Late time points only (>120 minutes post injection). Adjustment made using the Brochner-Mortenson correction equation to correct for unmeasured early time points.
 \item \code{SS-Jacobbson} Single Sample estimate of GFR
 }
 
@@ -137,7 +140,7 @@ implemented here.
 \examples{
 library(tabletools)
 # PUBLISHED IOHEXOL DATA ----
-# data available in package by calling 
+# data available in package by calling
 ## ├ Schwartz Data ----
 # Data extracted from Schwartz Fig1 https://pubmed.ncbi.nlm.nih.gov/16612328/
 # Iohexol 5mL IV injection (Omnipaque 300, 5mL ~3235mg Iohexol)
@@ -184,7 +187,7 @@ calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70,
 dat_7p <- dat_schwartz[dat_schwartz$time \%in\% c(10, 20, 30, 60, 240, 300, 360), ]
 calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 
-# if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning) 
+# if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning)
 dat_ebert
 calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
 calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
