@@ -44,7 +44,7 @@
 
 calculate_mgfr_ss <- function(egfr, height, weight, sex, age, 
                     iohexol_m, iohexol_ss, time_ss,
-                    weight_units="kg",  height_units = "cm", ecv_method="Faucon"
+                    weight_units="kg",  height_units = "m", ecv_method="Faucon"
                     ){
   sex=handle_sex(sex)
   iohexol_volume = calculate_ecv(age = age, height = height, weight=weight, sex=sex,
