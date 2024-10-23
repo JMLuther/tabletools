@@ -137,7 +137,7 @@ implemented here.
 \examples{
 library(tabletools)
 # PUBLISHED IOHEXOL DATA ----
-data available in package by calling 
+# data available in package by calling 
 ## ├ Schwartz Data ----
 # Data extracted from Schwartz Fig1 https://pubmed.ncbi.nlm.nih.gov/16612328/
 # Iohexol 5mL IV injection (Omnipaque 300, 5mL ~3235mg Iohexol)
