@@ -168,7 +168,9 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   # df_omnipaque=tabletools:::df_omnipaque # available in internal data
   ioh_spgrav = df_omnipaque$omnipaque_specgrav[df_omnipaque$omnipaque_v==omnipaque_v]/1000 # g/ml
   iohexol_mg_ml = df_omnipaque$iohexol_mg_ml[df_omnipaque$omnipaque_v==omnipaque_v] # mg/ml
-  if (!is.null(ioh_inj_wt) & !is.null(ioh_inj_vol)) stop("If iohexol injection weight is provided, assign `ioh_inj_vol=NULL` and exact iohexol mass will be calculated.")
+  if (!is.null(ioh_inj_wt) & !is.null(ioh_inj_vol)) {
+    ioh_inj_vol = ioh_inj_wt/ioh_spgrav
+    rlang::warn("Iohexol injection weight is provided; `ioh_inj_vol` recalculated.")}
   if (is.null(ioh_inj_wt) & is.null(ioh_inj_vol)) stop("missing injection details; must provide `ioh_inj_wt` or `ioh_inj_vol`")
   if (!is.null(ioh_inj_wt)) {ioh_inj_vol = ioh_inj_wt/ioh_spgrav  } # vol calculated by weight
   iohexol_m = ioh_inj_vol*iohexol_mg_ml*1000 # mass mcg iohexol injected

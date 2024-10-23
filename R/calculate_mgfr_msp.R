@@ -22,16 +22,22 @@
 #'                       ioh_vol = 5.06, # mL
 #'                       ioh_conc = 647)   # Omnipaque 300
 #' 
-#' dat <- data.frame(time=c(160,180,200,220,232,240),
-#'                   iohexol_ucg_ml = c(70,60,47,37,30,25)) 
+#' dat_ebert
 #' 
-#' calculate_mgfr_msp(dat$time, dat$iohexol_ucg_ml,
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol,
 #'                    ioh_inj_vol = 5.06,
 #'                    height = df1_dem$height, weight = df1_dem$weight)  
-#' calculate_mgfr_msp(dat$time, dat$iohexol_ucg_ml,
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol,
 #'                    ioh_inj_wt = 6.82594, 
 #'                    ioh_inj_vol=NULL, # make this NULL if weight given
 #'                    height = df1_dem$height, weight = df1_dem$weight)  
+#'                    
+#' # methods designed to match the fuller for 2C
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "summary")
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "gfr")
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "gfr_bsa")
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "fit")
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "plot", id="test")
 #' 
 #' # Example for multiple dataset analysis
 #' df2_dem <- data.frame(id=1:5,
@@ -72,7 +78,9 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
   # df_omnipaque=tabletools:::df_omnipaque # available in internal data
   ioh_spgrav = df_omnipaque$omnipaque_specgrav[df_omnipaque$omnipaque_v==omnipaque_v]/1000 # g/ml
   iohexol_mg_ml = df_omnipaque$iohexol_mg_ml[df_omnipaque$omnipaque_v==omnipaque_v] # mg/ml
-  if (!is.null(ioh_inj_wt) & !is.null(ioh_inj_vol)) stop("If iohexol injection weight is provided, assign `ioh_inj_vol=NULL` and exact iohexol mass will be calculated.")
+  if (!is.null(ioh_inj_wt) & !is.null(ioh_inj_vol)) {
+    ioh_inj_vol = ioh_inj_wt/ioh_spgrav
+    rlang::warn("Iohexol injection weight is provided; `ioh_inj_vol` recalculated.")}
   if (is.null(ioh_inj_wt) & is.null(ioh_inj_vol)) stop("missing injection details; must provide `ioh_inj_wt` or `ioh_inj_vol`")
   if (!is.null(ioh_inj_wt)) {ioh_inj_vol = ioh_inj_wt/ioh_spgrav  } # vol calculated by weight
   iohexol_m = ioh_inj_vol*iohexol_mg_ml*1000 # mass mcg iohexol injected
@@ -106,7 +114,7 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
   
   # model fit parameters
   # fit_SI_vals_late <- function(t, A, a, B, b) {A*exp(-a*t)+B*exp(-b*t) }
-  dat$pred <- predict(lm_late)
+  dat$pred <- exp(predict(lm_late))
   dat$resid <- exp(residuals(lm_late)) #  transform to reg scale
   # ODE micro parameters:
   k10 = NA # iohexol_m/iohexol_vd/AUC_inf/1000 # 1/min
@@ -137,5 +145,39 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
                    "k12"         = k12,
                    "n_early"     = NA, #length(dat_early$time),
                    "n_late"     = length(dat$time))
-  return(res)
+  if (output=="summary") {  return(res)}
+  if (output == "gfr") return(mgfr_late) # mGFR adjusted to 1.73m2 BSA
+  if (output == "gfr_bsa") return(mgfr_msp_bsa) # mGFR adjusted to 1.73m2 BSA
+  if (output == "fit") {return(lm_late)}
+  if (output == "plot") {
+    plot_msp_fit <- function(model, time, iohexol) {
+      # Main plot:
+      time_range = min(time_min):max(time_min)
+      plot(time, iohexol, pch=16, xlab = "Time after injection (minutes)", ylab="Iohexol (ug/mL)",
+           xlim = c(0,max(time)*1.05), ylim = c(0, max(iohexol)*1.5))
+      lines(time_range, exp(predict(lm_late, newdata = data.frame(time=min(time_min):max(time_min)))), col="red", lty=2)
+      title(main = ifelse(!is.null(id),      # add subtitle with subject identifier
+                          paste0("Study: ",id, "\nIohexol measured GFR, Multiple Sample 1-Compartment model\nMethod: ", mgfr_method), 
+                          paste0("Iohexol measured GFR, Multiple Sample 1-Compartment model\nMethod: ", mgfr_method)), 
+            adj = 0)
+      # Build Legend - model summary values:
+      A  = NA
+      a  = NA
+      B  = B |> round(1)
+      b  = b |> round(4)
+      mgfr_late = mgfr_late |> round(1)
+      mgfr_msp_bsa = mgfr_msp_bsa |> round(1)
+      AUC_inf = AUC_inf |> round(1)
+      model_r2 = model_r2 |> round(4)
+      iohexol_vd = iohexol_vd |> round(2)
+      legend("topleft", adj=0.02, cex = 1,
+             legend=c(bquote(GFR==.(mgfr_late)~mL/min),
+                      bquote(GFR[bsa-adj]==.(mgfr_msp_bsa)~mL/min/1.73~m^2),
+                      bquote(AUC[inf]==.(AUC_inf)~ug/mL*min),
+                      bquote(pseudo-R^2==.(model_r2))) )
+    }
+    return(plot_msp_fit(lm_late, time_min, iohexol))
   }
+  
+  }
+
