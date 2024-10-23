@@ -144,7 +144,6 @@
 #' calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 #' 
 
-
 calculate_mgfr_2c <- function(time, iohexol_conc, 
                               omnipaque_v=300, ioh_inj_vol=5.0,
                               ioh_inj_wt=NULL,  
@@ -176,18 +175,18 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   
   # get initial guess from SI method
   dat = data.frame(time=time_min, iohexol=iohexol)
-  wt <- if (nls_weights) {1/iohexol^2} else {rep(1, length(dat_schwartz$iohexol))} # weights for NLLS
+  wt <- if (nls_weights) {1/iohexol^2} else {rep(1, length(dat$iohexol))} # weights for NLLS
   
   # Late Timepoints 
   # t_late = 120
-  dat_late <- dat[dat_schwartz$time >= t_late, ]
+  dat_late <- dat[dat$time >= t_late, ]
   lm_late <- lm(log(iohexol) ~ time, data = dat_late)
   B_start <-  exp(coef(lm_late))[["(Intercept)"]]
   b_start <- -coef(lm_late)[["time"]]
   
   # Early Timepoints 
   # t_early = 100
-  dat_early <- dat[dat_schwartz$time <= t_early, ]
+  dat_early <- dat[dat$time <= t_early, ]
   # subtract predicted from observed
   dat_early$pred <- exp(predict(lm_late, dat_early))
   dat_early$conc_adj <- dat_early$iohexol - dat_early$pred
@@ -210,17 +209,17 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     
     # model fit parameters
     fit_SI_vals <- function(t, A, a, B, b) {A*exp(-a*t)+B*exp(-b*t) }
-    dat_schwartz$pred <- fit_SI_vals(dat_schwartz$time, A, a, B, b)
-    dat_schwartz$resid <- dat_schwartz$iohexol - dat_schwartz$pred
+    dat$pred <- fit_SI_vals(dat$time, A, a, B, b)
+    dat$resid <- dat$iohexol - dat$pred
     # ODE micro parameters:
     k10 = iohexol_m/iohexol_vd/AUC_inf/1000 # 1/min
     k21 = a*b/k10
     k12 = a+b - k10 - k21
     
     model_r2 =  summary(lm(pred ~ iohexol, data = dat))[["r.squared"]]  # this is a pseudo-r2
-    ssr = sum(dat_schwartz$resid^2)
-    sse = sum(dat_schwartz$resid[dat_schwartz$time <= t_early]^2)
-    ssl = sum(dat_schwartz$resid[dat_schwartz$time >= t_late]^2)
+    ssr = sum(dat$resid^2)
+    sse = sum(dat$resid[dat$time <= t_early]^2)
+    ssl = sum(dat$resid[dat$time >= t_late]^2)
     res = data.frame("mgfr_method" = mgfr_method,
                      "mgfr_2c"     = mgfr_2c,
                      "mgfr_2c_bsa" = mgfr_2c_bsa,
@@ -356,7 +355,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   if (output == "gfr_bsa") return(mgfr_2c_bsa) # mGFR adjusted to 1.73m2 BSA
   if (output == "fit"){ 
     if (nls_v == "SI") {return(list("Early"=lm_early, "Late"=lm_late))} else if (nls_v != "SI") {return(fit)}
-    }
+  }
   if (output == "plot") {
     plot_nls_fit <- function(model, time, iohexol) {
       # Main plot:
