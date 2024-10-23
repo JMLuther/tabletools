@@ -6,7 +6,7 @@
 ## ├ Iohexol Data ----
 # formerly entered in the examples for calculate_mgfr_2c()
 # moved to data Oct 2024
-dat <-
+dat_schwartz <-
   data.frame(
     time = c(10, 20, 30, 60, 120, 180, 240, 300, 360),
     iohexol_ug_ml = c(656.1168132,477.1163595,371.3542728,
@@ -32,7 +32,7 @@ dat17 <- data.frame(
 # full example data provided by Tondel in Table 2: https://pubmed.ncbi.nlm.nih.gov/29134449/
 dat_tondel <- data.frame(time=c(10,30,120,180,210,240,300),
                          iohexol=c(464,343,156,100,84,72,51))
-usethis::use_data(dat)
+usethis::use_data(dat_schwartz)
 usethis::use_data(dat10)
 usethis::use_data(dat17)
 usethis::use_data(dat_tondel)
