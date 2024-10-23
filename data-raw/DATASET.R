@@ -4,6 +4,7 @@
 
 # Datasets ----
 ## ├ Iohexol Data ----
+### ├ Schwartz ----
 # formerly entered in the examples for calculate_mgfr_2c()
 # moved to data Oct 2024
 dat_schwartz <-
@@ -14,7 +15,7 @@ dat_schwartz <-
                       37.43137242,21.79250307,12.75996292)  )
 
 
-## ├ Pottel data ----
+### ├ Pottel data ----
 # from Supplemental document
 dat10 <- data.frame(
   id = c(10, 10, 10, 10, 10, 10, 10, 10),
@@ -28,14 +29,22 @@ dat17 <- data.frame(
            102.927,89.5715,67.937,51.058))
 
 
-## ├ Tondel data ----
+### ├ Tondel data ----
 # full example data provided by Tondel in Table 2: https://pubmed.ncbi.nlm.nih.gov/29134449/
 dat_tondel <- data.frame(time=c(10,30,120,180,210,240,300),
                          iohexol=c(464,343,156,100,84,72,51))
+
+### ├ Ebert example data ----
+# data from XLS sheet, Ebert KI 2024: https://pubmed.ncbi.nlm.nih.gov/39097002/
+dat_ebert <- 
+  data.frame(time = c(160, 180, 200, 220, 232, 240),
+             iohexol = c(70, 60, 47, 37, 30, 25))
+
 usethis::use_data(dat_schwartz)
 usethis::use_data(dat10)
 usethis::use_data(dat17)
 usethis::use_data(dat_tondel)
+usethis::use_data(dat_ebert)
 
 
 

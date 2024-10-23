@@ -33,7 +33,7 @@
 #' @param t_late First Time point (minutes) to use in the "Late" elimination
 #'   phase, defaults to `120`
 #' @param nls_v Model estimation method (defaults to `gslnls`).  Can also use
-#'   `SI` or `base`
+#'   `SI`, `base`, or `MSP`. If `MSP` is selected, only "late" time points will be used and "early" time points will be discarded. If no early timepoints are available, method defaults to `MSP`.
 #' @param nls_weights Use weights in nls model (`TRUE` or `FALSE`), defaults to
 #'   `TRUE`. Uses 1/iohexol^2 as weights, which more heavily weight lower
 #'   concentrations obtained at later time points
@@ -143,6 +143,11 @@
 #' dat_7p <- dat_schwartz[dat_schwartz$time %in% c(10, 20, 30, 60, 240, 300, 360), ]
 #' calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 #' 
+#' # if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning) 
+#' dat_ebert
+#' calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
+
 
 calculate_mgfr_2c <- function(time, iohexol_conc, 
                               omnipaque_v=300, ioh_inj_vol=5.0,
@@ -186,14 +191,21 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   
   # Early Timepoints 
   # t_early = 100
-  dat_early <- dat[dat$time <= t_early, ]
-  # subtract predicted from observed
-  dat_early$pred <- exp(predict(lm_late, dat_early))
-  dat_early$conc_adj <- dat_early$iohexol - dat_early$pred
-  # if (any(dat_early$conc_adj <0)) {stop("negative concentration values observed")}
-  lm_early <- lm(log(conc_adj) ~ time, data = dat_early)
-  A_start <-  exp(coef(lm_early))[["(Intercept)"]]
-  a_start <- -coef(lm_early)[["time"]]
+  if (length(dat$time[dat$time<=t_early])==0 || tolower(nls_v) == "msp") {
+    rlang::warn("No early timepoints detected. Using MSP calculation only. No plot method available.")
+    res <- calculate_mgfr_msp(time = time_min, iohexol_conc = iohexol, 
+                       height = height, height_units = height_units , 
+                       weight=weight, weight_units = weight_units, ioh_inj_vol = ioh_inj_vol)
+        return(res)
+  } else { 
+    dat_early <- dat[dat$time <= t_early, ]
+    # subtract predicted from observed
+    dat_early$pred <- exp(predict(lm_late, dat_early))
+    dat_early$conc_adj <- dat_early$iohexol - dat_early$pred
+    # if (any(dat_early$conc_adj <0)) {stop("negative concentration values observed")}
+    lm_early <- lm(log(conc_adj) ~ time, data = dat_early)
+    A_start <-  exp(coef(lm_early))[["(Intercept)"]]
+    a_start <- -coef(lm_early)[["time"]]}
   
   if (nls_v == "SI"){
     A = A_start # use initial SI estimate

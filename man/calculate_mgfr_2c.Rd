@@ -58,7 +58,7 @@ preferred; use if weights not available)}
 concentrations obtained at later time points}
 
 \item{nls_v}{Model estimation method (defaults to \code{gslnls}).  Can also use
-\code{SI} or \code{base}}
+\code{SI}, \code{base}, or \code{MSP}. If \code{MSP} is selected, only "late" time points will be used and "early" time points will be discarded. If no early timepoints are available, method defaults to \code{MSP}.}
 
 \item{t_late}{First Time point (minutes) to use in the "Late" elimination
 phase, defaults to \code{120}}
@@ -184,6 +184,10 @@ calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70,
 dat_7p <- dat_schwartz[dat_schwartz$time \%in\% c(10, 20, 30, 60, 240, 300, 360), ]
 calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 
+# if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning) 
+dat_ebert
+calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
 }
 \seealso{
 \code{\link[=compare_mgfr_summary]{compare_mgfr_summary()}} for quick Table of results calculated by
