@@ -175,13 +175,13 @@ calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, 
 calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base", nls_weights = F)
 
 # examples with fewer time points
-dat_5p <- dat[dat_schwartz$time \%in\% c(10, 20, 30, 120, 300), ]
+dat_5p <- dat_schwartz[dat_schwartz$time \%in\% c(10, 20, 30, 120, 300), ]
 calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 
-dat_5p <- dat[dat_schwartz$time \%in\% c(10, 30, 60, 120, 300), ]
+dat_5p <- dat_schwartz[dat_schwartz$time \%in\% c(10, 30, 60, 120, 300), ]
 calculate_mgfr_2c(dat_5p$time, dat_5p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 
-dat_7p <- dat[dat_schwartz$time \%in\% c(10, 20, 30, 60, 240, 300, 360), ]
+dat_7p <- dat_schwartz[dat_schwartz$time \%in\% c(10, 20, 30, 60, 240, 300, 360), ]
 calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 
 }
