@@ -89,12 +89,12 @@ compare_mgfr_plot(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 0.8, w
 # Pottel ID#10 Difficult fit
 # Negative value using unconstrained parameters (NLLS-base-unweighted)
 # caused by early outlier data points (t=60 most likely)
-compare_mgfr_summary(dat10$time, dat10$conc, height = 1.67, weight = 70)
-compare_mgfr_plot(dat10$time, dat10$conc, height = 1.67, weight = 70)
+compare_mgfr_summary(dat10$time, dat10$iohexol, height = 1.67, weight = 70)
+compare_mgfr_plot(dat10$time, dat10$iohexol, height = 1.67, weight = 70)
 
 # Pottel ID#17 Difficult fit
-compare_mgfr_summary(dat17$time, dat17$conc, height = 1.67, weight = 70)
-compare_mgfr_plot(dat17$time, dat17$conc, height = 1.67, weight = 70)
+compare_mgfr_summary(dat17$time, dat17$iohexol, height = 1.67, weight = 70)
+compare_mgfr_plot(dat17$time, dat17$iohexol, height = 1.67, weight = 70)
 
 # ODE MODEL FOR COMPARISON;
 # Example only to verify ODE parameter estimates, not required for GFR calculation
