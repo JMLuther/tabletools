@@ -30,7 +30,7 @@ compare_mgfr_plot(
 
 \item{iohexol_conc}{A vector of Iohexol plasma measurements (ug/mL)}
 
-\item{height}{Patient Height, cm}
+\item{height}{Patient Height, m}
 
 \item{weight}{Patient Weight, kg}
 

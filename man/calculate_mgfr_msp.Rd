@@ -43,9 +43,9 @@ preferred; use if weights not available)}
 
 \item{id}{Study identifier (optional, passed to plot title)}
 
-\item{height}{Patient Height, cm}
+\item{height}{Patient Height, m}
 
-\item{height_units}{Height units, if not in cm}
+\item{height_units}{Height units, if not in m}
 
 \item{weight}{Patient Weight, kg}
 
