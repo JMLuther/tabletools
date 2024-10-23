@@ -105,7 +105,8 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
   mgfr_late = iohexol_m/AUC_inf  # Dose/AUC_inf = mL/minutes (not indexed to BSA)
   # Adjust for unmeasured early Iohexol conc (standard Brochner-Mortenson correction)
   # can add other options for alternative adjustments
-    if (method_adj == "BM") {mgfr_msp = 0.990778*mgfr_late - 0.001218*mgfr_late^2}
+    if (method_adj == "BM") {
+      mgfr_msp = 0.990778*mgfr_late - 0.001218*mgfr_late^2}
   mgfr_msp_bsa = mgfr_msp/bsa*1.73
   mgfr_method = paste0("MSP-", method_adj)
   
@@ -146,7 +147,7 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
                    "n_early"     = NA, #length(dat_early$time),
                    "n_late"     = length(dat$time))
   if (output=="summary") {  return(res)}
-  if (output == "gfr") return(mgfr_late) # mGFR adjusted to 1.73m2 BSA
+  if (output == "gfr") return(mgfr_msp) # mGFR adjusted to 1.73m2 BSA
   if (output == "gfr_bsa") return(mgfr_msp_bsa) # mGFR adjusted to 1.73m2 BSA
   if (output == "fit") {return(lm_late)}
   if (output == "plot") {
@@ -165,13 +166,13 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
       a  = NA
       B  = B |> round(1)
       b  = b |> round(4)
-      mgfr_late = mgfr_late |> round(1)
+      mgfr_msp = mgfr_msp |> round(1)
       mgfr_msp_bsa = mgfr_msp_bsa |> round(1)
       AUC_inf = AUC_inf |> round(1)
       model_r2 = model_r2 |> round(4)
       iohexol_vd = iohexol_vd |> round(2)
       legend("topleft", adj=0.02, cex = 1,
-             legend=c(bquote(GFR==.(mgfr_late)~mL/min),
+             legend=c(bquote(GFR==.(mgfr_msp)~mL/min),
                       bquote(GFR[bsa-adj]==.(mgfr_msp_bsa)~mL/min/1.73~m^2),
                       bquote(AUC[inf]==.(AUC_inf)~ug/mL*min),
                       bquote(pseudo-R^2==.(model_r2))) )
