@@ -3,6 +3,43 @@
 # usethis::use_data(overwrite = FALSE)
 
 # Datasets ----
+## ├ Iohexol Data ----
+# formerly entered in the examples for calculate_mgfr_2c()
+# moved to data Oct 2024
+dat <-
+  data.frame(
+    time = c(10, 20, 30, 60, 120, 180, 240, 300, 360),
+    iohexol_ug_ml = c(656.1168132,477.1163595,371.3542728,
+                      223.1121251,111.1086272,61.88251616,
+                      37.43137242,21.79250307,12.75996292)  )
+
+
+## ├ Pottel data ----
+# from Supplemental document
+dat10 <- data.frame(
+  id = c(10, 10, 10, 10, 10, 10, 10, 10),
+  time = c(30, 60, 90, 120, 150, 180, 240, 300),
+  iohexol = c(239.9117,217.3945,178.215,159.4682,
+           143.1718,130.3613,113.6223,98.6295))
+dat17 <- data.frame(
+  id = c(17, 17, 17, 17, 17, 17, 17, 17),
+  time = c(30,60,90,120,150,180,240,300),
+  iohexol = c(264.529,170.6695,143.0782,118.5563,
+           102.927,89.5715,67.937,51.058))
+
+
+## ├ Tondel data ----
+# full example data provided by Tondel in Table 2: https://pubmed.ncbi.nlm.nih.gov/29134449/
+dat_tondel <- data.frame(time=c(10,30,120,180,210,240,300),
+                         iohexol=c(464,343,156,100,84,72,51))
+usethis::use_data(dat)
+usethis::use_data(dat10)
+usethis::use_data(dat17)
+usethis::use_data(dat_tondel)
+
+
+
+
 ## ├ OGTT data ----
 library(tidyverse)
 gtt <- readRDS(here::here("data-raw/OGTT_merged_2017-12-23.rds"))

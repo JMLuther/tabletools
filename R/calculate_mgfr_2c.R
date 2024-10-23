@@ -21,9 +21,9 @@
 #'   (Pre-Post weight difference; recommnded method) in grams
 #' @param ioh_inj_vol Iohexol injection Volume by syringe volume injected (Not
 #'   preferred; use if weights not available)
-#' @param height Patient Height, cm
+#' @param height Patient Height, m
 #' @param weight Patient Weight, kg
-#' @param height_units Height units, if not in cm
+#' @param height_units Height units, if not in m
 #' @param weight_units Weight units, if not in kg
 #' @param ioh_units Iohexol concentration units, defaults to `ug/mL`
 #' @param id Study identifier (optional, passed to plot title)
