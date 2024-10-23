@@ -14,7 +14,7 @@ calculate_mgfr_ss(
   iohexol_ss,
   time_ss,
   weight_units = "kg",
-  height_units = "cm",
+  height_units = "m",
   ecv_method = "Faucon"
 )
 }
