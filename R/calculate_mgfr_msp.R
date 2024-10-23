@@ -13,7 +13,9 @@
 #' @md
 #' @export
 #' @examples
-#' # XLSX example data
+#' library(tabletools)
+#' library(dplyr)
+#' # data from Ebert KI 2024, in online XLS file: https://pubmed.ncbi.nlm.nih.gov/39097002/
 #' df1_dem <- data.frame(height=168,     # cm
 #'                       weight=87,      # kg
 #'                       ioh_inj_wt = 6.82594, # injected weight g; syringe wt pre-post
@@ -27,7 +29,8 @@
 #'                    ioh_inj_vol = 5.06,
 #'                    height = df1_dem$height, weight = df1_dem$weight)  
 #' calculate_mgfr_msp(dat$time, dat$iohexol_ucg_ml,
-#'                    ioh_inj_wt = 6.82594,
+#'                    ioh_inj_wt = 6.82594, 
+#'                    ioh_inj_vol=NULL, # make this NULL if weight given
 #'                    height = df1_dem$height, weight = df1_dem$weight)  
 #' 
 #' # Example for multiple dataset analysis
@@ -44,7 +47,7 @@
 #'df2_m <- merge(df2_dem, dat2, all.x = T) |> 
 #'  dplyr::group_by(id) |> 
 #'  tidyr::nest(dat = c(time, iohexol_ucg_ml))
-#'
+#'library(purrr)
 #'df2_m |> 
 #'  mutate(mgfr = map(dat, ~calculate_mgfr_msp(.x$time, .x$iohexol_ucg_ml,
 #'                                             ioh_inj_vol = ioh_vol,
