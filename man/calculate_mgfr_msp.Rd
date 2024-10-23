@@ -123,16 +123,22 @@ df1_dem <- data.frame(height=168,     # cm
                       ioh_vol = 5.06, # mL
                       ioh_conc = 647)   # Omnipaque 300
 
-dat <- data.frame(time=c(160,180,200,220,232,240),
-                  iohexol_ucg_ml = c(70,60,47,37,30,25)) 
+dat_ebert
 
-calculate_mgfr_msp(dat$time, dat$iohexol_ucg_ml,
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol,
                    ioh_inj_vol = 5.06,
                    height = df1_dem$height, weight = df1_dem$weight)  
-calculate_mgfr_msp(dat$time, dat$iohexol_ucg_ml,
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol,
                    ioh_inj_wt = 6.82594, 
                    ioh_inj_vol=NULL, # make this NULL if weight given
                    height = df1_dem$height, weight = df1_dem$weight)  
+                   
+# methods designed to match the fuller for 2C
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "summary")
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "gfr")
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "gfr_bsa")
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "fit")
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "plot", id="test")
 
 # Example for multiple dataset analysis
 df2_dem <- data.frame(id=1:5,
