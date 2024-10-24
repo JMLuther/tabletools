@@ -2,51 +2,15 @@
 % Please edit documentation in R/compare_mgfr_summary.R
 \name{compare_mgfr_summary}
 \alias{compare_mgfr_summary}
-\alias{compare_mgfr_plot}
 \title{Compare Iohexol mGFR results using available methods}
 \usage{
-compare_mgfr_summary(
-  time,
-  iohexol_conc,
-  height,
-  weight,
-  ioh_inj_vol = 5,
-  t_early = 100,
-  t_late = 120
-)
-
-compare_mgfr_plot(
-  time,
-  iohexol_conc,
-  height,
-  weight,
-  ioh_inj_vol = 5,
-  t_common = 120,
-  ...
-)
+compare_mgfr_summary(time, iohexol_conc, t_early = 100, t_late = 120, ...)
 }
 \arguments{
-\item{time}{}
-
-\item{iohexol_conc}{A vector of Iohexol plasma measurements (ug/mL)}
-
-\item{height}{Patient Height, m}
-
-\item{weight}{Patient Weight, kg}
-
-\item{ioh_inj_vol}{Iohexol injection Volume by syringe volume injected (Not
-preferred; use if weights not available)}
-
-\item{t_early}{Last Time point (minutes) to use in the "Early" distribution
-phase, defaults to \code{100}}
-
-\item{t_late}{First Time point (minutes) to use in the "Late" elimination
-phase, defaults to \code{120}}
+\item{...}{Inherits from named `calculate_mgfr_2c` paramaters. Any arguments can be added, but must be named (eg `ioh_inj_vol = 5.1`).}
 }
 \value{
-`compare_mgfr_summary()` returns a Table of mGFR summary values, using combination of available methods
-
-`compare_mgfr_plot()` returns a 3x2 grid of mGFR summary Plots, using combination of available methods
+`compare_mgfr_summary()` Returns a table of mGFR summary parameters, using combination of available methods. The single sample method result is not included but can be called separately using `calculate_mgfr_ss`. ' @export '
 }
 \description{
 Useful to analyze outlier or inconsistent results. Note most variation occurs
@@ -79,22 +43,22 @@ dat17
 dat_tondel
 
 compare_mgfr_summary(dat_tondel$time, dat_tondel$iohexol, ioh_inj_vol = 2.08, weight = 13, height = 0.9)
-compare_mgfr_plot(dat_tondel$time, dat_tondel$iohexol, ioh_inj_vol = 2.08, weight = 13, height = 0.9)
+compare_mgfr_plot(dat_tondel$time, dat_tondel$iohexol, ioh_inj_vol = 2.08, weight = 13, height = 0.9, id="dat_tondel")
 
 # Comparisons of available methods: published studies
 # Schwartz data in kids; note don't have subject details (height, weight, inj_vol)
 compare_mgfr_summary(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
-compare_mgfr_plot(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
+compare_mgfr_plot(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08, id="dat_schwartz")
 
 # Pottel ID#10 Difficult fit
 # Negative value using unconstrained parameters (NLLS-base-unweighted)
 # caused by early outlier data points (t=60 most likely)
 compare_mgfr_summary(dat10$time, dat10$iohexol, height = 1.67, weight = 70)
-compare_mgfr_plot(dat10$time, dat10$iohexol, height = 1.67, weight = 70)
+compare_mgfr_plot(dat10$time, dat10$iohexol, height = 1.67, weight = 70, id="dat10")
 
 # Pottel ID#17 Difficult fit
-compare_mgfr_summary(dat17$time, dat17$iohexol, height = 1.67, weight = 70)
-compare_mgfr_plot(dat17$time, dat17$iohexol, height = 1.67, weight = 70)
+compare_mgfr_summary(dat17$time, dat17$iohexol, height = 1.67, weight = 70, id="dat17")
+compare_mgfr_plot(dat17$time, dat17$iohexol, height = 1.67, weight = 70, id="dat17")
 
 # ODE MODEL FOR COMPARISON;
 # Example only to verify ODE parameter estimates, not required for GFR calculation
@@ -118,4 +82,5 @@ out_df <- as.data.frame(out)
 # Plot to verfiy kinetic parameters vs nls model
 calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 lines(out_df$time, out_df$Iohexol, lty=2)
+
 }

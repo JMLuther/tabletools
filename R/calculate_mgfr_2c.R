@@ -152,7 +152,6 @@
 #' calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output="plot")
 #' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
 
-
 calculate_mgfr_2c <- function(time, iohexol_conc, 
                               omnipaque_v=300, ioh_inj_vol=5.0,
                               ioh_inj_wt=NULL,  
@@ -199,10 +198,17 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
   # t_early = 100
   if (length(dat$time[dat$time<=t_early])==0 || tolower(nls_v) == "msp") {
     rlang::warn("No early timepoints detected. Using MSP calculation only.")
-    res <- calculate_mgfr_msp(time = time_min, iohexol_conc = iohexol, output = output,
-                       height = height, height_units = height_units , 
-                       weight=weight, weight_units = weight_units, ioh_inj_vol = ioh_inj_vol)
-        return(res)
+    res <- calculate_mgfr_msp(time = time_min, iohexol_conc = iohexol, 
+                              omnipaque_v=omnipaque_v, 
+                              ioh_inj_vol=ioh_inj_vol,
+                              ioh_inj_wt=NULL,  
+                              ioh_units="ug/mL", 
+                              time_units="min",
+                              id=id,
+                              output = output,
+                              height = height, height_units = height_units ,
+                              weight=weight, weight_units = weight_units)
+    return(res)
   } else { 
     dat_early <- dat[dat$time <= t_early, ]
     # subtract predicted from observed

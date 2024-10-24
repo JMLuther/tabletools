@@ -7,10 +7,12 @@
 #' The summary provides estimates of kinetic parameters (k10, k21, k12) which
 #' can be used in ODE models, but is not implemented here.
 #'
-#' @inheritParams calculate_mgfr_2c
-#' @param time
+#' @inheritParams calculate_mgfr_2c ' 
+#' @param ... Inherits from named `calculate_mgfr_2c` paramaters. Any arguments can be added, but must be named (eg `ioh_inj_vol = 5.1`).
+#' @rdname compare_mgfr_summary
+#' @importFrom purrr pmap_df
 #'
-#' @return `compare_mgfr_summary()` returns a Table of mGFR summary values, using combination of available methods
+#' @return `compare_mgfr_summary()` Returns a table of mGFR summary parameters, using combination of available methods. The single sample method result is not included but can be called separately using `calculate_mgfr_ss`. ' @export '
 #' @export
 #' @examples
 #' library(tabletools)
@@ -35,22 +37,22 @@
 #' dat_tondel
 #' 
 #' compare_mgfr_summary(dat_tondel$time, dat_tondel$iohexol, ioh_inj_vol = 2.08, weight = 13, height = 0.9)
-#' compare_mgfr_plot(dat_tondel$time, dat_tondel$iohexol, ioh_inj_vol = 2.08, weight = 13, height = 0.9)
+#' compare_mgfr_plot(dat_tondel$time, dat_tondel$iohexol, ioh_inj_vol = 2.08, weight = 13, height = 0.9, id="dat_tondel")
 #' 
 #' # Comparisons of available methods: published studies
 #' # Schwartz data in kids; note don't have subject details (height, weight, inj_vol)
 #' compare_mgfr_summary(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
-#' compare_mgfr_plot(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08)
+#' compare_mgfr_plot(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 0.8, weight = 13, ioh_inj_vol = 2.08, id="dat_schwartz")
 #' 
 #' # Pottel ID#10 Difficult fit
 #' # Negative value using unconstrained parameters (NLLS-base-unweighted)
 #' # caused by early outlier data points (t=60 most likely)
 #' compare_mgfr_summary(dat10$time, dat10$iohexol, height = 1.67, weight = 70)
-#' compare_mgfr_plot(dat10$time, dat10$iohexol, height = 1.67, weight = 70)
+#' compare_mgfr_plot(dat10$time, dat10$iohexol, height = 1.67, weight = 70, id="dat10")
 #' 
 #' # Pottel ID#17 Difficult fit
-#' compare_mgfr_summary(dat17$time, dat17$iohexol, height = 1.67, weight = 70)
-#' compare_mgfr_plot(dat17$time, dat17$iohexol, height = 1.67, weight = 70)
+#' compare_mgfr_summary(dat17$time, dat17$iohexol, height = 1.67, weight = 70, id="dat17")
+#' compare_mgfr_plot(dat17$time, dat17$iohexol, height = 1.67, weight = 70, id="dat17")
 #' 
 #' # ODE MODEL FOR COMPARISON;
 #' # Example only to verify ODE parameter estimates, not required for GFR calculation
@@ -74,32 +76,28 @@
 #' # Plot to verfiy kinetic parameters vs nls model
 #' calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot")
 #' lines(out_df$time, out_df$Iohexol, lty=2)
-  
-compare_mgfr_summary <- function(time, iohexol_conc, height, weight, ioh_inj_vol=5, t_early=100, t_late=120){
-  rbind(
-    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI"),
-    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI", t_early = t_early, t_late = t_late),
-    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls"),
-    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base"),
-    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls", nls_weights = F),
-    calculate_mgfr_2c(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base", nls_weights = F),
-    calculate_mgfr_msp(time, iohexol_conc, output="summary", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, t_late=t_late)
-  )
+#' 
+compare_mgfr_summary  <- function(time, iohexol_conc, t_early=100, t_late=120,...) {
+  nls_vs = list(nls_v       = c("SI", "SI", "gslnls", "base", "gslnls", "base", "msp"),
+                nls_weights = c(  T,   T,        T,      T,        F,      F,    F),
+                t_early     = c(t_early, t_late, t_early, t_early, t_early, t_early, t_early),
+                t_late      = rep(t_late, 7))
+  pmap_df(nls_vs, calculate_mgfr_2c, time=time, iohexol_conc=iohexol_conc, output="summary",...) 
 }
 
-#' @inheritParams calculate_mgfr_2c
-#' @return `compare_mgfr_plot()` returns a 3x2 grid of mGFR summary Plots, using combination of available methods
+
+#' @inheritParams calculate_mgfr_2c ' 
+#' @param ... Inherits from named `calculate_mgfr_2c` paramaters. Any arguments can be added, but must be named (eg `ioh_inj_vol = 5.1`).
+#' @return `compare_mgfr_plot()` returns a 3x2 grid of mGFR summary Plots, using combination of available methods. Note the `base` versions are not plotted but results can be reviewed using `compare_mgfr_summary` ' 
 #' @export
-#' @rdname compare_mgfr_summary
-compare_mgfr_plot <- function(time, iohexol_conc, height, weight, ioh_inj_vol=5, t_common=120,...){
-  if (is.null(t_common)) {stop("Provide a value for 't_common' for m-SI method")}
+#' @examples
+compare_mgfr_plot  <- function(time, iohexol_conc, t_early=100, t_late=120,...) {
+  nls_vs = list(nls_v       = c("SI", "SI", "gslnls", "gslnls", "msp"),
+                nls_weights = c(  T,     T,        T,        F,    F),
+                t_early     = c(t_early, t_late, t_early, t_early, t_early),
+                t_late      = rep(t_late, 5))
   opar_mfr = par("mfrow")
-  par(mfrow = c(3, 2))
-  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI")
-  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "SI", t_early = 120, t_late = 120)
-  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls")
-  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base")
-  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "gslnls", nls_weights = F)
-  calculate_mgfr_2c(time, iohexol_conc, output="plot", height=height, weight=weight, ioh_inj_vol = ioh_inj_vol, nls_v = "base", nls_weights = F)
+  par(mfrow = c(3,2))
+  pmap_df(nls_vs, calculate_mgfr_2c, time=time, iohexol_conc=iohexol_conc, output="plot",...) 
   par(mfrow=opar_mfr)
 }
