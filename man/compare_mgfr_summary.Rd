@@ -17,15 +17,22 @@ phase, defaults to \code{100}}
 \item{t_late}{First Time point (minutes) to use in the "Late" elimination
 phase, defaults to \code{120}}
 
-\item{...}{Inherits from named `calculate_mgfr_2c` paramaters. Any arguments can be added, but must be named (eg `ioh_inj_vol = 5.1`).}
+\item{...}{Inherits from named `calculate_mgfr_2c` paramaters. Any arguments
+can be added, but must be named (eg `ioh_inj_vol = 5.1`).}
 }
 \value{
-`compare_mgfr_summary()` Returns a table of mGFR summary parameters, using combination of available methods. The single sample method result is not included but can be called separately using `calculate_mgfr_ss`. ' @export '
+`compare_mgfr_summary()` Returns a table of mGFR summary parameters,
+  and `compare_mgfr_plot()` returns a panel of plots using a combination of available methods.
+  The single sample method result is not included but can be called
+  separately using `calculate_mgfr_ss`. '
 }
 \description{
-Useful to analyze outlier or inconsistent results. Note most variation occurs
-due to poor fitting of early timepoints. Further discussion and details
-regarding methods of fitting the 2-compartment models can be found at
+Two functions are provided to to summarize available options and analyze
+outlier or inconsistent results. Most variation occurs due to poor fitting or
+variability in early timepoints (<90min), although the late time points
+account for ~90% of the measured AUC used in calculation of creatinine
+clearance. Further discussion and details regarding methods of fitting the
+2-compartment models can be found at
 \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8101203/}{Pottel et al.}
 The summary provides estimates of kinetic parameters (k10, k21, k12) which
 can be used in ODE models, but is not implemented here.
@@ -33,7 +40,7 @@ can be used in ODE models, but is not implemented here.
 \examples{
 library(tabletools)
 # PUBLISHED IOHEXOL DATA ----
-# data available in package by calling 
+# data available in package by calling
 ## ├ Schwartz Data ----
 # Data extracted from Schwartz Fig1 https://pubmed.ncbi.nlm.nih.gov/16612328/
 # Iohexol 5mL IV injection (Omnipaque 300, 5mL ~3235mg Iohexol)
