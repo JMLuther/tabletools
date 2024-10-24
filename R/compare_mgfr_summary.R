@@ -11,6 +11,7 @@
 #' can be used in ODE models, but is not implemented here.
 #'
 #' @inheritParams calculate_mgfr_2c
+#' @param mfr Plot layout. defaults to c(2,3) for 2 rows, 3 columns
 #' @param ... Inherits from named `calculate_mgfr_2c` paramaters. Any arguments
 #'   can be added, but must be named (eg `ioh_inj_vol = 5.1`).
 #' @rdname compare_mgfr_summary
@@ -96,16 +97,17 @@ compare_mgfr_summary  <- function(time, iohexol_conc, t_early=100, t_late=120,..
   pmap_df(nls_vs, calculate_mgfr_2c, time=time, iohexol_conc=iohexol_conc, output="summary",...) 
 }
 
-
+#' @rdname compare_mgfr_summary 
 #' @inheritParams calculate_mgfr_2c
 #' @export compare_mgfr_plot
-compare_mgfr_plot  <- function(time, iohexol_conc, t_early=100, t_late=120,...) {
+compare_mgfr_plot  <- function(time, iohexol_conc, t_early=100, t_late=120, mfr=c(2,3),...) {
   nls_vs = list(nls_v       = c("gslnls", "gslnls","base", "base","SI", "msp"),
                 nls_weights = c(       T,        F,     T,      F,   F,    F),
                 t_early     = c(t_early, t_early, t_early, t_early, t_early, t_early),
                 t_late      = rep(t_late, 6))
   old.mfrow = par("mfrow")
-  par(mfrow=c(3,2))
+  par(mfrow = mfr)
   pmap(nls_vs, calculate_mgfr_2c, time=time, iohexol_conc=iohexol_conc, output="plot",...) 
   par("mfrow"=old.mfrow) 
 }
+

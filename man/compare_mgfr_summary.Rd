@@ -2,9 +2,19 @@
 % Please edit documentation in R/compare_mgfr_summary.R
 \name{compare_mgfr_summary}
 \alias{compare_mgfr_summary}
+\alias{compare_mgfr_plot}
 \title{Compare Iohexol mGFR results using available methods}
 \usage{
 compare_mgfr_summary(time, iohexol_conc, t_early = 100, t_late = 120, ...)
+
+compare_mgfr_plot(
+  time,
+  iohexol_conc,
+  t_early = 100,
+  t_late = 120,
+  mfr = c(2, 3),
+  ...
+)
 }
 \arguments{
 \item{time}{A vector of time values (minutes)}
@@ -19,6 +29,8 @@ phase, defaults to \code{120}}
 
 \item{...}{Inherits from named `calculate_mgfr_2c` paramaters. Any arguments
 can be added, but must be named (eg `ioh_inj_vol = 5.1`).}
+
+\item{mfr}{Plot layout. defaults to c(2,3) for 2 rows, 3 columns}
 }
 \value{
 `compare_mgfr_summary()` Returns a table of mGFR summary parameters,
