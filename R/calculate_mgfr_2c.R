@@ -210,7 +210,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                               id=id,
                               output = output,
                               height = height, height_units = height_units ,
-                              weight=weight, weight_units = weight_units)
+                              weight=weight, weight_units = weight_units, legend_cex = legend_cex)
     return(res)
   } else { 
     dat_early <- dat[dat$time <= t_early, ]
