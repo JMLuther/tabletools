@@ -19,6 +19,7 @@ calculate_mgfr_msp(
   weight_units = "kg",
   method_adj = "BM",
   t_late = 120,
+  legend_cex = 1,
   output = "summary"
 )
 }
@@ -53,6 +54,8 @@ preferred; use if weights not available)}
 
 \item{t_late}{First Time point (minutes) to use in the "Late" elimination
 phase, defaults to \code{120}}
+
+\item{legend_cex}{Magnification factor for plot text, default 1.0 (100\%)}
 
 \item{output}{Desired output, defaults to \code{summary} of model. Alternatively
 can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
@@ -140,6 +143,8 @@ calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, 
 calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "gfr_bsa")
 calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "fit")
 calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "plot", id="test")
+calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, 
+ioh_inj_vol = 5.06, output = "plot", id="test", legend_cex = 1.5)
 
 # Example for multiple dataset analysis
 df2_dem <- data.frame(id=1:5,
