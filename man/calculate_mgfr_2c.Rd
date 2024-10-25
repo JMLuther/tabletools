@@ -21,6 +21,7 @@ calculate_mgfr_2c(
   nls_v = "gslnls",
   t_late = 120,
   t_early = 100,
+  legend_cex = 1,
   output = "summary"
 )
 }
@@ -67,6 +68,8 @@ phase, defaults to \code{120}}
 
 \item{t_early}{Last Time point (minutes) to use in the "Early" distribution
 phase, defaults to \code{100}}
+
+\item{legend_cex}{Magnification factor for plot text, default 1.0 (100\%)}
 
 \item{output}{Desired output, defaults to \code{summary} of model. Alternatively
 can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
@@ -176,6 +179,7 @@ calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, 
 calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base")
 calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "gslnls", nls_weights = F)
 calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base", nls_weights = F)
+calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", legend_cex = 1.5)
 
 # examples with fewer time points
 dat_5p <- dat_schwartz[dat_schwartz$time \%in\% c(10, 20, 30, 120, 300), ]
@@ -190,7 +194,7 @@ calculate_mgfr_2c(dat_7p$time, dat_7p$iohexol_ug_ml, height = 1.67, weight = 70,
 # if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning)
 dat_ebert
 calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
-calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output="plot")
+calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output="plot", leg)
 calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
 }
 \seealso{

@@ -38,6 +38,8 @@
 #' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "gfr_bsa")
 #' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "fit")
 #' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output = "plot", id="test")
+#' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, 
+#' ioh_inj_vol = 5.06, output = "plot", id="test", legend_cex = 1.5)
 #' 
 #' # Example for multiple dataset analysis
 #' df2_dem <- data.frame(id=1:5,
@@ -68,6 +70,7 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
                                height=NA, height_units = "m", 
                                weight=NA, weight_units = "kg",
                                method_adj = "BM", t_late = 120, #t_early = 100,
+                               legend_cex = 1.0,
                                output="summary"){
   # Subject calcs
   bsa = ifelse(is.na(height) || is.na(weight), NA, 
@@ -155,12 +158,13 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
       # Main plot:
       time_range = min(time_min):max(time_min)
       plot(time, iohexol, pch=16, xlab = "Time after injection (minutes)", ylab="Iohexol (ug/mL)",
-           xlim = c(0,max(time)*1.05), ylim = c(0, max(iohexol)*1.5))
+           xlim = c(0,max(time)*1.05), ylim = c(0, max(iohexol)*1.5),
+           cex.lab=legend_cex, cex.axis=legend_cex, cex.main=legend_cex, cex.sub=legend_cex)
       lines(time_range, exp(predict(lm_late, newdata = data.frame(time=min(time_min):max(time_min)))), col="red", lty=2)
       title(main = ifelse(!is.null(id),      # add subtitle with subject identifier
                           paste0("Study: ",id, "\nIohexol measured GFR, Multiple Sample 1-Compartment model\nMethod: ", mgfr_method), 
                           paste0("Iohexol measured GFR, Multiple Sample 1-Compartment model\nMethod: ", mgfr_method)), 
-            adj = 0)
+            adj = 0, cex.main=legend_cex)
       # Build Legend - model summary values:
       A  = NA
       a  = NA
@@ -171,7 +175,7 @@ calculate_mgfr_msp <- function(time, iohexol_conc,
       AUC_inf = AUC_inf |> round(1)
       model_r2 = model_r2 |> round(4)
       iohexol_vd = iohexol_vd |> round(2)
-      legend("topleft", adj=0.02, cex = 1,
+      legend("topleft", adj=0.02, cex = legend_cex,
              legend=c(bquote(GFR==.(mgfr_msp)~mL/min),
                       bquote(GFR[bsa-adj]==.(mgfr_msp_bsa)~mL/min/1.73~m^2),
                       bquote(AUC[inf]==.(AUC_inf)~ug/mL*min),

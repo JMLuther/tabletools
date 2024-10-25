@@ -39,6 +39,7 @@
 #' @param nls_weights Use weights in nls model (`TRUE` or `FALSE`), defaults to
 #'   `TRUE`. Uses 1/iohexol^2 as weights, which more heavily weight lower
 #'   concentrations obtained at later time points
+#' @param legend_cex Magnification factor for plot text, default 1.0 (100%)   
 #' @param output Desired output, defaults to `summary` of model. Alternatively
 #'   can specify `gfr`, `gfr_bsa`, `fit`, or `plot`
 #'
@@ -135,6 +136,7 @@
 #' calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base")
 #' calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "gslnls", nls_weights = F)
 #' calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", nls_v = "base", nls_weights = F)
+#' calculate_mgfr_2c(dat_schwartz$time, dat_schwartz$iohexol_ug_ml, height = 1.67, weight = 70, ioh_inj_vol = 5, output="plot", legend_cex = 1.5)
 #'
 #' # examples with fewer time points
 #' dat_5p <- dat_schwartz[dat_schwartz$time %in% c(10, 20, 30, 120, 300), ]
@@ -149,7 +151,7 @@
 #' # if early time points not present, defaults to MSP-BM estimation (using `calculate_mgfr_msp` with warning)
 #' dat_ebert
 #' calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
-#' calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output="plot")
+#' calculate_mgfr_2c(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06, output="plot", leg)
 #' calculate_mgfr_msp(dat_ebert$time, dat_ebert$iohexol, height = 1.68, weight=87, ioh_inj_vol = 5.06)
 
 calculate_mgfr_2c <- function(time, iohexol_conc, 
@@ -161,6 +163,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
                               weight=NA, weight_units = "kg",
                               nls_weights = TRUE, nls_v = "gslnls",
                               t_late = 120, t_early = 100,
+                              legend_cex=1.0,
                               output="summary"){
   # Subject calcs
   bsa = ifelse(is.na(height) || is.na(weight), NA, 
@@ -384,14 +387,15 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
     plot_nls_fit <- function(model, time, iohexol) {
       # Main plot:
       time_range = 0:max(time)
-      plot(time, iohexol, pch=16, xlab = "Time after injection (minutes)", ylab="Iohexol (ug/mL)")
+      plot(time, iohexol, pch=16, xlab = "Time after injection (minutes)", ylab="Iohexol (ug/mL)", 
+           cex.lab=legend_cex, cex.axis=legend_cex, cex.main=legend_cex, cex.sub=legend_cex)
       if (nls_v != "SI") {lines(predict(model, list(time_min=0:max(time))), col="red", lty=2)
       } else if (nls_v == "SI") {
         lines(0:max(time), fit_SI_vals(0:max(time), A, a, B, b), col="red", lty=2)        }
       title(main = ifelse(!is.null(id),      # add subtitle with subject identifier
                           paste0("Study: ",id, "\nIohexol measured GFR, 2-Compartment model\nMethod: ", mgfr_method), 
                           paste0("Iohexol measured GFR, 2-Compartment model\nMethod: ", mgfr_method)), 
-            adj = 0)
+            adj = 0, cex.main=legend_cex)
       # Build Legend - model summary values:
       A  = A |> round(1)
       a  = a |> round(4)
@@ -402,7 +406,7 @@ calculate_mgfr_2c <- function(time, iohexol_conc,
       AUC_inf = AUC_inf |> round(1)
       model_r2 = model_r2 |> round(4)
       iohexol_vd = iohexol_vd |> round(2)
-      legend("topright", adj=0.02, cex = 0.9,
+      legend("topright", adj=0.02, cex = legend_cex,
              legend=c(bquote(C[Ioh.]==.(A)*e^(-.(a)*t)+.(B)*e^(-.(b)*t)),
                       bquote(GFR==.(mgfr_2c)~mL/min),
                       bquote(GFR[bsa-adj]==.(mgfr_2c_bsa)~mL/min/1.73~m^2),
