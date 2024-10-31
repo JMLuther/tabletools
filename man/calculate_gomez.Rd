@@ -4,17 +4,15 @@
 \alias{calculate_gomez}
 \title{Gomez formulas for renal afferent/efferent resistance}
 \usage{
-calculate_gomez(GFR, RPF, Hct, TP, sbp, dbp, hr, DM = F)
+calculate_gomez(GFR, RPF, Hct, total_protein, MAP = NULL, sbp, dbp, hr, DM = F)
 }
 \arguments{
 \item{GFR}{Glomerular filtration rate measured by iohexol clearance or other
-precise method (mL/min)}
+precise method (mL/min), not adjusted by BSA.}
 
-\item{RPF}{Renal plasms flow, determined by PAH infusion (mL/min)}
+\item{RPF}{Renal plasma flow, determined by PAH infusion (mL/min), not adjusted by BSA.}
 
 \item{Hct}{Hematocrit (fraction)}
-
-\item{TP}{Total protein concentration (mg/dL, plasma)}
 
 \item{sbp}{Systolic Blood pressure (mmHg)}
 
@@ -23,28 +21,62 @@ precise method (mL/min)}
 \item{hr}{Heart rate (bpm)}
 
 \item{DM}{Diabetes (\code{T}/\code{F}). defaults to \code{FALSE}}
+
+\item{TP}{Total Protein concentration (g/dL, plasma)}
 }
 \value{
-Data.frame of calculated values
+a Data.frame of calculated values:
+\itemize{
+\item \code{gomez_map} Mean arterial pressure (MAP),mmHg
+\item \code{gomez_ff} Filtration Fraction, unitless
+\item \code{gomez_rbf} Renal Blood Flow (RBF), mL/min
+\item \code{gomez_rvr} Renal Vascular Resistance (RVR), mmHg min/L
+\item \code{gomez_kfg} Gross Filtration Coefficient, mL/s/mmHg
+\item \code{CM} Cappilary Mean Plasma protein concentration, g/dL
+\item \code{gomez_pf} Filtration Pressure across Glomerular cappilaries, mmHg
+\item \code{Pbow} Bowman's Space Pressure, mmHg
+\item \code{gomez_piGlom} Glomerular cappilary Oncotic Pressure, mmHg
+\item \code{gomez_pglom} Glomerular Pressure, mmHg
+\item \code{gomez_ra}  Resistance afferent arteriole (Ra), dyne s/cm^5
+\item \code{gomez_re}  Resistance efferent arteriole (Re), dyne s/cm^5
+\item \code{gomez_ra_re_ratio} Ra to Re Ratio
+\item \code{gomez_A} A - theoretical pressure at which sodium excretion is zero
+}
 }
 \description{
 Calculates renal resistance measures using the formulas originally reported
 by \href{https://pubmed.ncbi.nlm.nih.gov/14888692/}{Gomez}, referred to as
 the "Gomez Formulas". For review of this method see
 \href{https://pubmed.ncbi.nlm.nih.gov/27605583/}{Bjornstad}. For discussion
-of the additionally reported A value see \href{https://pubmed.ncbi.nlm.nih.gov/1860182/}{Kimura.}
+of the additionally reported A value see
+\href{https://pubmed.ncbi.nlm.nih.gov/1860182/}{Kimura.}
 }
 \details{
 Assumptions imposed by Gomez equations are as follows:
 \enumerate{
-\item Intrarenal vascular resistances are divided into afferent, postglomerular, and efferent
-\item Hydrostatic pressures within the renal tubules, venules, Bowman’s space, and interstitium (PBow) are in equilibrium of 10 mmHg
+\item Intrarenal vascular resistances are divided into afferent, postglomerular,
+and efferent
+\item Hydrostatic pressures within the renal tubules, venules, Bowman’s space, and
+interstitium (PBow) are in equilibrium of 10 mmHg
 \item Glomerulus is  in filtration disequilibrium
-\item Gross filtration coefficient KF is 0.0867mL/s/ mmHg given a normal kidney.
+\item Gross filtration coefficient KF is 0.0867 mL/s/mmHg given a normal kidney.
+Alternative assumed values include 0.1012 mL/s/mmHg for patients with Diabetes
+or heart failure.
 }
 }
 \examples{
-calculate_gomez(GFR=85/60, RPF=377/60, Hct=0.432,
+calculate_gomez(GFR=85, RPF=377, Hct=0.432,
                 sbp=125, dbp=73, hr=70, #MAP=93,
-                TP=6.8, DM=F)
+                total_protein=6.8, DM=F)
+                
+# Ribstein avg values
+calculate_gomez(GFR = 102, RPF = 445, Hct = 0.44, total_protein = 6.8, sbp=169, dbp=97, hr=65, DM=F)
+calculate_gomez(GFR = 93, RPF = 422, Hct = 0.44, total_protein=6.8, MAP=121, DM=F)
+
+
+# Lytvyn data
+# healthy control
+calculate_gomez(GFR = 109, RPF = 621, Hct = 0.44, total_protein = 6.8, sbp=109, dbp=65, hr=61, DM=F)
+# type I DM
+calculate_gomez(GFR = 117, RPF = 685, Hct = 0.44, total_protein = 6.8, sbp=114, dbp=66, hr=70, DM=F)
 }
