@@ -30,7 +30,7 @@
 #' 
 #' hr <- 40:125
 #' plot(hr, map_dbl(hr, ~calculate_map(125, 73, .x, method = "gomez")), "l", lty=1, col="black",
-#'      # xlim = c(30,150), ylim = c(85,100),
+#'      xlim = c(35,127.5), ylim = c(90,99),
 #'      ylab = "Calculated MAP (mmHg)")
 #' title("Methods comparison for HR-adjusted MAP calculation")
 #' lines(hr, map_dbl(hr, ~calculate_map(125, 73, .x, method = "razminia")), lty=2, col="red")
@@ -46,12 +46,13 @@ calculate_map <- function(sbp, dbp, hr=NA, method="gomez"){
     rlang::warn("non-numeric values in sbp or dbp")
     return(NA_real_)}
   
-  if (is.na(hr)){
-    rlang::warn("no HR value, defaulting to standard method")
+  if (method == "standard"){
     map = 1/3*sbp + 2/3*dbp
     return(map)
   }
-  if (method == "standard"){
+  
+  if (is.na(hr)){
+    rlang::warn("no HR value, defaulting to standard method")
     map = 1/3*sbp + 2/3*dbp
     return(map)
   }

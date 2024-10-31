@@ -41,7 +41,7 @@ calculate_map(140, 90, 70, method="razminia")
 
 hr <- 40:125
 plot(hr, map_dbl(hr, ~calculate_map(125, 73, .x, method = "gomez")), "l", lty=1, col="black",
-     # xlim = c(30,150), ylim = c(85,100),
+     xlim = c(35,127.5), ylim = c(90,99),
      ylab = "Calculated MAP (mmHg)")
 title("Methods comparison for HR-adjusted MAP calculation")
 lines(hr, map_dbl(hr, ~calculate_map(125, 73, .x, method = "razminia")), lty=2, col="red")
