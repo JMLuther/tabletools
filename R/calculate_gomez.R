@@ -21,11 +21,12 @@
 #'   precise method (mL/min), not adjusted by BSA.
 #' @param RPF Renal plasma flow, determined by PAH infusion (mL/min), not adjusted by BSA.
 #' @param Hct Hematocrit (fraction)
-#' @param TP Total Protein concentration (g/dL, plasma)
 #' @param sbp Systolic Blood pressure (mmHg)
 #' @param dbp Diastolic Blood pressure (mmHg)
 #' @param hr Heart rate (bpm)
+#' @param MAP Mean Arterial Pressure (mmHg). If not provided, MAP is calculated from `sbp`, `dbp`, and `hr`.
 #' @param DM Diabetes (`T`/`F`). defaults to `FALSE`
+#' @param total_protein Total protein in plasma (g/dL)
 #'
 #' @return a Data.frame of calculated values: 
 #' *  `gomez_map` Mean arterial pressure (MAP),mmHg
@@ -33,9 +34,9 @@
 #' *  `gomez_rbf` Renal Blood Flow (RBF), mL/min
 #' *  `gomez_rvr` Renal Vascular Resistance (RVR), mmHg min/L
 #' *  `gomez_kfg` Gross Filtration Coefficient, mL/s/mmHg
-#' *  `CM` Cappilary Mean Plasma protein concentration, g/dL
+#' *  `gomez_cm` Capillary Mean Plasma protein concentration, g/dL
 #' *  `gomez_pf` Filtration Pressure across Glomerular cappilaries, mmHg
-#' *  `Pbow` Bowman's Space Pressure, mmHg
+#' *  `gomez_Pbow` Bowman's Space Pressure, mmHg
 #' *  `gomez_piGlom` Glomerular cappilary Oncotic Pressure, mmHg
 #' *  `gomez_pglom` Glomerular Pressure, mmHg
 #' *  `gomez_ra`  Resistance afferent arteriole (Ra), dyne s/cm^5
@@ -103,7 +104,7 @@ calculate_gomez <- function(GFR, RPF, Hct, total_protein,
                    gomez_rvr_dyne = RVR*80, # conver to dyne s 
                    gomez_rvr = RVR,
                    gomez_kfg = Kfg,
-                   # CM = CM,
+                   gomez_cm = CM,
                    gomez_pf = dPf,
                    gomez_piGlom = piG,
                    gomez_pbow = Pbow,

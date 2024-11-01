@@ -14,6 +14,10 @@ precise method (mL/min), not adjusted by BSA.}
 
 \item{Hct}{Hematocrit (fraction)}
 
+\item{total_protein}{Total protein in plasma (g/dL)}
+
+\item{MAP}{Mean Arterial Pressure (mmHg). If not provided, MAP is calculated from \code{sbp}, \code{dbp}, and \code{hr}.}
+
 \item{sbp}{Systolic Blood pressure (mmHg)}
 
 \item{dbp}{Diastolic Blood pressure (mmHg)}
@@ -21,8 +25,6 @@ precise method (mL/min), not adjusted by BSA.}
 \item{hr}{Heart rate (bpm)}
 
 \item{DM}{Diabetes (\code{T}/\code{F}). defaults to \code{FALSE}}
-
-\item{TP}{Total Protein concentration (g/dL, plasma)}
 }
 \value{
 a Data.frame of calculated values:
@@ -32,9 +34,9 @@ a Data.frame of calculated values:
 \item \code{gomez_rbf} Renal Blood Flow (RBF), mL/min
 \item \code{gomez_rvr} Renal Vascular Resistance (RVR), mmHg min/L
 \item \code{gomez_kfg} Gross Filtration Coefficient, mL/s/mmHg
-\item \code{CM} Cappilary Mean Plasma protein concentration, g/dL
+\item \code{gomez_cm} Capillary Mean Plasma protein concentration, g/dL
 \item \code{gomez_pf} Filtration Pressure across Glomerular cappilaries, mmHg
-\item \code{Pbow} Bowman's Space Pressure, mmHg
+\item \code{gomez_Pbow} Bowman's Space Pressure, mmHg
 \item \code{gomez_piGlom} Glomerular cappilary Oncotic Pressure, mmHg
 \item \code{gomez_pglom} Glomerular Pressure, mmHg
 \item \code{gomez_ra}  Resistance afferent arteriole (Ra), dyne s/cm^5
