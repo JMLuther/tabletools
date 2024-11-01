@@ -2,11 +2,12 @@
 % Please edit documentation in R/calculate_egfr.R, R/calculate_egfr_ckdepi.R
 \name{calculate_egfr_ckdepi}
 \alias{calculate_egfr_ckdepi}
+\alias{calculate_egfr_ckdepi_nonv}
 \title{Calculate estimated GFR by CKD-EPI equation}
 \usage{
 calculate_egfr_ckdepi(age, sex, creatinine, race = NULL, version = "2021")
 
-calculate_egfr_ckdepi(age, sex, creatinine, race = NULL, version = "2021")
+calculate_egfr_ckdepi_nonv(age, sex, creatinine, race = NULL, version = "2021")
 }
 \arguments{
 \item{age}{Age, in years}
@@ -54,7 +55,7 @@ calculate_egfr(age=50, sex="Female", creatinine=1.0, method="CKD-EPI") # 68.6
 # https://www.kidney.org/professionals/kdoqi/gfr_calculator
 calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 
 calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8, version = "2021") # 95.2
-calculate_egfr_ckdepi(age=70, sex="Female", creatinine=0.8, version = "2021") # 
+calculate_egfr_ckdepi(age=70, sex="Female", creatinine=0.8, version = "2021") # 79.2
 
 # use of race-incorporated version not recommended (ASR);
 # if you want to use race, use version = "original".
@@ -68,70 +69,12 @@ calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8, version = "original", 
 # CKD-EPI AS (2021) RESULTS; Race-free equation
 # Note: do not use race in function call; results same regardless of race
 # results verified against Table S11 in Inker NEJM 2021: eGFR (AS) new
-calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 118
-calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1)   # 92
-calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1.5) # 56
-calculate_egfr_ckdepi(age=50, sex="Male", creatinine=2.0) # 40
-
-calculate_egfr_ckdepi(age=75, sex="Male", creatinine=0.6) # 101
-calculate_egfr_ckdepi(age=75, sex="Male", creatinine=1)   # 78
-calculate_egfr_ckdepi(age=75, sex="Male", creatinine=1.5) # 48
-calculate_egfr_ckdepi(age=75, sex="Male", creatinine=2.0) # 34
-
-calculate_egfr_ckdepi(age=50, sex="Female", creatinine=0.6) # 109
-calculate_egfr_ckdepi(age=50, sex="Female", creatinine=1)   # 69
-calculate_egfr_ckdepi(age=50, sex="Female", creatinine=1.5) # 42
-calculate_egfr_ckdepi(age=50, sex="Female", creatinine=2.0) # 30
-
-calculate_egfr_ckdepi(age=75, sex="Female", creatinine=0.6) # 94
-calculate_egfr_ckdepi(age=75, sex="Female", creatinine=1)   # 59
-calculate_egfr_ckdepi(age=75, sex="Female", creatinine=1.5) # 36
-calculate_egfr_ckdepi(age=75, sex="Female", creatinine=2.0) # 26
-
-
-# CKD-EPI ASR (2021) RESULTS; Race-based equation
-# this equation is equivalent to the original 2009 CKD-EPI equation
-# The CKD-EPI ASR-NB (2021) = "Non-Black" is equivalent to using race="White"
-# version = "original" allows specification of race = "White" or "Black"
-# results verified against Table S11 in Inker NEJM 2021: eGFR (ASR) current
-calculate_egfr_ckdepi(age=50, sex="Male", race="Black", creatinine=0.6, version = "original") # 135 (not 136)
-calculate_egfr_ckdepi(age=50, sex="Male", race="Black", creatinine=1, version = "original")   # 101
-calculate_egfr_ckdepi(age=50, sex="Male", race="Black", creatinine=1.5, version = "original") # 62
-calculate_egfr_ckdepi(age=50, sex="Male", race="Black", creatinine=2.0, version = "original") # 44
-
-calculate_egfr_ckdepi(age=75, sex="Male", race="Black", creatinine=0.6, version = "original") # 113 (not 114)
-calculate_egfr_ckdepi(age=75, sex="Male", race="Black", creatinine=1, version = "original")   # 84 (not 85)
-calculate_egfr_ckdepi(age=75, sex="Male", race="Black", creatinine=1.5, version = "original") # 52
-calculate_egfr_ckdepi(age=75, sex="Male", race="Black", creatinine=2.0, version = "original") # 36 (not 37)
-
-calculate_egfr_ckdepi(age=50, sex="Female", race="Black", creatinine=0.6, version = "original") # 123 (not 124)
-calculate_egfr_ckdepi(age=50, sex="Female", race="Black", creatinine=1, version = "original")   # 76
-calculate_egfr_ckdepi(age=50, sex="Female", race="Black", creatinine=1.5, version = "original") # 46 (not 47)
-calculate_egfr_ckdepi(age=50, sex="Female", race="Black", creatinine=2.0, version = "original") # 33
-
-calculate_egfr_ckdepi(age=75, sex="Female", race="Black", creatinine=0.6, version = "original") # 103 (not 104)
-calculate_egfr_ckdepi(age=75, sex="Female", race="Black", creatinine=1, version = "original")   # 63 (not 64)
-calculate_egfr_ckdepi(age=75, sex="Female", race="Black", creatinine=1.5, version = "original") # 39
-calculate_egfr_ckdepi(age=75, sex="Female", race="Black", creatinine=2.0, version = "original") # 27 (not 28)
-
-# race = "White" forces use of the CKD-EPI ASR-NB result
-calculate_egfr_ckdepi(age=50, sex="Male", race="White", creatinine=0.6, version = "original") # 117
-calculate_egfr_ckdepi(age=50, sex="Male", race="White", creatinine=1, version = "original")   # 87
-calculate_egfr_ckdepi(age=50, sex="Male", race="White", creatinine=1.5, version = "original") # 53 (not 54)
-calculate_egfr_ckdepi(age=50, sex="Male", race="White", creatinine=2.0, version = "original") # 38
-
-calculate_egfr_ckdepi(age=75, sex="Male", race="White", creatinine=0.6, version = "original") # 98
-calculate_egfr_ckdepi(age=75, sex="Male", race="White", creatinine=1, version = "original")   # 73
-calculate_egfr_ckdepi(age=75, sex="Male", race="White", creatinine=1.5, version = "original") # 45
-calculate_egfr_ckdepi(age=75, sex="Male", race="White", creatinine=2.0, version = "original") # 32
-
-calculate_egfr_ckdepi(age=50, sex="Female", race="White", creatinine=0.6, version = "original") # 106 (not 107)
-calculate_egfr_ckdepi(age=50, sex="Female", race="White", creatinine=1, version = "original")   # 65
-calculate_egfr_ckdepi(age=50, sex="Female", race="White", creatinine=1.5, version = "original") # 40
-calculate_egfr_ckdepi(age=50, sex="Female", race="White", creatinine=2.0, version = "original") # 29 (not 28)
-
-calculate_egfr_ckdepi(age=75, sex="Female", race="White", creatinine=0.6, version = "original") # 88 (not 89)
-calculate_egfr_ckdepi(age=75, sex="Female", race="White", creatinine=1, version = "original")   # 55
-calculate_egfr_ckdepi(age=75, sex="Female", race="White", creatinine=1.5, version = "original") # 34
-calculate_egfr_ckdepi(age=75, sex="Female", race="White", creatinine=2.0, version = "original") # 24
+df <-  data.frame(age=rep(c(rep(50,4),rep(75,4)),6),
+                  sex = rep(c(rep("Male",8),rep("Female",8)),3),
+                  race=c(rep("White",16),rep("Black",16),rep("White",16)),
+                  creatinine = rep(c(0.6, 1, 1.5, 2), 6),
+                  version = c(rep("2021", 16),rep("original", 32)))
+df |>
+  mutate(egfr = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version=version),
+         egfr_ckepi_original = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version="original")) 
 }

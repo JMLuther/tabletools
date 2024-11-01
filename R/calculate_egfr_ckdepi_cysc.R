@@ -13,9 +13,11 @@
 #' @param sex Sex 
 #' @param creatinine creatinine (mg/dL) 
 #' @param cystatin cystatin C (mg/L)
+#' 
 #'
 #' @returns a numeric vector with eGFR (ml/min/1.73m^2)
-#' @export
+#' @export calculate_egfr_ckdepi_cysc
+#' @rdname calculate_egfr_ckdepi_cysc
 #'
 #' @examples
 #' calculate_egfr_ckdepi_cysc(age=50, sex = "Female", creatinine=1.0, cystatin=1.5) # 54
@@ -30,7 +32,7 @@
 #'            sex=rep("Male",5),
 #'            creatinine=abs(rnorm(5, 1.2)),
 #'            CysC=rep(1.2,5)) |>
-#'   dplyr::mutate(egfr= calculate_egfr_ckdepi_cysc_V(age, sex, creatinine, CysC))
+#'   dplyr::mutate(egfr= calculate_egfr_ckdepi_cysc(age, sex, creatinine, CysC))
 
 
 calculate_egfr_ckdepi_cysc_nonv <- function(age, sex, creatinine, cystatin) {

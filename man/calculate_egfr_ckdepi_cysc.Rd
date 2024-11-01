@@ -41,5 +41,5 @@ data.frame(age=c(5,10,15,35, 50),
            sex=rep("Male",5),
            creatinine=abs(rnorm(5, 1.2)),
            CysC=rep(1.2,5)) |>
-  dplyr::mutate(egfr= calculate_egfr_ckdepi_cysc_V(age, sex, creatinine, CysC))
+  dplyr::mutate(egfr= calculate_egfr_ckdepi_cysc(age, sex, creatinine, CysC))
 }
