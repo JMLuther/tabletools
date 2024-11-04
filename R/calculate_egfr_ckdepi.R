@@ -79,7 +79,7 @@ calculate_egfr_ckdepi <- Vectorize(
     F.sex = switch(sex, "Female" = 1.018, "Male"=1)
     R = switch(race, "Black" = 1.159, "White"=1,
                stop("No race specified. use race='Black' or 'White'"))
-    eGFR = 141*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.209) * 0.9929^age * F.sex * R
+    eGFR = 141*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.209) * 0.993^age * F.sex * R
   }  else {eGFR = NA}
   return(eGFR)
   }
