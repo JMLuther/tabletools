@@ -34,7 +34,8 @@
 
 
 
-calculate_egfr_mdrd <- function(age, sex, race=NA, creatinine) {
+calculate_egfr_mdrd <- Vectorize(
+  function(age, sex, race=NA, creatinine) {
   sex=handle_sex(sex)
   race=handle_race(race)
   if (is.na(race)) {
@@ -45,5 +46,5 @@ calculate_egfr_mdrd <- function(age, sex, race=NA, creatinine) {
   eGFR = 175 * creatinine ^(-1.154) * age^(-0.203) * R * F.sex
     return(eGFR)
 }
-
+)
 

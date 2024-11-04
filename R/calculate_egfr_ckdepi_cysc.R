@@ -35,7 +35,8 @@
 #'   dplyr::mutate(egfr= calculate_egfr_ckdepi_cysc(age, sex, creatinine, CysC))
 
 
-calculate_egfr_ckdepi_cysc_nonv <- function(age, sex, creatinine, cystatin) {
+calculate_egfr_ckdepi_cysc <- Vectorize(
+  function(age, sex, creatinine, cystatin) {
   sex = handle_sex(sex)
   args = data.frame(stringsAsFactors = FALSE,
                     sex = c("Female","Female","Female",
@@ -62,6 +63,7 @@ calculate_egfr_ckdepi_cysc_nonv <- function(age, sex, creatinine, cystatin) {
   
   eGFR = 135 * (creatinine/A)^B * (cystatin/C)^D * 0.9961^age * F.sex
   return(eGFR)
-}
-calculate_egfr_ckdepi_cysc <- Vectorize(calculate_egfr_ckdepi_cysc_nonv)
+})
+
+# calculate_egfr_ckdepi_cysc <- Vectorize(calculate_egfr_ckdepi_cysc_nonv)
 
