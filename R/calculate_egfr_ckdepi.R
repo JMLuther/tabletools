@@ -23,8 +23,7 @@
 #' @param version Equation version, either "2021" or "original"
 #'
 #' @returns a numeric vector with eGFR (ml/min/1.73m^2)
-#' @export calculate_egfr_ckdepi
-#' @rdname calculate_egfr_ckdepi
+#' @export 
 #'
 #' @examples
 #' # CKD-EPI 2021 version (new race-free creatinine-based equation)
@@ -57,7 +56,7 @@
 #'          egfr_ekfc = calculate_egfr_ekfc(age, sex, creatinine),
 #'          egfr_krs  = calculate_egfr_krs(age, sex, creatinine))
 
-calculate_egfr_ckdepi_nonv <- Vectorize(
+calculate_egfr_ckdepi <- Vectorize(
   function(age, sex, creatinine, race=NULL, version="2021") {
   sex = handle_sex(sex)
   # creat.f = switch(sex,
