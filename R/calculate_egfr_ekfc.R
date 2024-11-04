@@ -46,15 +46,16 @@
 #' dplyr::mutate(egfr=calculate_egfr_ekfc(creatinine, age, sex))
 
 
-calculate_egfr_ekfc_nonv <- function(creatinine, age, sex, 
-                           creatinine_units = "mg/dL") {
-  
-  # creatinine and Q must be same units, doesn't matter which
-  creatinine = convert_creatinine_to_uM(creatinine, creatinine_units)
-  Q = get_Q_uM(age, sex)
-  107.3*ifelse(creatinine/Q <1, (creatinine/Q)^(-0.322), (creatinine/Q)^(-1.132))*ifelse(age<40,1, 0.990^(age-40))
-}
-calculate_egfr_ekfc <- Vectorize(calculate_egfr_ekfc_nonv)
+calculate_egfr_ekfc <- Vectorize(
+  function(age, sex, creatinine, 
+           creatinine_units = "mg/dL") {
+    
+    # creatinine and Q must be same units, doesn't matter which
+    creatinine = convert_creatinine_to_uM(creatinine, creatinine_units)
+    Q = get_Q_uM(age, sex)
+    107.3*ifelse(creatinine/Q <1, (creatinine/Q)^(-0.322), (creatinine/Q)^(-1.132))*ifelse(age<40,1, 0.990^(age-40))
+  })
+# calculate_egfr_ekfc <- Vectorize(calculate_egfr_ekfc_nonv)
 
 # this function is not vectorized; 
 # Q represents the median creatinine for age, sex returns umol/L but this does

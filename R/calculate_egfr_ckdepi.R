@@ -8,6 +8,8 @@
 #'   * CKD-EPI ASR Equation (original, 2009) incorporating Age, Sex, Race
 #'   * CKD-EPI Cystatin-C (not incorporated)
 #'   * MDRD  
+#'   * EKFC
+#'   * KRS
 #'   * Cockcroft-Gault 
 #'
 #' Online calculators can be used to compare reults for \href{https://www.kidney.org/professionals/kdoqi/gfr_calculator}{CKD-EPI AS (2021)},
@@ -50,11 +52,13 @@
 #'                   version = c(rep("2021", 16),rep("original", 32)))
 #' df |>
 #'   mutate(egfr = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version=version),
-#'          egfr_ckepi_original = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version="original")) 
+#'          egfr_ckepi_original = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version="original"),
+#'          egfr_mdrd = calculate_egfr_mdrd(age, sex, race, creatinine),
+#'          egfr_ekfc = calculate_egfr_ekfc(age, sex, creatinine),
+#'          egfr_krs  = calculate_egfr_krs(age, sex, creatinine))
 
-
-
-calculate_egfr_ckdepi_nonv <- function(age, sex, creatinine, race=NULL, version="2021") {
+calculate_egfr_ckdepi_nonv <- Vectorize(
+  function(age, sex, creatinine, race=NULL, version="2021") {
   sex = handle_sex(sex)
   # creat.f = switch(sex,
   #                  "Female" = as.character(cut(creatinine, breaks=c(0, 0.7, Inf), labels=c("<=0.7", ">0.7"))),
@@ -79,8 +83,9 @@ calculate_egfr_ckdepi_nonv <- function(age, sex, creatinine, race=NULL, version=
     eGFR = 141*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.209) * 0.9929^age * F.sex * R
   }  else {eGFR = NA}
   return(eGFR)
-}
-calculate_egfr_ckdepi <- Vectorize(calculate_egfr_ckdepi_nonv)
+  }
+)
+# calculate_egfr_ckdepi <- Vectorize(calculate_egfr_ckdepi_nonv)
 
 # # examples for documentation that have been validated
 # # Note nonvectorized form is ~10x faster and can be called if speed is an issue
