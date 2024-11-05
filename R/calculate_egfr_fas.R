@@ -11,10 +11,6 @@
 #' @export calculate_egfr_fas
 #'
 #' @examples
-#' data.frame(age=1:20,
-#' gender="female") |> 
-#'   mutate(egfr= calculate_egfr_fas(age, gender, Q))
-#' 
 #' # comparison vs 
 #' calculate_egfr_fas(age=11, sex="Male", creatinine = 0.69)
 #' calculate_egfr_fas(age=11.3, sex="feMale", creatinine = 0.63)
