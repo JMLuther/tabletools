@@ -66,5 +66,6 @@ df |>
          egfr_ckepi_original = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version="original"),
          egfr_mdrd = calculate_egfr_mdrd(age, sex, race, creatinine),
          egfr_ekfc = calculate_egfr_ekfc(age, sex, creatinine),
-         egfr_krs  = calculate_egfr_krs(age, sex, creatinine)  )
+         egfr_krs  = calculate_egfr_krs(age, sex, creatinine),
+         egfr_fas  = calculate_egfr_fas(age, sex, creatinine))
 }

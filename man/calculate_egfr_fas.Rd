@@ -22,10 +22,6 @@ a single value or vector of values for egfr
 Uses age and sex-based median values for estimation of GFR as described by \href{https://pubmed.ncbi.nlm.nih.gov/26932693/}{Pottel et al.}
 }
 \examples{
-data.frame(age=1:20,
-gender="female") |> 
-  mutate(egfr= calculate_egfr_fas(age, gender, Q))
-
 # comparison vs 
 calculate_egfr_fas(age=11, sex="Male", creatinine = 0.69)
 calculate_egfr_fas(age=11.3, sex="feMale", creatinine = 0.63)
