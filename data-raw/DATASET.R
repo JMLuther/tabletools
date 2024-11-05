@@ -87,10 +87,41 @@ usethis::use_data(df_relmapirazin)
 
   
 # Internal Data ----
+
 # Internal data objects are all stored within a single .rda file (R/sysdata.rda) 
 # Internal data objects can be made available for use with `devtools::load_all()` 
 
 # original data files are stored in `data-raw` folder and are not exported in the package
+
+## ├ eGFR FAS reference table  ----
+
+df_FAS_Q <-
+  data.frame(
+    stringsAsFactors = FALSE,
+    age = c(1,2,3,4,5,
+            6,7,8,9,10,11,12,13,14,
+            15,16,17,18,19,20,15,16,17,
+            18,19,20),
+    gender = c("both","both","both",
+               "both","both","both","both","both","both",
+               "both","both","both","both","both","Male","Male",
+               "Male","Male","Male","Male","Female","Female",
+               "Female","Female","Female","Female"),
+    height_cm = c(75.00,87.00,
+                  95.50,102.50,110.00,116.70,123.50,129.50,
+                  13.50,140.00,146.00,152.50,159.00,
+                  165.00,172.00,176.00,178.00,179.00,
+                  180.00,181.50,164.50,166.00,166.50,167.00,
+                  167.50,168),
+    Q_uM = c(23,26,27,30,34,36,
+             39,41,43,45,47,50,52,54,64,69,72,75,78,
+             80,57,59,61,61,62,62),
+    Q_mg_dL = c(0.26,0.29,0.31,0.34,
+                0.38,0.41,0.44,0.46,0.49,0.51,0.53,0.57,0.59,
+                0.61,0.72,0.78,0.81,0.85,0.88,0.9,0.64,0.67,
+                0.69,0.69,0.7,0.7)
+  )
+saveRDS(df_FAS_Q, here::here("data-raw/df_FAS_Q.rds"))
 
 ## ├ Omnipaque Table ----
 # US brand = 300 or 350
@@ -143,6 +174,7 @@ cfs_full10yr <- readRDS(here::here("data-raw/cfs_full10yr.rds"))
 cfs_base30yr <- readRDS(here::here("data-raw/cfs_base30yr.rds"))
 cfs_full30yr <- readRDS(here::here("data-raw/cfs_full30yr.rds"))
 df_sdi       <- readRDS(here::here("data-raw/df_sdi.rds"))
+df_FAS_Q     <- readRDS(here::here("data-raw/df_FAS_Q.rds"))
 
 
 ## ├ SAVE internal objects ----
@@ -150,5 +182,6 @@ usethis::use_data(df_omnipaque,
                   cfs_base10yr, cfs_full10yr, 
                   cfs_base30yr, cfs_full30yr, 
                   df_sdi, 
+                  df_FAS_Q,
                   internal = TRUE,
                   overwrite = TRUE)

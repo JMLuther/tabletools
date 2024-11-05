@@ -55,15 +55,16 @@ calculate_egfr_ckdepi(age=70, sex="Male", creatinine=0.8, version = "original", 
 # CKD-EPI AS (2021) RESULTS; Race-free equation
 # Note: do not use race in function call; results same regardless of race
 # results verified against Table S11 in Inker NEJM 2021: eGFR (AS) new
-df <-  data.frame(age=rep(c(rep(50,4),rep(75,4)),6),
-                  sex = rep(c(rep("Male",8),rep("Female",8)),3),
-                  race=c(rep("White",16),rep("Black",16),rep("White",16)),
-                  creatinine = rep(c(0.6, 1, 1.5, 2), 6),
-                  version = c(rep("2021", 16),rep("original", 32)))
+df <-
+  data.frame(age=rep(c(rep(50,4),rep(75,4)),2),
+             sex = rep(c(rep("Male",8),rep("Female",8)),2),
+             race=c(rep("White",16),rep("Black",16)),
+             creatinine = rep(c(0.6, 1, 1.5, 2), 4)
+  )
 df |>
-  mutate(egfr = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version=version),
+  mutate(egfr = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine),
          egfr_ckepi_original = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version="original"),
          egfr_mdrd = calculate_egfr_mdrd(age, sex, race, creatinine),
          egfr_ekfc = calculate_egfr_ekfc(age, sex, creatinine),
-         egfr_krs  = calculate_egfr_krs(age, sex, creatinine))
+         egfr_krs  = calculate_egfr_krs(age, sex, creatinine)  )
 }

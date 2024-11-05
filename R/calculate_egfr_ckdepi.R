@@ -44,35 +44,33 @@
 #' # CKD-EPI AS (2021) RESULTS; Race-free equation
 #' # Note: do not use race in function call; results same regardless of race
 #' # results verified against Table S11 in Inker NEJM 2021: eGFR (AS) new
-#' df <-  data.frame(age=rep(c(rep(50,4),rep(75,4)),6),
-#'                   sex = rep(c(rep("Male",8),rep("Female",8)),3),
-#'                   race=c(rep("White",16),rep("Black",16),rep("White",16)),
-#'                   creatinine = rep(c(0.6, 1, 1.5, 2), 6),
-#'                   version = c(rep("2021", 16),rep("original", 32)))
+#' df <-
+#'   data.frame(age=rep(c(rep(50,4),rep(75,4)),2),
+#'              sex = rep(c(rep("Male",8),rep("Female",8)),2),
+#'              race=c(rep("White",16),rep("Black",16)),
+#'              creatinine = rep(c(0.6, 1, 1.5, 2), 4)
+#'   )
 #' df |>
-#'   mutate(egfr = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version=version),
+#'   mutate(egfr = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine),
 #'          egfr_ckepi_original = calculate_egfr_ckdepi(age=age, sex=sex, race=race, creatinine=creatinine, version="original"),
 #'          egfr_mdrd = calculate_egfr_mdrd(age, sex, race, creatinine),
 #'          egfr_ekfc = calculate_egfr_ekfc(age, sex, creatinine),
-#'          egfr_krs  = calculate_egfr_krs(age, sex, creatinine))
+#'          egfr_krs  = calculate_egfr_krs(age, sex, creatinine)  )
 
 calculate_egfr_ckdepi <- Vectorize(
   function(age, sex, creatinine, race=NULL, version="2021") {
   sex = handle_sex(sex)
-  # creat.f = switch(sex,
-  #                  "Female" = as.character(cut(creatinine, breaks=c(0, 0.7, Inf), labels=c("<=0.7", ">0.7"))),
-  #                  "Male"   = as.character(cut(creatinine, breaks=c(0, 0.9, Inf), labels=c("<=0.9", ">0.9"))))
+  
+  # Updated 2021 Version
+  # CKD-EPI Age, Sex Equation (2021) (Age, Sex- refit Eq without Race) - Recommended, Default
+  # results verified against publication, Inker NEJM table S11
   if (version=="2021" ) {
     k = switch(sex, "Female"=0.7, "Male"=0.9) # same for CKD-EPI and CKD-EPI Cystatin-C
     a = switch(sex, "Female" = -0.241, "Male"= -0.302)
     F.sex = switch(sex, "Female" = 1.012, "Male"=1)
-    
-    # CKD-EPI Age, Sex Equation (2021) (Age, Sex- refit Eq without Race) - Recommended, Default
-    # results verified against publication, Inker NEJM table S11
     eGFR = 142*min((creatinine/k), 1)^a * max((creatinine/k), 1)^(-1.200) * 0.9938^age * F.sex
-  # } else if (version=="2021" & !is.null(race)) { 
-  #   stop("Race is not used in the 2021 CKD-EPI equation. use 'race=NULL' (default) or do not specify this argument.
-  #        To use the Race-based equation, specify version='original' ")
+  
+    # Original 2009 CKD-EPI equation  
   } else if (version=="original") { # 2009 CKD-EPI
     k = switch(sex, "Female" = 0.7, "Male"=0.9) # same for CKD-EPI and CKD-EPI Cystatin-C
     a = switch(sex, "Female" = -0.329, "Male"= -0.411)
