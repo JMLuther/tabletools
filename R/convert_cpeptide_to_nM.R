@@ -4,9 +4,7 @@
 #' @param cpeptide_units character string of units (pmol/l or similar)
 #'
 #' @return numeric vector of cpeptide values in uU/mL
-#' @export convert_cpeptide_to_nM
-#' @export convert_cpeptide_to_ng_ml
-#' @export convert_cpeptide_to_pM
+#' @name convert_cpeptide_to_
 #'
 #' @examples
 #' convert_cpeptide_to_nM(1.0, cpeptide_units = "ng/ml")
@@ -16,6 +14,8 @@
 #' convert_cpeptide_to_ng_ml(0.33, cpeptide_units = "nM")
 #' convert_cpeptide_to_ng_ml(1, cpeptide_units = "ng/ml")
 
+#' @rdname convert_cpeptide_to_
+#' @export
 convert_cpeptide_to_nM <- function(cpeptide, cpeptide_units){
   switch(cpeptide_units,
          "nmol/L" = cpeptide, "nmol/l" = cpeptide,"nmol_l" = cpeptide,
@@ -26,6 +26,8 @@ convert_cpeptide_to_nM <- function(cpeptide, cpeptide_units){
          stop("invalid units; use pmol/l or similar"))
 }
 
+#' @rdname convert_cpeptide_to_
+#' @export
 convert_cpeptide_to_pM <- function(cpeptide, cpeptide_units){
   switch(cpeptide_units,
          "pmol/L" = cpeptide, "pM" = cpeptide,
@@ -36,6 +38,8 @@ convert_cpeptide_to_pM <- function(cpeptide, cpeptide_units){
          stop("invalid units; use pmol/l or similar"))
 }
 
+#' @rdname convert_cpeptide_to_
+#' @export
 convert_cpeptide_to_ng_ml <- function(cpeptide, cpeptide_units){
   switch(cpeptide_units,
          "ng/ml" = cpeptide, "ng/mL" = cpeptide,
