@@ -2,6 +2,7 @@
 
 export(calculate_age)
 export(calculate_ascvd_risk)
+export(calculate_ascvd_risk_)
 export(calculate_avg_glucose)
 export(calculate_bmi)
 export(calculate_bsa)
