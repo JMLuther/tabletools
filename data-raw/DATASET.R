@@ -146,6 +146,70 @@ saveRDS(cfs_full10yr, here::here("data-raw/cfs_full10yr.rds"))
 saveRDS(cfs_base30yr, here::here("data-raw/cfs_base30yr.rds"))
 saveRDS(cfs_full30yr, here::here("data-raw/cfs_full30yr.rds"))
 
+## ├ ASCVD Risk Coefficient table ----
+df_coeff_ascvd <-
+  data.frame(
+    stringsAsFactors = FALSE,
+    sex = c("female","female","female","female",
+            "female","female","female","female","female",
+            "female","female","female","female",
+            "female","female","male","male","male",
+            "male","male","male","male","male",
+            "male","male","male","male","male","male",
+            "male","female","female","female",
+            "female","female","female","female",
+            "female","female","female","female","female",
+            "female","female","female","male",
+            "male","male","male","male","male","male",
+            "male","male","male","male","male",
+            "male","male","male"),
+    race = c("white","white","white","white","white",
+             "white","white","white","white","white",
+             "white","white","white","white",
+             "white","white","white","white","white",
+             "white","white","white","white","white",
+             "white","white","white","white","white",
+             "white","black","black","black","black",
+             "black","black","black","black",
+             "black","black","black","black","black",
+             "black","black","black","black","black",
+             "black","black","black","black","black",
+             "black","black","black","black",
+             "black","black","black"),
+    coeff_n = c("age","age2","tchol","age_tchol","hdl",
+                "age_hdl","sbp_t","age_sbp_t","sbp_u",
+                "age_sbp_u","smoker_yn","age_smoker",
+                "diabetes_yn","baseline","mean_coeff","age",
+                "age2","tchol","age_tchol","hdl",
+                "age_hdl","sbp_t","age_sbp_t","sbp_u",
+                "age_sbp_u","smoker_yn","age_smoker",
+                "diabetes_yn","baseline","mean_coeff","age","age2",
+                "tchol","age_tchol","hdl","age_hdl",
+                "sbp_t","age_sbp_t","sbp_u","age_sbp_u",
+                "smoker_yn","age_smoker","diabetes_yn",
+                "baseline","mean_coeff","age","age2",
+                "tchol","age_tchol","hdl","age_hdl",
+                "sbp_t","age_sbp_t","sbp_u","age_sbp_u",
+                "smoker_yn","age_smoker","diabetes_yn",
+                "baseline","mean_coeff"),
+    coeff_val = c(-29.799,4.884,13.54,-3.114,-13.578,3.149,
+                  2.019,0,1.957,0,7.574,-1.665,0.661,
+                  0.967,-29.18,12.344,0,11.853,-2.664,
+                  -7.99,1.769,1.797,0,1.764,0,7.837,
+                  -1.795,0.658,0.914,61.18,17.114,0,
+                  0.94,0,-18.92,4.475,29.291,-6.432,27.82,
+                  -6.087,0.691,0,0.874,0.953,86.61,
+                  2.469,0,0.302,0,-0.307,0,1.916,0,
+                  1.809,0,0.549,0,0.645,0.895,19.54)
+  )
+df_coeff_ascvd <-
+  df_coeff_ascvd |> 
+  pivot_wider(names_from = "coeff_n",
+              values_from = "coeff_val")  
+saveRDS(df_coeff_ascvd, here::here("data-raw/df_coeff_ascvd.rds"))
+
+
+
 # usethis::use_data(cfs_base10yr, cfs_full10yr, 
 #                   cfs_base30yr, cfs_full30yr, 
 #                   internal = TRUE,
@@ -168,19 +232,22 @@ saveRDS(df_sdi, here::here("data-raw/df_sdi.rds"))
 
 
 # LOAD AND SAVE/UPDATE INTERNAL DATA ----
-df_omnipaque <- readRDS(here::here("data-raw/df_omnipaque.rds"))
-cfs_base10yr <- readRDS(here::here("data-raw/cfs_base10yr.rds"))
-cfs_full10yr <- readRDS(here::here("data-raw/cfs_full10yr.rds"))
-cfs_base30yr <- readRDS(here::here("data-raw/cfs_base30yr.rds"))
-cfs_full30yr <- readRDS(here::here("data-raw/cfs_full30yr.rds"))
-df_sdi       <- readRDS(here::here("data-raw/df_sdi.rds"))
-df_FAS_Q     <- readRDS(here::here("data-raw/df_FAS_Q.rds"))
+# add new object to this and then udpate with each new data set
+df_omnipaque   <- readRDS(here::here("data-raw/df_omnipaque.rds"))
+cfs_base10yr   <- readRDS(here::here("data-raw/cfs_base10yr.rds"))
+cfs_full10yr   <- readRDS(here::here("data-raw/cfs_full10yr.rds"))
+cfs_base30yr   <- readRDS(here::here("data-raw/cfs_base30yr.rds"))
+cfs_full30yr   <- readRDS(here::here("data-raw/cfs_full30yr.rds"))
+df_sdi         <- readRDS(here::here("data-raw/df_sdi.rds"))
+df_FAS_Q       <- readRDS(here::here("data-raw/df_FAS_Q.rds"))
+df_coeff_ascvd <- readRDS(here::here("data-raw/df_coeff_ascvd.rds"))
 
 
 ## ├ SAVE internal objects ----
 usethis::use_data(df_omnipaque,
                   cfs_base10yr, cfs_full10yr, 
                   cfs_base30yr, cfs_full30yr, 
+                  df_coeff_ascvd,
                   df_sdi, 
                   df_FAS_Q,
                   internal = TRUE,
