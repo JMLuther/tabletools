@@ -13,6 +13,7 @@
 #'
 #' @return A single value for 10-year Cardiovascular Risk. Multiple *100 to obtain as a percentage. 
 #' @export calculate_ascvd_risk
+#' @export
 #'
 #' @examples
 #' calculate_ascvd_risk(sex = "female",
