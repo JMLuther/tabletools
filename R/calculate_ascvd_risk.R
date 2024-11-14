@@ -12,7 +12,11 @@
 #' @param chol_units Cholesterol units (default "mg/dL")
 #'
 #' @return A single value for 10-year Cardiovascular Risk. Multiple *100 to obtain as a percentage. 
+<<<<<<< HEAD
 #' @export calculate_ascvd_risk
+=======
+#' @export
+>>>>>>> 2b064d2d64963be99d8555ced7f4ff5a2a5d91a5
 #'
 #' @examples
 #' calculate_ascvd_risk(sex = "female",
@@ -79,6 +83,3 @@ calculate_ascvd_risk_ <- function(age, sex, race,
   return((1-cf$baseline)*exp(coeff_sum - cf$mean_coeff)) # 10-year Risk
 }
 calculate_ascvd_risk <- Vectorize(calculate_ascvd_risk_)
-
-
-
