@@ -79,6 +79,3 @@ calculate_ascvd_risk_ <- function(age, sex, race,
   return((1-cf$baseline)*exp(coeff_sum - cf$mean_coeff)) # 10-year Risk
 }
 calculate_ascvd_risk <- Vectorize(calculate_ascvd_risk_)
-
-
-
