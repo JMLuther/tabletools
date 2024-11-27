@@ -13,7 +13,7 @@ calculate_map(sbp, dbp, hr = NA, method = "gomez")
 
 \item{hr}{Heart rate, bpm}
 
-\item{method}{MAP formula, one of `gomez`, `standard`, or `razminia`. Uses
+\item{method}{MAP formula, one of `gomez`, `standard33`, `standard40`, or `razminia`. Uses
 "gomez" method by default. If no HR is supplied, the "standard" method is
 used. If `standard` method is used without specifying it, due to no HR, a
 warning is issued.}
@@ -22,11 +22,11 @@ warning is issued.}
 map as a single value, or vector of results
 }
 \description{
-Returns the mean arterial pressure (MAP) from standard systolic (SBP) and
-diastolic (DBP) blood pressure measurements. Note it is best to record MAP
-reported directly by the device. Heart rate adjusted methods reported by
-\href{https://pubmed.ncbi.nlm.nih.gov/1860182/}{Gomez} and by
-\href{https://pubmed.ncbi.nlm.nih.gov/15558774/}{Razminia} are also
+Returns the mean arterial pressure (MAP) from systolic (SBP) and diastolic
+(DBP) blood pressure measurements, using several methods. For brachial BP measurements, the formula \eqn{MAP=DBP + 0.4 \cdot
+PP} as described in \href{https://pubmed.ncbi.nlm.nih.gov/17351365/}{Bos 2007} is typically preferred ("standard40"). Note the commonly used estimate of adding 33% of PP has been shown to underestimate MAP, although variable peripheral pulse amplification makes this difficult to estimate accurately.  Heart rate adjusted
+methods reported by \href{https://pubmed.ncbi.nlm.nih.gov/1860182/}{Gomez}
+and by \href{https://pubmed.ncbi.nlm.nih.gov/15558774/}{Razminia} are also
 supported. The Gomez method is applied as the default, for use in calculation
 in renal glomerular pressure estimates.
 }
@@ -35,15 +35,18 @@ calculate_map(159, 46)
 calculate_map("159", 46)
 calculate_map("159", NA)
 calculate_map(140, 90)
-calculate_map(140, 90, 70, method="standard")
+calculate_map(140, 90, 70, method="standard33")
+calculate_map(140, 90, 70, method="standard40")
 calculate_map(140, 90, 70, method = "gomez")
 calculate_map(140, 90, 70, method="razminia")
 
 hr <- 40:125
+library(purrr)
 plot(hr, map_dbl(hr, ~calculate_map(125, 73, .x, method = "gomez")), "l", lty=1, col="black",
      xlim = c(35,127.5), ylim = c(90,99),
      ylab = "Calculated MAP (mmHg)")
 title("Methods comparison for HR-adjusted MAP calculation")
 lines(hr, map_dbl(hr, ~calculate_map(125, 73, .x, method = "razminia")), lty=2, col="red")
-abline(h=calculate_map(125,73, method="standard"),lty=2, col="blue")
+abline(h=calculate_map(125,73, method="standard33"),lty=2, col="blue")
+abline(h=calculate_map(125,73, method="standard40"),lty=2, col="steelblue")
 }
