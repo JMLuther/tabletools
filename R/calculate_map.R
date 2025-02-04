@@ -60,7 +60,7 @@ calculate_map <- function(sbp, dbp, hr=NA, method="gomez"){
   
   if (is.na(hr)){
     rlang::warn("no HR value, defaulting to method='standard40'")
-    map = dbp + 0.4(sbp-dbp)
+    map = dbp + 0.4*(sbp-dbp)
     return(map)
   }
   if (method=="gomez"){
