@@ -25,8 +25,14 @@
 clean_author_list <- function(string_authors){
   # remove numbers, ., line breaks and whitespace
   au1 <- gsub("[0-9\\*\\.\r\n]+", "", trimws(string_authors))
+  au1 <- gsub(",[0-9]+", "", au1)
+  
+  # # remove titles
+  au1 <- gsub("MD|MPH|Phd|MS+", "", trimws(au1))
+  # au1 <- gsub("MD", "", trimws(au1))
   # remove "and" and whitespace
   au1 <- gsub("and[ ]*", "", au1)
+
   # extract names from list separated by commas
   au1 <- strsplit(au1, ",")[[1]]
   # remove leading and trailing whitespace
@@ -54,4 +60,3 @@ clean_author_list <- function(string_authors){
   # data.frame(au1, name_last, ini_first, ini_middle, name_inits) # checking
   paste0(name_inits[name_inits != " "], collapse = ", ") # return value
 }
-
