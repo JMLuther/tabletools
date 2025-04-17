@@ -134,6 +134,28 @@ df_omnipaque <-
 )
 saveRDS(df_omnipaque, here::here("data-raw/df_omnipaque.rds"))
 
+## ├ MESA CHD risk coefficients ----
+mesa10yrcoeff <- 
+  data.frame(
+    stringsAsFactors = FALSE,
+    risk = c("mesa_10yr", "mesa_cac_10yr"),
+    age = c(0.0455, 0.0172),
+    gender_m = c(0.7496, 0.4079),
+    race_black = c(-0.2111, 0.0353),
+    race_asian = c(-0.5055, -0.3475),
+    race_hispanic = c(-0.19, -0.0222),
+    diabetes = c(0.5168, 0.3892),
+    current_smoker = c(0.4732, 0.3717),
+    Tc = c(0.0053, 0.0043),
+    HDL = c(-0.014, -0.0114),
+    using_lipidloweringagent = c(0.2473, 0.1206),
+    SBP = c(0.0085, 0.0066),
+    using_antihypertensive_medication = c(0.3381, 0.2278),
+    MI_fmhx = c(0.4522, 0.3239),
+    cac = c(NA, 0.2743)
+  )
+saveRDS(mesa10yrcoeff, here::here("data-raw/mesa10yrcoeff.rds"))
+
 
 ## ├ PREVENT coefficient tables ----
 cfs_base10yr <-  readxl::read_excel(here::here("data-raw/prevent_coefficients.xlsx"), sheet = "cfs_base10yr")
@@ -241,12 +263,14 @@ cfs_full30yr   <- readRDS(here::here("data-raw/cfs_full30yr.rds"))
 df_sdi         <- readRDS(here::here("data-raw/df_sdi.rds"))
 df_FAS_Q       <- readRDS(here::here("data-raw/df_FAS_Q.rds"))
 df_coeff_ascvd <- readRDS(here::here("data-raw/df_coeff_ascvd.rds"))
+mesa10yrcoeff  <- readRDS(here::here("data-raw/mesa10yrcoeff.rds"))
 
 
 ## ├ SAVE internal objects ----
 usethis::use_data(df_omnipaque,
                   cfs_base10yr, cfs_full10yr, 
                   cfs_base30yr, cfs_full30yr, 
+                  mesa10yrcoeff,
                   df_coeff_ascvd,
                   df_sdi, 
                   df_FAS_Q,
