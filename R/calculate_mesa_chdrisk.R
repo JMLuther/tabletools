@@ -90,6 +90,7 @@ calculate_mesa_chdrisk <- function(age, gender, race,
   Terms = 
     {(age * mesa_base$age) +
         (gender_m * mesa_base$gender_m)  +
+        # default/base case is White; modified if other:
         ((race == "Black") * mesa_base$race_black)  +
         ((race == "Asian") * mesa_base$race_asian)  +
         ((race == "Hispanic") * mesa_base$race_hispanic)  +
@@ -107,10 +108,14 @@ calculate_mesa_chdrisk <- function(age, gender, race,
   # Mesa Risk with CAC  
   mesa_cac = mesa10yrcoeff[mesa10yrcoeff$risk=="mesa_cac_10yr", ]
   Terms_cac = 
-    {   (gender_m * mesa_cac$gender_m)  +
+    {(age * mesa_cac$age) +
+        (gender_m * mesa_cac$gender_m)  +
+        # default/base case is White; modified if other:
         ((race == "Black") * mesa_cac$race_black)  +
         ((race == "Asian") * mesa_cac$race_asian)  +
         ((race == "Hispanic") * mesa_cac$race_hispanic)  +
+        (diabetes * mesa_cac$diabetes) +
+        (current_smoker * mesa_cac$current_smoker) +
         (Tc * mesa_cac$Tc)  +
         (HDL * mesa_cac$HDL)  +
         (using_lipidloweringagent * mesa_cac$using_lipidloweringagent)  +
@@ -120,24 +125,10 @@ calculate_mesa_chdrisk <- function(age, gender, race,
         (log(cac + 1) * mesa_cac$cac)
     }
   mesa_risk_cac_10yr =  100 * (1 - 0.99833^(exp(Terms_cac)))
-  
-  # coronary age calculation
-  # Age- and Sex-specific Healthy Comparator
-  # Non-smoker, No Diabetes, 
-  # Average Risk factor values estimated (SBP, Tc)
-  # **currently don't have data available to obtain comparator values**
-  # HDL = 55 (female) or 45 (male)
-  # A_base =
-  #   {(age * mesa_cac$age) +
-  #       (gender_m * mesa_cac$gender_m)  +
-  #       ((race == "Black") * mesa_cac$race_black)  +
-  #       ((race == "Asian") * mesa_cac$race_asian)  +
-  #       ((race == "Hispanic") * mesa_cac$race_hispanic)  +
-  #       (Tc * mesa_cac$Tc)  +
-  #       (HDL * mesa_cac$HDL)  +
-  #       (SBP * mesa_cac$SBP)
-  #   }
 
-return(data.frame(mesa_risk_10yr,
+return(data.frame(#Terms, 
+                  mesa_risk_10yr,
+                  # Terms_cac, 
                   mesa_risk_cac_10yr))
 }
+

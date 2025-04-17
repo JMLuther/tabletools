@@ -28,8 +28,8 @@ handle_race <-
   rx
 }
 # )
-test_case <- c(NA, "BL", "black", "White", "AA", "Asian")
-handle_race(test_case)
+# test_case <- c(NA, "BL", "black", "White", "AA", "Asian")
+# handle_race(test_case)
 # 
 
 handle_weight_units <- #Vectorize(
