@@ -3,6 +3,12 @@
 # usethis::use_data(overwrite = FALSE)
 
 # Datasets ----
+
+# Datasets that can be loaded by name from the package
+# Original source files are stored in "data-raw" folder
+# Data files are stored in "data" folder. 
+# .rda files are created from objects by the `usethis::use_data()` function
+
 ## ├ Iohexol Data ----
 ### ├ Schwartz ----
 # formerly entered in the examples for calculate_mgfr_2c()
@@ -92,6 +98,14 @@ usethis::use_data(df_relmapirazin)
 # Internal data objects can be made available for use with `devtools::load_all()` 
 
 # original data files are stored in `data-raw` folder and are not exported in the package
+
+## ├ DDD ----
+# DDD data from WHO Collaborating Centre for Drug Statistics Methodology
+# https://www.whocc.no/ddd/definition_and_general_considerations/
+# DDD is the assumed average maintenance dose per day for a drug used for its main indication in adults
+ddd <- readxl::read_excel(here::here("data-raw/DDD list.xlsx"))
+names(ddd) <- tolower(names(ddd))
+saveRDS(ddd, here::here("data-raw/ddd.rds"))
 
 ## ├ eGFR FAS reference table  ----
 
@@ -264,10 +278,12 @@ df_sdi         <- readRDS(here::here("data-raw/df_sdi.rds"))
 df_FAS_Q       <- readRDS(here::here("data-raw/df_FAS_Q.rds"))
 df_coeff_ascvd <- readRDS(here::here("data-raw/df_coeff_ascvd.rds"))
 mesa10yrcoeff  <- readRDS(here::here("data-raw/mesa10yrcoeff.rds"))
+ddd <- readRDS(here::here("data-raw/ddd.rds"))
 
 
 ## ├ SAVE internal objects ----
-usethis::use_data(df_omnipaque,
+usethis::use_data(ddd,
+                  df_omnipaque,
                   cfs_base10yr, cfs_full10yr, 
                   cfs_base30yr, cfs_full30yr, 
                   mesa10yrcoeff,
