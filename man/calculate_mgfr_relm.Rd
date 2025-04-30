@@ -49,9 +49,9 @@ can specify \code{gfr}, \code{gfr_bsa}, \code{fit}, or \code{plot}
 \item \code{relmipirazin_vd}  Relmipirazin Volume of distribution estimated by Dose/relmipirazin\link{t0}
 \item \code{relm_auc}  Relmipirazin calculated AUC from t=0 to Infinity, estimated by A/a + B/b
 \item \code{A} Model parameter A
-\item \code{a} Model parameter a, or \alpha
+\item \code{a} Model parameter a, or \eqn{\alpha}
 \item \code{B} Model parameter B
-\item \code{b} Model parameter b, or \beta
+\item \code{b} Model parameter b, or \eqn{\beta}
 \item \code{model_r2} Model Pseudo-R2, calculated as the linear regression R2 for predicted~observed values
 \item \code{k10} Relmipirazin elimination rate constant from central compartment (1/min)
 \item \code{k21} Relmipirazin transfer rate constant from peripheral to central compartment (1/min)

@@ -33,9 +33,9 @@
 #'    * `relmipirazin_vd`  Relmipirazin Volume of distribution estimated by Dose/relmipirazin[t0]
 #'    * `relm_auc`  Relmipirazin calculated AUC from t=0 to Infinity, estimated by A/a + B/b
 #'    * `A` Model parameter A
-#'    * `a` Model parameter a, or \alpha
+#'    * `a` Model parameter a, or \eqn{\alpha}
 #'    * `B` Model parameter B
-#'    * `b` Model parameter b, or \beta
+#'    * `b` Model parameter b, or \eqn{\beta}
 #'    * `model_r2` Model Pseudo-R2, calculated as the linear regression R2 for predicted~observed values
 #'    * `k10` Relmipirazin elimination rate constant from central compartment (1/min)
 #'    * `k21` Relmipirazin transfer rate constant from peripheral to central compartment (1/min)

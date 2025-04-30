@@ -63,9 +63,9 @@
 #'    * `iohexol_vd`  Iohexol Volume of distribution estimated by Dose/Iohexol[t0]
 #'    * `ioh_auc`  Iohexol calculated AUC from t=0 to Infinity, estimated by A/a + B/b.
 #'    * `A` Model parameter A
-#'    * `a` Model parameter a, or \alpha
+#'    * `a` Model parameter a, or \eqn{\alpha}
 #'    * `B` Model parameter B
-#'    * `b` Model parameter b, or \beta
+#'    * `b` Model parameter b, or \eqn{\beta}
 #'    * `model_r2` Model Pseudo-R2, calculated as the linear regression R2 for predicted~observed values
 #'    * `ssr` Sum of squared residuals
 #'    * `sse` Sum of squared residuals for early time points

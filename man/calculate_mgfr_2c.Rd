@@ -97,9 +97,9 @@ For \code{output = "summary"} results returned includes the named variables:
 \item \code{iohexol_vd}  Iohexol Volume of distribution estimated by Dose/Iohexol\link{t0}
 \item \code{ioh_auc}  Iohexol calculated AUC from t=0 to Infinity, estimated by A/a + B/b.
 \item \code{A} Model parameter A
-\item \code{a} Model parameter a, or \alpha
+\item \code{a} Model parameter a, or \eqn{\alpha}
 \item \code{B} Model parameter B
-\item \code{b} Model parameter b, or \beta
+\item \code{b} Model parameter b, or \eqn{\beta}
 \item \code{model_r2} Model Pseudo-R2, calculated as the linear regression R2 for predicted~observed values
 \item \code{ssr} Sum of squared residuals
 \item \code{sse} Sum of squared residuals for early time points
