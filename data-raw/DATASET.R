@@ -91,7 +91,48 @@ df_relmapirazin <-
 
 usethis::use_data(df_relmapirazin)
 
-  
+## ├ HTN medication DDD example data ----
+htn_med_dose <- 
+  data.frame(
+    stringsAsFactors = FALSE,
+    study_id = c(33L,66L,29L,10L,23L,6L,
+                 20L,39L,22L,3L,51L,2L,48L,9L,
+                 7L,9L,60L,52L,65L,56L,35L,50L,
+                 27L,57L,51L,10L,52L,43L,10L,
+                 24L,56L,58L,22L,3L,64L,25L,40L,
+                 65L,38L,20L,38L,6L,32L,40L,
+                 34L,14L,2L,24L,35L,14L),
+    medication = c("ramipril","spironolactone",
+                   "nifedipine","metoprolol",
+                   "amlodipine","enalapril","losartan",
+                   "valsartan","captopril","clonidine",
+                   "fosinopril","amlodipine",
+                   "spironolactone","chlorthalidone","diltiazem",
+                   "amlodipine","nifedipine",
+                   "lisinopril","metoprolol","triamterene",
+                   "valsartan","methyldopa","amlodipine",
+                   "doxazosin","amlodipine",
+                   "spironolactone","nifedipine","labetalol",
+                   "clonidine","losartan",
+                   "hydrochlorothiazide","verapamil",
+                   "spironolactone","lisinopril","olmesartan",
+                   "diltiazem","prazosin","verapamil",
+                   "spironolactone","spironolactone",
+                   "clonidine","diltiazem","amlodipine",
+                   "valsartan","labetalol","amlodipine",
+                   "benazepril","hydralazine",
+                   "hydrochlorothiazide","atenolol"),
+    dose = c(20,50,120,100,5,40,50,
+             320,150,0.6,40,5,75,50,180,
+             10,90,40,200,37.5,160,750,10,2,
+             5,50,60,400,0.05,100,25,120,
+             100,80,40,240,4,240,100,200,
+             0.4,240,10,640,400,10,40,200,
+             25,50)
+  )
+usethis::use_data(htn_med_dose)
+
+
 # Internal Data ----
 
 # Internal data objects are all stored within a single .rda file (R/sysdata.rda) 
