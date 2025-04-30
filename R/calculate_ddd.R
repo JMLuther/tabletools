@@ -15,12 +15,9 @@
 #'
 #' @examples
 #' # example data
-#' htn_med_dose
-#' htn_med_dose |>
-#'   mutate(
-#'     ddd_value = lookup_ddd(medication), # example only - not required
-#'     ddd_calc = calculate_ddd(medication, dose)) 
-
+#' head(htn_med_dose)
+#' lookup_ddd(htn_med_dose$medication)
+#' calculate_ddd(htn_med_dose$medication, htn_med_dose$dose)
 
 calculate_ddd <- function(medication, dose){
   if (length(medication) != length(dose)) {
