@@ -9,6 +9,7 @@
 #' Circulation. 2024}. Extended models incorporating urine albumin, A1C and socioeconomic risk (by Zip code) are available.
 #'
 #' Allowable range for Risk variables are:
+#'
 #' *  Age 30-79
 #' *  Total Cholesterol 130-320 mg/dL
 #' *  HDL Cholesterol 20-100 mg/dL
