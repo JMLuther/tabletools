@@ -75,6 +75,16 @@ CVD), Heart failure (HF), Coronary Artery Disease (CAD), and Stroke. Details
 provided in \href{https://pubmed.ncbi.nlm.nih.gov/37947085/}{Khan et al.,
 Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic risk (by Zip code) if available. SDI lookup by zipcode is slightly off in SDI estimate- enter the SDI decile (1-10) for most accurate results.
 }
+\details{
+#' Allowable range for Risk variables are:
+*  Age 30-79
+*  Total Cholesterol 130-320 mg/dL
+*  HDL Cholesterol 20-100 mg/dL
+*  SBP 90-200 mmHg
+*  BMI 18.5 - 40 mg/m^2
+*  eGFR 15-150 mL/min/1.73m^2
+*  Urine albumin/Creatinine 0.1-2500 mg/g Creatinine
+}
 \examples{
 
 
@@ -152,6 +162,6 @@ Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic
                                       UACR, HbA1c, SDI,
                                       using_antihypertensive_medication = using_antihypertensive_medication,
                                       diabetes=diabetes)
-   ) 
+   )
 df_risk
 }

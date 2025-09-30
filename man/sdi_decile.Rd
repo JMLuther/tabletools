@@ -4,21 +4,17 @@
 \alias{sdi_decile}
 \title{Get Social Deprivation Index (SDI) by Zipcode}
 \usage{
-sdi_decile(zipcode, year = 2019)
+sdi_decile(zipcode)
 }
 \arguments{
 \item{zipcode}{Zipcode area}
-
-\item{year}{Year (default to most recent = 2019)}
 }
 \value{
 Single value representing the SDI Decile (lower is better)
 }
 \description{
 Return the SDI decile calculated by 5-year intervals. SDI decile estimates
-are available for years ending in 2012, 2015, 2016, 2017, 2018, 2019.
-Quantiles are calculated by the SDI score for each year. Detailed description
-and source data from
+are based on 2015-2019. Detailed description and source data from
 \href{https://www.graham-center.org/maps-data-tools/social-deprivation-index.html}{Robert
 Graham Center}.
 }
