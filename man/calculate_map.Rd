@@ -13,9 +13,9 @@ calculate_map(sbp, dbp, hr = NA, method = "gomez")
 
 \item{hr}{Heart rate, bpm}
 
-\item{method}{MAP formula, one of `gomez`, `standard33`, `standard40`, or `razminia`. Uses
+\item{method}{MAP formula, one of \code{gomez}, \code{standard33}, \code{standard40}, or \code{razminia}. Uses
 "gomez" method by default. If no HR is supplied, the "standard" method is
-used. If `standard` method is used without specifying it, due to no HR, a
+used. If \code{standard} method is used without specifying it, due to no HR, a
 warning is issued.}
 }
 \value{
@@ -24,7 +24,7 @@ map as a single value, or vector of results
 \description{
 Returns the mean arterial pressure (MAP) from systolic (SBP) and diastolic
 (DBP) blood pressure measurements, using several methods. For brachial BP measurements, the formula \eqn{MAP=DBP + 0.4 \cdot
-PP} as described in \href{https://pubmed.ncbi.nlm.nih.gov/17351365/}{Bos 2007} is typically preferred ("standard40"). Note the commonly used estimate of adding 33% of PP has been shown to underestimate MAP, although variable peripheral pulse amplification makes this difficult to estimate accurately.  Heart rate adjusted
+PP} as described in \href{https://pubmed.ncbi.nlm.nih.gov/17351365/}{Bos 2007} is typically preferred ("standard40"). Note the commonly used estimate of adding 33\% of PP has been shown to underestimate MAP, although variable peripheral pulse amplification makes this difficult to estimate accurately.  Heart rate adjusted
 methods reported by \href{https://pubmed.ncbi.nlm.nih.gov/1860182/}{Gomez}
 and by \href{https://pubmed.ncbi.nlm.nih.gov/15558774/}{Razminia} are also
 supported. The Gomez method is applied as the default, for use in calculation

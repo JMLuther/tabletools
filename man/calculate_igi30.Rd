@@ -40,15 +40,15 @@ calculate_igi60(
 Insulinogenic index as a single value
 }
 \description{
-This function calculates theInsulinogenic Index  using glucose and insulin 
+This function calculates theInsulinogenic Index  using glucose and insulin
 sampled during a standard 75g oral glucose tolerance test.
 }
 \details{
 Standard timepoints are 0, 30, 60, 90, and 120 min.
-Note: insulin unit conversion may differ differ depending on assay. 
-Insulin (pmol/l) = insulin (uU/ml)*6 
+Note: insulin unit conversion may differ differ depending on assay.
+Insulin (pmol/l) = insulin (uU/ml)*6
 
-`calculate_igi30()` accepts 3 separate vectors for time, glucose, insulin. 
+\code{calculate_igi30()} accepts 3 separate vectors for time, glucose, insulin.
 Uses the formula detailed in \href{https://pubmed.ncbi.nlm.nih.gov/6023769/}{Seltzer et al}:
 \eqn{\frac{(Insulin_{30} - Insulin_0)}{(Glucose_{30}-Glucose_0)}}
 }

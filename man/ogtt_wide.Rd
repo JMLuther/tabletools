@@ -25,8 +25,8 @@ Demographic data includes:
 \item{\code{ogtt_df}}{A nested dataframe with a single OGTT result per row in the nested dataset (\code{ogtt_nested}), Time points, in minutes (0, 30, 60, 90, 120) denoted either in the variable name (\verb{_000}, \verb{_030}) or in the time column of the nested dataset}
 }
 
-`ogtt_wide` A dataframe with 184 OGTT results, with a nested
-  dataframe with each participant result (time, glucose, insulin)
+\code{ogtt_wide} A dataframe with 184 OGTT results, with a nested
+dataframe with each participant result (time, glucose, insulin)
 }
 \source{
 Primary data collected from multiple studies

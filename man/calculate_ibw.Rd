@@ -45,7 +45,7 @@ al.}.
 The function is not vectorized, so to perform multiple calculations, first
 create a vectorized version of the function as in the examples below
 
-This version is only the Devine method, and does not use the `switch()`
+This version is only the Devine method, and does not use the \code{switch()}
 function. This did not avoid the vectorization issue, however, and it does
 not work on dataframes without converting to a vectorized version. Kept only for documentation, since it is no faster than the other version.
 }

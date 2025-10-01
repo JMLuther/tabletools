@@ -27,11 +27,13 @@ calculate_creatclearance_urine(
 a numeric vector with eGFR (ml/min/1.73m^2)
 }
 \description{
-Calculates Creatinine Clearance by 24hr urine collection results. 
-CrCL typically overestimates GFR by 10-20% due to tubular secretion of creatinine. Other assumptions also apply including:
-* Creatinine/renal function is in steady state
-* Creatinine is filtered and not secreted (not true- leads to 10-20% overestimate of GFR)
-* Complete and well-timed urine collection
+Calculates Creatinine Clearance by 24hr urine collection results.
+CrCL typically overestimates GFR by 10-20\% due to tubular secretion of creatinine. Other assumptions also apply including:
+\itemize{
+\item Creatinine/renal function is in steady state
+\item Creatinine is filtered and not secreted (not true- leads to 10-20\% overestimate of GFR)
+\item Complete and well-timed urine collection
+}
 }
 \examples{
 calculate_creatclearance_urine(urine_volume = 1000, creatinine_serum = 1.0, creatinine_urine = 100) # 69.4

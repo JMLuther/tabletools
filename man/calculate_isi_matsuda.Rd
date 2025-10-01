@@ -43,7 +43,7 @@ using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online
 calculator}. Examples with reduced sampling times have been validated using the online calculator.
 }
 \details{
-Standard timepoints (`sample_times`) are 0, 30, 60, 90, and 120 min. This
+Standard timepoints (\code{sample_times}) are 0, 30, 60, 90, and 120 min. This
 option can be changed to use alternative sampling times, and if extra
 timepoints are provided, they will be dropped for analysis with a warning.
 
@@ -52,7 +52,7 @@ If time is provided out of order, it will be reordered and trigger a warning.
 Note: insulin unit conversion may differ differ depending on assay. Insulin
 (pmol/l) = insulin (uU/ml)*6
 
-`calculate_isi_matsuda()` accepts 3 separate vectors for time, glucose,
+\code{calculate_isi_matsuda()} accepts 3 separate vectors for time, glucose,
 insulin.
 
 The formula used for this calculation is described in

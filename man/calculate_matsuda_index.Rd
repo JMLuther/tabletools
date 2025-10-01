@@ -30,17 +30,17 @@ calculate_matsuda_index(
 Matsuda index as a single value
 }
 \description{
-This function calculates the Matsuda index using glucose and insulin 
+This function calculates the Matsuda index using glucose and insulin
 sampled during a standard 75g oral glucose tolerance test.
 Results can be checked using the \href{http://mmatsuda.diabetes-smc.jp/MIndex.html}{Matsuda online calculator}.
 }
 \details{
 Standard timepoints are 0, 30, 60, 90, and 120 min.
-Note: insulin unit conversion may differ differ depending on assay. 
-Insulin (pmol/l) = insulin (uU/ml)*6 
+Note: insulin unit conversion may differ differ depending on assay.
+Insulin (pmol/l) = insulin (uU/ml)*6
 
-`calculate_matsuda_index_df()` requires a dataframe input with time, glucose, insulin columns. 
-`calculate_matsuda_index()` accepts 3 separate vectors for time, glucose, insulin.
+\code{calculate_matsuda_index_df()} requires a dataframe input with time, glucose, insulin columns.
+\code{calculate_matsuda_index()} accepts 3 separate vectors for time, glucose, insulin.
 }
 \examples{
 ogtt1 <- data.frame(

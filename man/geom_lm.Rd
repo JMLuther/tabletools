@@ -19,7 +19,7 @@ geom_lm(formula = y ~ x, se = TRUE, linewidth = 1, ...)
 a ggplot object
 }
 \description{
-Convenience function- a version of `geom_smooth()` using `lm()` instead of `loess()`
+Convenience function- a version of \code{geom_smooth()} using \code{lm()} instead of \code{loess()}
 }
 \examples{
 library(dplyr)

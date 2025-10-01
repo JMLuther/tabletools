@@ -74,7 +74,7 @@ is described in \href{https://pubmed.ncbi.nlm.nih.gov/11289482/}{Mari et
 al.}. An Online calculator is
 \href{http://webmet.pd.cnr.it/ogis/ogis.php}{available here.}
 
-`calculate_isi_ogis()` accepts vectors for time, glucose, insulin, height, and
+\code{calculate_isi_ogis()} accepts vectors for time, glucose, insulin, height, and
 weight.
 }
 \examples{

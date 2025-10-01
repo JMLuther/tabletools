@@ -22,16 +22,17 @@ a numeric vector with eGFR (ml/min/1.73m^2)
 }
 \description{
 Calculates estimated glomerular filtration rate (GFR) by several
-  common methods. Converts weight to Kg and Height to cm if needed. Available
-  methods for eGFR calculations include:
-
-  * CKD-EPI AS Equation (2021) incorporating only Age, Sex 
-  * CKD-EPI ASR Equation (original, 2009) incorporating Age, Sex, Race
-  * CKD-EPI Cystatin-C (not incorporated)
-  * MDRD  
-  * EKFC
-  * KRS
-  * Cockcroft-Gault 
+common methods. Converts weight to Kg and Height to cm if needed. Available
+methods for eGFR calculations include:
+\itemize{
+\item CKD-EPI AS Equation (2021) incorporating only Age, Sex
+\item CKD-EPI ASR Equation (original, 2009) incorporating Age, Sex, Race
+\item CKD-EPI Cystatin-C (not incorporated)
+\item MDRD
+\item EKFC
+\item KRS
+\item Cockcroft-Gault
+}
 
 Online calculators can be used to compare reults for \href{https://www.kidney.org/professionals/kdoqi/gfr_calculator}{CKD-EPI AS (2021)},
 \href{https://www.niddk.nih.gov/health-information/professionals/clinical-tools-patient-management/kidney-disease/laboratory-evaluation/glomerular-filtration-rate-calculators/historical}{CKD-EPI ASR}

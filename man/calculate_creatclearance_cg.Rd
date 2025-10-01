@@ -20,7 +20,7 @@ a numeric vector with eGFR (ml/min/1.73m^2)
 }
 \description{
 Estimates Creatinine Clearance based on age, sex, weight, and
-  creatinine. Note that other estimating equations estimate GFR.
+creatinine. Note that other estimating equations estimate GFR.
 }
 \examples{
 calculate_creatclearance_cg(age=70, sex="MAle", weight=70, creatinine=1.0) # 68.05556

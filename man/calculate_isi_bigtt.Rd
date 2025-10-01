@@ -54,7 +54,7 @@ Standard timepoints are 0, 30, 60, 90, and 120 min. Note: insulin unit
 conversion may differ differ depending on assay. Insulin (pmol/l) = insulin
 (uU/ml)*6
 
-`calculate_isi_bigtt()` accepts 3 separate vectors for time, glucose,
+\code{calculate_isi_bigtt()} accepts 3 separate vectors for time, glucose,
 insulin and values for gender and BMI.
 }
 \examples{

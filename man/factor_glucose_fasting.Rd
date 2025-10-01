@@ -8,14 +8,16 @@ factor_glucose_fasting(x)
 }
 \arguments{
 \item{x}{A glucose value, or vector of values, in mg/dL. Converts
-a number entered as a string to numeric if possible, otherwise returns `NA`}
+a number entered as a string to numeric if possible, otherwise returns \code{NA}}
 }
 \value{
 A Factor for OGTT classification of fasting and 2hr glucose
 }
 \description{
-* `factor_glucose_fasting()` classifies fasting glucose as Normal (NFG),
+\itemize{
+\item \code{factor_glucose_fasting()} classifies fasting glucose as Normal (NFG),
 Impaired (IFG), or Diabetes (DM2)
+}
 }
 \examples{
 factor_glucose_fasting(155)

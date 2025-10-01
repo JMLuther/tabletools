@@ -14,15 +14,15 @@ pick_bestmatch_value(string_vector, string_tomatch, method = "jaccard")
 \item{method}{Method for distance calculation. The default is "jaccard", see \code{\link[stringdist]{stringdist-metrics}}.}
 }
 \value{
-`pick_bestmatch_index` returns the integer index for the best-scoring match
+\code{pick_bestmatch_index} returns the integer index for the best-scoring match
 ``
-`pick_bestmatch_value` returns the character value for the best-scoring match.
+\code{pick_bestmatch_value} returns the character value for the best-scoring match.
 
-`pick_bestmatch_score` returns the calculated score for the best-scoring match.
+\code{pick_bestmatch_score} returns the calculated score for the best-scoring match.
 }
 \description{
-Functions to match text using fuzzy matching from a vector of possible matches. Bases on `stringdist` functions.
-Note: the `stringdist` package is required to be installed to run these functions.
+Functions to match text using fuzzy matching from a vector of possible matches. Bases on \code{stringdist} functions.
+Note: the \code{stringdist} package is required to be installed to run these functions.
 }
 \examples{
 single_char <- "A Very Specific Title"

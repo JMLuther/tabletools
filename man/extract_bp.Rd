@@ -18,7 +18,7 @@ A dataframe containing SBP, DBP and MAP
 }
 \description{
 Separates SBP and DBP from a string of blood pressure readings, and returns
-it as a dataframe. Mean arterial pressure is added unless default `meanBP`
+it as a dataframe. Mean arterial pressure is added unless default \code{meanBP}
 option changed.
 }
 \examples{

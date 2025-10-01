@@ -15,7 +15,7 @@ txt_median_iqr(var, lower = 0.25, upper = 0.75, na.rm = T, digits = 1, ...)
 
 \item{na.rm}{a logical value indicating whether NA values should be stripped}
 
-\item{...}{passes to `median(...)`}
+\item{...}{passes to \code{median(...)}}
 }
 \value{
 A character vector with median (interquartile range), suitable for printing in an html table

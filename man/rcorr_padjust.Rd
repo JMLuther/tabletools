@@ -7,25 +7,25 @@
 rcorr_padjust(x, method = "BH")
 }
 \arguments{
-\item{x}{An `rcorr` class object created by the function `Hmisc::rcorr``}
+\item{x}{An \code{rcorr} class object created by the function `Hmisc::rcorr``}
 
 \item{method}{Uses "BH" by default}
 }
 \value{
 An rcorr array with the following matrices:
 \itemize{
-  \item correlation (`$r`). unchanged from the original
-  \item n (`$n`). unchanged from the original
-  \item P-value (`$P`). modified using the selected adjustment method
+\item correlation (\verb{$r}). unchanged from the original
+\item n (\verb{$n}). unchanged from the original
+\item P-value (\verb{$P}). modified using the selected adjustment method
 }
 }
 \description{
-Modifies the `rcorr` p-values from the `Hmisc::rcorr()` function.
-The result is an array with modified `$P` matrix.
-uses `base::p.adjust`
+Modifies the \code{rcorr} p-values from the \code{Hmisc::rcorr()} function.
+The result is an array with modified \verb{$P} matrix.
+uses \code{base::p.adjust}
 }
 \details{
-Adjust Hmisc::rcorr p-values using `p.adjust`
+Adjust Hmisc::rcorr p-values using \code{p.adjust}
 }
 \examples{
 require(Hmisc)

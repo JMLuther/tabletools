@@ -18,10 +18,10 @@ my_summary(df, my_var, probs = c(0.025, 0.975), na.rm = T, digits = 2)
 \item{digits}{integer indicating number of decimal places}
 }
 \value{
-A dataframe with named variables for: mean, sd, n, sem, and 95%CI
+A dataframe with named variables for: mean, sd, n, sem, and 95\%CI
 }
 \description{
-Uses `dplyr` style summarization to retrun mean, SD, n, SEM, and 95% CI for a
+Uses \code{dplyr} style summarization to retrun mean, SD, n, SEM, and 95\% CI for a
 single continuous variable in a dataframe. Useful for grouped data summaries.
 }
 \examples{
@@ -32,5 +32,5 @@ mtcars \%>\% group_by(cyl) \%>\% my_summary(mpg, probs = c(0.01, .999), digits =
 }
 \seealso{
 \code{\link[dplyr]{summarise}}, \code{\link[base]{mean}}, \code{\link[base]{sd}},
- \code{\link[base]{round}}, \code{\link[stats]{quantile}}
+\code{\link[base]{round}}, \code{\link[stats]{quantile}}
 }

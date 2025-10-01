@@ -7,26 +7,26 @@
 rcorr_clean(rcmat, lookup_varTable = NULL)
 }
 \arguments{
-\item{rcmat}{An `rcorr` class object created by the function `Hmisc::rcorr``}
+\item{rcmat}{An \code{rcorr} class object created by the function `Hmisc::rcorr``}
 
-\item{lookup_varTable}{A lookup table structured as a dataframe with variable lables. 
+\item{lookup_varTable}{A lookup table structured as a dataframe with variable lables.
 This is optional and by default is not used.}
 }
 \value{
 An rcorr array with the following matrices:
 \itemize{
-  \item correlation (`$r`). unchanged from the original
-  \item n (`$n`). unchanged from the original
-  \item P-value (`$P`). unchanged from the original
-  \item Simplified P-value (`$P_simplified`). a text matrix with P-values
-  \item Labeled P-value (`P_lab`). a text matrix with significance of P-values indicated with `*`, `**`, and `***`. Results are unadjusted.
-  \item label (`$label`). a text matrix with the `r` and `p-value` summary, useful as a hovertext
-  \item label (`$label_html`). a text matrix with the `r` and `p-value` summary, useful to pass to `htmlTable`
+\item correlation (\verb{$r}). unchanged from the original
+\item n (\verb{$n}). unchanged from the original
+\item P-value (\verb{$P}). unchanged from the original
+\item Simplified P-value (\verb{$P_simplified}). a text matrix with P-values
+\item Labeled P-value (\code{P_lab}). a text matrix with significance of P-values indicated with \code{*}, \verb{**}, and \verb{***}. Results are unadjusted.
+\item label (\verb{$label}). a text matrix with the \code{r} and \code{p-value} summary, useful as a hovertext
+\item label (\verb{$label_html}). a text matrix with the \code{r} and \code{p-value} summary, useful to pass to \code{htmlTable}
 }
 }
 \description{
-Modifies the `rcorr` output from the `Hmisc::rcorr()` function.
-The result is an array with additional matrices (`$P_simplified`, `$label`, and `P_lab`).
+Modifies the \code{rcorr} output from the \code{Hmisc::rcorr()} function.
+The result is an array with additional matrices (\verb{$P_simplified}, \verb{$label}, and \code{P_lab}).
 Optionally will replace the variable names with labels from a lookup table (see example)
 }
 \details{

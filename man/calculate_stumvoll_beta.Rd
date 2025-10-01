@@ -30,7 +30,7 @@ conversion (options "mg/dl" or "mmol/l")}
 conversion (options "uU/ml" or "pmol/l")}
 }
 \value{
-Stumvoll beta cell estimates (`stumvoll_ph1`, `stumvol_ph2`) values as a `data.frame`
+Stumvoll beta cell estimates (\code{stumvoll_ph1}, \code{stumvol_ph2}) values as a \code{data.frame}
 }
 \description{
 This function calculates the Stumvoll phase 1 (ph1) and phase 2 (ph2) using glucose
@@ -41,7 +41,7 @@ Standard timepoints are 0, 30, 60, 90, and 120 min. Note: insulin unit
 conversion may differ differ depending on assay. Insulin (pmol/l) = insulin
 (uU/ml)*6
 
-`calculate_stumvoll_beta()` accepts 3 separate vectors for time, glucose,
+\code{calculate_stumvoll_beta()} accepts 3 separate vectors for time, glucose,
 insulin.
 }
 \examples{

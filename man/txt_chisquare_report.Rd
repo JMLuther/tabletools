@@ -10,9 +10,9 @@ txt_chisquare_report(chisquare_object)
 \item{chisquare_object}{A Chi-square object}
 }
 \description{
-This function returns html formatted text summary of a Chi-sqauare test. 
-The input object must be a chisq.test object, and the p-value is formatted by the 
-`htmlTable::txtPval()` function.
+This function returns html formatted text summary of a Chi-sqauare test.
+The input object must be a chisq.test object, and the p-value is formatted by the
+\code{htmlTable::txtPval()} function.
 }
 \examples{
 library(htmlTable)

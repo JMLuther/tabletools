@@ -18,10 +18,10 @@ a numeric vector with eGFR (ml/min/1.73m^2)
 }
 \description{
 Calculates the Race-free kidney-transplant-specific estimated
-  glomerular filtration rate. Methods described in
-  \href{https://pubmed.ncbi.nlm.nih.gov/37257905/}{Raynaud et al. BMJ. 2023}.
-  An online calculator is found at
-  \href{https://transplant-prediction-system.shinyapps.io/eGFR_equation_KTX/}{here}.
+glomerular filtration rate. Methods described in
+\href{https://pubmed.ncbi.nlm.nih.gov/37257905/}{Raynaud et al. BMJ. 2023}.
+An online calculator is found at
+\href{https://transplant-prediction-system.shinyapps.io/eGFR_equation_KTX/}{here}.
 }
 \examples{
 # CKD-EPI 2021 version (new race-free creatinine-based equation)

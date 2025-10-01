@@ -65,14 +65,14 @@ months)}
 
 \item{RASB}{Renin-angiotensin-aldosterone system blockade use (TRUE/FALSE)}
 
-\item{race}{Race as `"Chinese", "Japanese", "Caucasian", or "Other"`}
+\item{race}{Race as \verb{"Chinese", "Japanese", "Caucasian", or "Other"}}
 
 \item{explanation}{Whether to output results as text description (TRUE/FALSE;
 defaults to FALSE)}
 }
 \value{
-a single value of risk estimate for kidney outcome (>50% decline in
- eGFR or ESRD) in the desired time interval
+a single value of risk estimate for kidney outcome (>50\% decline in
+eGFR or ESRD) in the desired time interval
 }
 \description{
 Post-Biopsy Risk estimator for Kidney outcomes in patients with IgA
@@ -84,8 +84,8 @@ online calculator at
 \href{https://qxmd.com/calculate/calculator_839/international-igan-prediction-tool-post-biopsy-adults#}{Calculate
 by QxMD}. Note if Race does not fit into the categories of "Chinese", "Japanese", or "Caucasian" then it is recommended to use the race-free equation.
 
-`calculate_iga_risk_postbiopsy()` is the full Race-based model
-`calculate_iga_risk_postbiopsy_norace()` Provides an estimate when race is not
+\code{calculate_iga_risk_postbiopsy()} is the full Race-based model
+\code{calculate_iga_risk_postbiopsy_norace()} Provides an estimate when race is not
 known or if race is not well matched by Caucasian, Chinese, or Japanese
 race/ethnicity
 }

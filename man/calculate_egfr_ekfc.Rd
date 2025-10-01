@@ -20,9 +20,9 @@ a numeric vector with eGFR (ml/min/1.73m^2)
 }
 \description{
 Calculates the European Kidney Function Consortium (EKFC) 2021 formula estimated
-  glomerular filtration rate. Methods described in
-  \href{https://pubmed.ncbi.nlm.nih.gov/33166224/}{Pottel et al, Annals Int Med. 2021}.
-  An online calculator is found \href{https://ekfccalculator.pages.dev/?value=50&value=1&value=#results}{here}.
+glomerular filtration rate. Methods described in
+\href{https://pubmed.ncbi.nlm.nih.gov/33166224/}{Pottel et al, Annals Int Med. 2021}.
+An online calculator is found \href{https://ekfccalculator.pages.dev/?value=50&value=1&value=#results}{here}.
 }
 \examples{
 # CKD-EPI 2021 version (new race-free creatinine-based equation)

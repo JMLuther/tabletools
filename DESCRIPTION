@@ -15,6 +15,7 @@ Imports: dplyr,
     gslnls,
     purrr
 RoxygenNote: 7.3.3
+Roxygen: list(markdown = TRUE)
 Suggests: 
     ggbeeswarm,
     ggplot2,

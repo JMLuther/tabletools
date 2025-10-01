@@ -15,8 +15,8 @@ txt_clean_nonascii(string, regex = "[^[:alnum:][:blank:]+?&/\\\\-\\\\.]")
 A character string or vector, now stripped of any non-matching values
 }
 \description{
-`txt_clean_nonascii` removes non-standard characters from text, but keeps space, -, and . by default, using regex matching.
-Default matching can be overridden by `regex` option.
+\code{txt_clean_nonascii} removes non-standard characters from text, but keeps space, -, and . by default, using regex matching.
+Default matching can be overridden by \code{regex} option.
 }
 \examples{
 test_strings <- c("\"The Erlenmeyer Flask\"‡", "\"My Struggle\"‡", "\"Founder's Mutation\"", "\"Mulder & Scully Meet the Were-Monster\"",

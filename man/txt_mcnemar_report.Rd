@@ -10,9 +10,9 @@ txt_mcnemar_report(mcnemar_object)
 \item{mcnemar_object}{A McNemar's Chi-square object}
 }
 \description{
-This function returns html formatted text summary of McNemar's Chi-sqauare test, for paired data. 
-The input object must be a `mcnemar.test` object, and the p-value is formatted by the 
-`htmlTable::txtPval()` function.
+This function returns html formatted text summary of McNemar's Chi-sqauare test, for paired data.
+The input object must be a \code{mcnemar.test} object, and the p-value is formatted by the
+\code{htmlTable::txtPval()} function.
 }
 \examples{
 ex <- data.frame(A = sample(c("No", "Yes"), 9, replace = T),

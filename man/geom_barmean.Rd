@@ -9,7 +9,7 @@ geom_barmean(se = TRUE, points = F, barfill = "steelblue")
 \arguments{
 \item{se}{add SEM bars (TRUE/FALSE)}
 
-\item{points}{add jittered points (uses `ggbeeswarm::geom_quasirandom()`)
+\item{points}{add jittered points (uses \code{ggbeeswarm::geom_quasirandom()})
 (TRUE/FALSE)}
 
 \item{barfill}{color for bar fill (as a string, default = "steelblue")}
@@ -20,7 +20,7 @@ a ggplot object
 \description{
 Plots a summary Barplot of the averaged group values. Optionally can add
 error bars (SEM) and jittered data points. Does not have full functionality
-of `geom_bar()`, e.g., cannot pass additional aes() elements or arguments.
+of \code{geom_bar()}, e.g., cannot pass additional aes() elements or arguments.
 }
 \examples{
 library(ggplot2)

@@ -37,7 +37,7 @@ conversion (options "uU/ml" or "pmol/l")}
 }
 \value{
 A dataframe containing 3 values for basal, 2hr and mean Insulin
-  Sensitivity values
+Sensitivity values
 }
 \description{
 This function calculates the Avignon Insulin Sensitivity Index using glucose
@@ -50,7 +50,7 @@ Standard timepoints are 0, 30, 60, 90, and 120 min. Note: insulin unit
 conversion may differ differ depending on assay. Insulin (pmol/l) = insulin
 (uU/ml)*6
 
-`calculate_isi_avignon()` accepts 3 separate vectors for time, glucose,
+\code{calculate_isi_avignon()} accepts 3 separate vectors for time, glucose,
 insulin and a single weight value.
 }
 \examples{

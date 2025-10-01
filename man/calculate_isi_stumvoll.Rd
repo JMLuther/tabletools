@@ -60,8 +60,8 @@ Standard timepoints are 0, 30, 60, 90, and 120 min. Note: insulin unit
 conversion may differ differ depending on assay. Insulin (pmol/l) = insulin
 (uU/ml)*6
 
-`calculate_isi_stumvoll()` accepts 3 separate vectors for time, glucose,
-insulin. If the demographic `calculate_isi_stumvoll_dem()` version is used,
+\code{calculate_isi_stumvoll()} accepts 3 separate vectors for time, glucose,
+insulin. If the demographic \code{calculate_isi_stumvoll_dem()} version is used,
 BMI and age are required. Note the demographic version only utilizes Insulin
 at t=120 and dose not incorporate glucose.
 }

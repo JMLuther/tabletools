@@ -27,22 +27,22 @@ phase, defaults to \code{100}}
 \item{t_late}{First Time point (minutes) to use in the "Late" elimination
 phase, defaults to \code{120}}
 
-\item{...}{Inherits from named `calculate_mgfr_2c` paramaters. Any arguments
-can be added, but must be named (eg `ioh_inj_vol = 5.1`).}
+\item{...}{Inherits from named \code{calculate_mgfr_2c} paramaters. Any arguments
+can be added, but must be named (eg \code{ioh_inj_vol = 5.1}).}
 
 \item{mfr}{Plot layout. defaults to c(2,3) for 2 rows, 3 columns}
 }
 \value{
-`compare_mgfr_summary()` Returns a table of mGFR summary parameters,
-  and `compare_mgfr_plot()` returns a panel of plots using a combination of available methods.
-  The single sample method result is not included but can be called
-  separately using `calculate_mgfr_ss`. '
+\code{compare_mgfr_summary()} Returns a table of mGFR summary parameters,
+and \code{compare_mgfr_plot()} returns a panel of plots using a combination of available methods.
+The single sample method result is not included but can be called
+separately using \code{calculate_mgfr_ss}. '
 }
 \description{
 Two functions are provided to to summarize available options and analyze
 outlier or inconsistent results. Most variation occurs due to poor fitting or
 variability in early timepoints (<90min), although the late time points
-account for ~90% of the measured AUC used in calculation of creatinine
+account for ~90\% of the measured AUC used in calculation of creatinine
 clearance. Further discussion and details regarding methods of fitting the
 2-compartment models can be found at
 \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8101203/}{Pottel et al.}

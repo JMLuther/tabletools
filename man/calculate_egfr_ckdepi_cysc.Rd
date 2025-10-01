@@ -20,13 +20,14 @@ a numeric vector with eGFR (ml/min/1.73m^2)
 }
 \description{
 Calculates estimated glomerular filtration rate (GFR) by several
-  common methods. Converts weight to Kg and Height to cm if needed. Available
-  methods for eGFR calculations include:
-
-  *  CKD-EPI(2021)
-  *  CKD-EPI Cystatin-C
-  *  MDRD
-  *  Cockcroft-Gault
+common methods. Converts weight to Kg and Height to cm if needed. Available
+methods for eGFR calculations include:
+\itemize{
+\item CKD-EPI(2021)
+\item CKD-EPI Cystatin-C
+\item MDRD
+\item Cockcroft-Gault
+}
 }
 \examples{
 calculate_egfr_ckdepi_cysc(age=50, sex = "Female", creatinine=1.0, cystatin=1.5) # 54

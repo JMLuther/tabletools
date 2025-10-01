@@ -8,7 +8,7 @@ factor_glucose_tolerance(x)
 }
 \arguments{
 \item{x}{A glucose value in mg/dL. Can be single value or a vector. Converts
-a number entered as a string to numeric if possible, otherwise returns `NA`}
+a number entered as a string to numeric if possible, otherwise returns \code{NA}}
 }
 \value{
 A Factor for OGTT classification of fasting and 2hr glucose
@@ -17,8 +17,10 @@ A Factor for OGTT classification of fasting and 2hr glucose
 Factor the 2-hour glucose from a standard 75g OGTT
 }
 \details{
-* `factor_glucose_tolerance()` classifies glucose tolerance from a 2-hr OGTT
+\itemize{
+\item \code{factor_glucose_tolerance()} classifies glucose tolerance from a 2-hr OGTT
 glucose as Normal (NGT), Impaired (IGT), or Diabetes (DM2)
+}
 }
 \examples{
 factor_glucose_tolerance(140)

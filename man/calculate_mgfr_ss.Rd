@@ -42,7 +42,7 @@ calculate_mgfr_ss(
 \item{ecv_method}{ECV Formula (default =  "Faucon"; also can use "Granerus")}
 }
 \value{
-data.frame with `mgfr_ss` (non-indexed) and `mgfr_ss_bsa` (GFR indexed to standard BSA of 1.73m2)
+data.frame with \code{mgfr_ss} (non-indexed) and \code{mgfr_ss_bsa} (GFR indexed to standard BSA of 1.73m2)
 }
 \description{
 This method uses a single sample measurement of iohexol to determine GFR
@@ -70,6 +70,6 @@ calculate_mgfr_ss(egfr=40,
 
 }
 \seealso{
-[calculate_ecv()] for ECV calculation
- [calculate_bsa()] for BSA calculation
+\code{\link[=calculate_ecv]{calculate_ecv()}} for ECV calculation
+\code{\link[=calculate_bsa]{calculate_bsa()}} for BSA calculation
 }

@@ -19,7 +19,7 @@ calculate_h2fpef(age, bmi, pa_pressure, filling_pressure, afib)
 \item{afib}{Atrial Fibrillation (T/F)}
 }
 \value{
-H2PEF probability (%)
+H2PEF probability (\%)
 }
 \description{
 Estimated probability of HFpEF based on a validated risk calculator \href{https://pubmed.ncbi.nlm.nih.gov/29792299/}{(Reddy 2018)}.
