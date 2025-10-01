@@ -804,6 +804,7 @@ saveRDS(df_coeff_ascvd, here::here("data-raw/df_coeff_ascvd.rds"))
 # PREVENT used the 2014-2018 data, so this is used for consistency
 
 # library(data.table)
+# tabletools:::df_sdi
 df_sdi <-
   data.table::fread(here::here(
     "data-raw/SDI_zcta/rgcsdi-2015-2019-zcta.csv"
@@ -812,8 +813,17 @@ df_sdi <-
   mutate(sdi_decile = ntile(SDI_score, 10)) |>
   select(ZCTA5_FIPS, SDI_score, sdi_decile)
 
-saveRDS(df_sdi, here::here("data-raw/df_sdi.rds"))
+# which(df_sdi$ZCTA5_FIPS == 37232)
+# download.file(
+#   url = "https://www2.census.gov/geo/docs/maps-data/data/rel/zcta_cbsa_rel_10.txt",
+#   destfile = here::here("data-raw/zcta_cbsa_rel_10.txt")
+# )
+# df_zip <-  data.table::fread(here::here("data-raw/zcta_cbsa_rel_10.txt"))
+# df_zip[ZCTA5==37220,]
+# df_zip[ZCTA5==37215,]
+# df_zip[ZCTA5==37232,]
 
+saveRDS(df_sdi, here::here("data-raw/df_sdi.rds"))
 
 # LOAD AND SAVE/UPDATE INTERNAL DATA ----
 # add new object to this and then udpate with each new data set
