@@ -9,14 +9,13 @@
 #' Circulation. 2024}. Extended models incorporating urine albumin, A1C and socioeconomic risk (by Zip code) are available.
 #'
 #' Allowable range for Risk variables are:
-#'
-#' *  Age 30-79
-#' *  Total Cholesterol 130-320 mg/dL
-#' *  HDL Cholesterol 20-100 mg/dL
-#' *  SBP 90-200 mmHg
-#' *  BMI 18.5 - 40 mg/m^2
-#' *  eGFR 15-150 mL/min/1.73m^2
-#' *  Urine albumin/Creatinine 0.1-2500 mg/g Creatinine
+#' * Age 30-79
+#' * Total Cholesterol 130-320 mg/dL
+#' * HDL Cholesterol 20-100 mg/dL
+#' * SBP 90-200 mmHg
+#' * BMI 18.5 - 40 mg/m^2
+#' * eGFR 15-150 mL/min/1.73m^2
+#' * Urine albumin/Creatinine 0.1-2500 mg/g Creatinine
 #'
 #' @param risk Desired Risk Calculation ("cvd", "ascvd", "hf", "cad", "stroke")
 #' @param gender Gender, (Female/Male)

@@ -9,14 +9,15 @@
 #' Circulation. 2024}. This model incorporates urine albumin, A1C and socioeconomic risk (by Zip code) if available. SDI lookup by zipcode is slightly off in SDI estimate- enter the SDI decile (1-10) for most accurate results.
 #'
 #' Allowable range for Risk variables are:
-#'
-#' *  Age 30-79
-#' *  Total Cholesterol 130-320 mg/dL
-#' *  HDL Cholesterol 20-100 mg/dL
-#' *  SBP 90-200 mmHg
-#' *  BMI 18.5 - 40 mg/m^2
-#' *  eGFR 15-150 mL/min/1.73m^2
-#' *  Urine albumin/Creatinine 0.1-2500 mg/g Creatinine
+#' * Age 30-79
+#' * Total Cholesterol 130-320 mg/dL
+#' * HDL Cholesterol 20-100 mg/dL
+#' * SBP 90-200 mmHg
+#' * BMI 18.5 - 40 mg/m^2
+#' * eGFR 15-150 mL/min/1.73m^2
+#' * Urine albumin/Creatinine 0.1-2500 mg/g Creatinine
+#' * HbA1C 3-15%
+#' * SDI 1-10
 #'
 #'@param risk Desired Risk Calculation ("cvd", "ascvd", "hf", "cad", "stroke")
 #'@param gender Gender, (Female/Male)
@@ -28,9 +29,8 @@
 #'@param BMI Body Mass Index (kg/m2), used only in HF estimate
 #'@param UACR Urine albumin/creatinine ratio (mg/g creatinine)
 #'@param HbA1c Hemoglobin A1C (percent)
-#'@param SDI Social Deprivation Index (SDI), decile
+#'@param SDI Social Deprivation Index (SDI), decile (1-10)
 #'@param zipcode Zipcode to use for SDI lookup, if SDI not provided
-#'@param year Year to use for SDI lookup, if SDI not provided
 #'@param current_smoker current_smoker, T/F
 #'@param using_antihypertensive_medication HTN medication use, T/F
 #'@param using_statin Statin use, T/F
@@ -41,7 +41,7 @@
 #'@return 10- and 30-year Risk (percent) in Dataframe format
 #'@export
 #'
-#' @examples
+#'@examples
 #'
 #'
 #'  calculate_prevent_risk_full(risk="cvd",gender="Female", age=50, Tc=200, HDL=45, SBP=160, eGFR=90,
@@ -134,7 +134,6 @@ calculate_prevent_risk_full <- function(
        HbA1c = NA,
        SDI = NA,
        zipcode = NA,
-       year = 2019,
        current_smoker = FALSE,
        using_antihypertensive_medication = FALSE,
        using_statin = FALSE,
@@ -145,7 +144,7 @@ calculate_prevent_risk_full <- function(
        SDI = ifelse(
               !is.na(SDI),
               SDI,
-              ifelse(!is.na(zipcode), sdi_decile({{ zipcode }}, {{ year }}), NA)
+              ifelse(!is.na(zipcode), sdi_decile({{ zipcode }}), NA)
        )
        SDI_missing = ifelse(is.na(SDI) & is.na(zipcode), TRUE, FALSE)
        SDI4_6 = SDI >= 4 & SDI < 7
