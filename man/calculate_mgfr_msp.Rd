@@ -80,7 +80,7 @@ For \code{output = "summary"} results returned includes the named variables:
 \item \code{mgfr_2c_bsa} The measured GFR (mL/min/1.73 m2) indexed to body surface area (BSA calculated by DuBois equation)
 \item \code{iohexol_m}   Iohexol mass (ucg) injected. Determined either by user-provided syringe weight or volume injected.
 \item \code{iohexol_0}   Iohexol concentration at t=0 calculated by A+B (theoretical, not measured)
-\item \code{iohexol_vd}  Iohexol Volume of distribution estimated by Dose/Iohexol\link{t0}
+\item \code{iohexol_vd}  Iohexol Volume of distribution estimated by Dose/Iohexol(t0)
 \item \code{ioh_auc}  Iohexol calculated AUC from t=0 to Infinity, estimated by A/a + B/b.
 \item \code{A} Model parameter A
 \item \code{a} Model parameter a, or \eqn{\alpha}
