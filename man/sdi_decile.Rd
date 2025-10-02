@@ -20,5 +20,6 @@ Graham Center}.
 }
 \examples{
 sdi_decile(37220)
+sdi_decile(37232)
 sdi_decile(90210)
 }

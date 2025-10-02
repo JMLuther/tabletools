@@ -40,6 +40,7 @@
 #'
 #'@return 10- and 30-year Risk (percent) in Dataframe format
 #'@export
+#'@md
 #'
 #'@examples
 #'
