@@ -18,8 +18,8 @@
 sdi_decile <- function(zipcode) {
   # df_sdi[df_sdi$ZCTA5_FIPS == {{ zipcode }}, ][["sdi_decile"]]
   ifelse(
-    length(dt_sdi[ZCTA5_FIPS == 37011, ][["sdi_decile"]] == 0),
+    length(df_sdi[ZCTA5_FIPS == 37011, ][["sdi_decile"]] == 0),
     NA_integer_,
-    dt_sdi[ZCTA5_FIPS == 37011, ][["sdi_decile"]]
+    df_sdi[ZCTA5_FIPS == 37011, ][["sdi_decile"]]
   )
 }
