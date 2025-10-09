@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' library(ggplot2, data.table)
-#' ecg_example_filepath =  system.file("extdata", "ecg_example.csv", package = "reatabletools")
+#' ecg_example_filepath =  system.file("extdata", "ecg_example.csv", package = "tabletools")
 #' plot_ecg(ecg_example_filepath)
 #' plot_ecg(ecg_example_filepath, width_max = 100)
 #' plot_ecg(ecg_example_filepath, width_max = 125)
@@ -19,7 +19,11 @@
 #'
 plot_ecg <- function(ecg_file, width_max = 125) {
   ## ├ ECG voltage ----
-  ecg_dt_dat = data.table::fread(ecg_file, skip = 13, col.names = "voltage")
+  ecg_dt_dat = data.table::fread(
+    ecg_file,
+    skip = 13,
+    col.names = c("voltage", "_")
+  )
   ## ├ Metadata ----
   ecg_dt_meta <- data.table::fread(
     ecg_file,
