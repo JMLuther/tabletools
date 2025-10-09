@@ -320,8 +320,9 @@ usethis::use_data(htn_med_dose)
 
 # Internal data objects are all stored within a single .rda file (R/sysdata.rda)
 # Internal data objects can be made available for use with `devtools::load_all()`
-
 # original data files are stored in `data-raw` folder and are not exported in the package
+
+## ├ Apple Watch ECG data ----
 
 ## ├ DDD ----
 # DDD data from WHO Collaborating Centre for Drug Statistics Methodology
