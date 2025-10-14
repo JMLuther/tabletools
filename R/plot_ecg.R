@@ -19,20 +19,36 @@
 #'
 plot_ecg <- function(ecg_file, width_max = 125) {
   ## ├ ECG voltage ----
-  ecg_dt_dat = data.table::fread(
-    ecg_file,
-    skip = 13,
-    col.names = c("voltage", "_")
+  te <- try(
+    data.table::fread(
+      ecg_file,
+      skip = 13,
+      col.names = c("voltage")
+    ),
+    silent = T
   )
+  if ("try-error" %in% class(te)) {
+    ecg_dt_dat = data.table::fread(
+      ecg_file,
+      skip = 13,
+      col.names = c("voltage", "_")
+    )
+  } else {
+    ecg_dt_dat = data.table::fread(
+      ecg_file,
+      skip = 13,
+      col.names = c("voltage")
+    )
+  }
   ## ├ Metadata ----
-  ecg_dt_meta <- data.table::fread(
+  ecg_dt_meta <- suppressWarnings(data.table::fread(
     ecg_file,
     skip = 0,
     nrows = 10,
     header = F,
     blank.lines.skip = T,
     col.names = c("field", "value")
-  )
+  ))
   ecg_sample_Hz = as.numeric(str_extract(
     ecg_dt_meta$value[ecg_dt_meta$field == "Sample Rate"],
     "\\d+"
@@ -42,10 +58,13 @@ plot_ecg <- function(ecg_file, width_max = 125) {
   # note: each 25mm grid = 1second (per standard ECG convention)
   ecg_sample_rate_ms = 1000 / ecg_sample_Hz # Hz = 1/s; all appear to be 512 Hz
   ecg_dt_dat$time_ms <- (seq_along(ecg_dt_dat$voltage) - 1) * ecg_sample_rate_ms
-  ecg_dt_dat$voltage_mV <- ecg_dt_dat$voltage / 1000 # convert uV to mV
   ecg_dt_dat$x = ecg_dt_dat$time_ms / 40 # 1mm = 40ms (25mm/s "paper speed")
+
   # note: each 1mm grid = 0.1mV (per standard ECG convention)
+  ecg_dt_dat$voltage_mV <- ecg_dt_dat$voltage / 1000 # convert uV to mV
   ecg_dt_dat$y = ecg_dt_dat$voltage_mV / 0.1 # 1mm = 0.1mV (single standard ecg)
+  y_lims <- range(ecg_dt_dat$y)
+
   ecg_interpretation <- ecg_dt_meta$value[ecg_dt_meta$field == "Classification"]
 
   # width_max = 125 # 125 = 5 seconds each strip
@@ -73,9 +92,12 @@ plot_ecg <- function(ecg_file, width_max = 125) {
       minor_breaks = seq(0, width_max, by = 1)
     ) + # major breaks = 200ms; minor = 40ms
     scale_y_continuous(
-      # will probably need to adjust limits based on different ECG voltage range
-      breaks = seq(-2.5, 7.5, by = 5),
-      minor_breaks = seq(-2.5, 7.5, by = 1)
+      # expand grid based on different ECG voltage range
+      limits = y_lims,
+      breaks = seq(min(y_lims), max(y_lims), by = 5),
+      minor_breaks = seq(min(y_lims), max(y_lims), by = 1)
+      # breaks = seq(-2.5, 7.5, by = 5),
+      # minor_breaks = seq(-2.5, 7.5, by = 1)
     ) + # major breaks = 200ms; minor = 40ms
     coord_fixed(ratio = 1) +
     theme_ecg()
