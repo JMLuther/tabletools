@@ -223,7 +223,7 @@ calculate_avg_glucose(5.5)
 Higher values indicate lower insulin sensitivity.
 
 ```{r}
-calculate_homair(ogtt1$glucose[1], ogtt1$insulin[1])
+calculate_homa1_ir(ogtt1$glucose[1], ogtt1$insulin[1])
 ```
 
 ### QUICKI:
@@ -329,7 +329,7 @@ ogtt_isi <-
          insulin_0 = map_dbl(ogtt_df, ~.x$insulin[.x$time==0]),
          glucose_fasting.f = factor_glucose_fasting(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
          glucose_tolerance.f = factor_glucose_tolerance(map_dbl(ogtt_df, ~.x$glucose[.x$time==0])),
-         isi_homair = map_dbl(ogtt_df, ~calculate_homair(.x$glucose[.x$time==0], .x$insulin[.x$time==0])),
+         isi_homa1_ir = map_dbl(ogtt_df, ~calculate_homa1_ir(.x$glucose[.x$time==0], .x$insulin[.x$time==0])),
          isi_quicki = map_dbl(ogtt_df, ~calculate_quicki(.x$glucose[.x$time==0], .x$insulin[.x$time==0])), # Uses Log10 c/w Katz publication
          isi_avignon = map2_df(ogtt_df, weight_kg, ~calculate_isi_avignon(.x$time, .x$glucose, .x$insulin, weight=.y)), # no match
          isi_belfiore = map_dbl(ogtt_df, ~calculate_isi_belfiore(.x$time, .x$glucose, .x$insulin)), # no match
