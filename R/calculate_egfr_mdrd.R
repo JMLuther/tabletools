@@ -7,44 +7,44 @@
 #'   *  CKD-EPI(2021)
 #'   *  CKD-EPI Cystatin-C
 #'   *  MDRD
-#'   *  Cockcroft-Gault  
+#'   *  Cockcroft-Gault
 #'
 #' @param age Age, in years
-#' @param sex Sex 
-#' @param race 
-#' @param creatinine 
+#' @param sex Sex
+#' @param race Race
+#' @param creatinine Creatinine value (mg/dL)
 #'
 #' @returns a numeric vector with eGFR (ml/min/1.73m^2)
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=0.6) # 118
 #' calculate_egfr_mdrd(age=50, sex="Male", creatinine=0.6) # 142.6
-#' 
+#'
 #' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1) # 92
 #' calculate_egfr_mdrd(age=50, sex="Male", creatinine=1)   # 79
-#' 
+#'
 #' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=1.5) # 56
 #' calculate_egfr_mdrd(age=50, sex="Male", creatinine=1.5) # 49
-#' 
+#'
 #' calculate_egfr_ckdepi(age=50, sex="Male", creatinine=2.0) # 40
 #' calculate_egfr_mdrd(age=50, sex="Male", race="white", creatinine=2.0) # 35.5
 #' calculate_egfr_mdrd(age=50, sex="Male",  creatinine=2.0) # 35.5
 
-
-
 calculate_egfr_mdrd <- Vectorize(
-  function(age, sex, race=NA, creatinine) {
-  sex=handle_sex(sex)
-  race=handle_race(race)
-  if (is.na(race)) {
-    race="White"
-    rlang::warn("Race is missing, defaulting to MDRD calculation using White race")}
-  F.sex = switch(sex, "Female" = 0.742, "Male"=1)
-  R = switch(race, "Black" = 1.212, "White"=1)
-  eGFR = 175 * creatinine ^(-1.154) * age^(-0.203) * R * F.sex
+  function(age, sex, race = NA, creatinine) {
+    sex = handle_sex(sex)
+    race = handle_race(race)
+    if (is.na(race)) {
+      race = "White"
+      rlang::warn(
+        "Race is missing, defaulting to MDRD calculation using White race"
+      )
+    }
+    F.sex = switch(sex, "Female" = 0.742, "Male" = 1)
+    R = switch(race, "Black" = 1.212, "White" = 1)
+    eGFR = 175 * creatinine^(-1.154) * age^(-0.203) * R * F.sex
     return(eGFR)
-}
+  }
 )
-

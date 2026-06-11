@@ -1,8 +1,8 @@
 #' Erythropoietin (EPO) Nomogram Plot
 #' Plots a single matched hematocrit, EPO data pair over the historical EPO nomogram. Data was taken from \href{https://pubmed.ncbi.nlm.nih.gov/2017231/}{Erslev. NEJM. 1991}
 #'
-#' @param hematocrit
-#' @param epo
+#' @param hematocrit Hematocrit (%) that corresponds to EPO
+#' @param epo Serum Erythropoietin (mU/mL)
 #'
 #' @returns a ggplot of datapoint over the EPO nomogram plot
 #'

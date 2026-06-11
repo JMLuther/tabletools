@@ -11,9 +11,9 @@ calculate_egfr_mdrd(age, sex, race = NA, creatinine)
 
 \item{sex}{Sex}
 
-\item{race}{}
+\item{race}{Race}
 
-\item{creatinine}{}
+\item{creatinine}{Creatinine value (mg/dL)}
 }
 \value{
 a numeric vector with eGFR (ml/min/1.73m^2)
