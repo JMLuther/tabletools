@@ -9,6 +9,8 @@
 #' @export
 #' @examples
 #' epo_nomogram(35, 12)
+#' epo_nomogram(29, 14)
+#' epo_nomogram(31.7, 13)
 
 epo_nomogram <- function(hematocrit, epo) {
   theme_set(tabletools::theme_jml())
@@ -22,5 +24,8 @@ epo_nomogram <- function(hematocrit, epo) {
       label = paste("[", hematocrit, ", ", epo, "]"),
       color = "red",
       vjust = 1
+    ) +
+    labs(
+      title = "Expected Erythropoietin Concentrations in Patients\nwith uncomplicated anemia"
     )
 }
