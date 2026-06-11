@@ -11,6 +11,7 @@
 #' epo_nomogram(35, 12)
 
 epo_nomogram <- function(hematocrit, epo) {
+  theme_set(tabletools::theme_jml())
   plot_epo = tabletools:::plot_epo
   plot_epo +
     annotate("point", x = hematocrit, y = epo, colour = "red", size = 4) +
