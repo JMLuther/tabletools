@@ -826,6 +826,53 @@ df_sdi <-
 
 saveRDS(df_sdi, here::here("data-raw/df_sdi.rds"))
 
+## ├ EPO data and nomogram plot  ----
+# Base EPO nomogram plot for use in epo_nomogram.R
+dat_epo <- readr::read_csv(here::here("data-raw/epo_data.csv"))
+theme_set(tabletools::theme_jml())
+
+lm_epo_log10 <- lm(log10(dat_epo$epo) ~ dat_epo$hematocrit)
+epo_pred_log10 <- as.data.frame(predict(
+  lm_epo_log10,
+  interval = "prediction",
+  level = 0.95
+))
+dat_epo_log10 <- cbind(dat_epo, epo_pred_log10)
+dat_epo_log10$fit <- 10^(dat_epo_log10$fit)
+dat_epo_log10$lwr <- 10^(dat_epo_log10$lwr)
+dat_epo_log10$upr <- 10^(dat_epo_log10$upr)
+
+plot_epo <-
+  dat_epo_log10 |>
+  ggplot(aes(hematocrit * 100, epo)) +
+  # geom_point(size = 1) +
+  # geom_point(size = 1, aes(shape = category)) +
+  geom_smooth(method = "lm", se = F, color = "black") +
+  geom_ribbon(
+    aes(ymin = lwr, ymax = upr),
+    alpha = 0.3,
+    fill = "steelblue",
+    color = "black",
+    linetype = 2
+  ) +
+  scale_y_log10(guide = "axis_logticks") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_shape_manual(values = c(21, 24)) +
+  scale_fill_manual(values = c("red", "blue")) +
+  labs(
+    x = "Hematocrit (%)",
+    y = "Erythropoietin (mU/mL)",
+    caption = "95% prediction intervals from Erslev AJ. Erythropoietin. N Engl J Med 1991;324:1339–1344.\ndoi:10.1056/NEJM199105093241907."
+  ) +
+  theme(
+    axis.text = element_text(size = 16),
+    axis.title.y = element_text(size = 25),
+    axis.title.x = element_text(size = 25)
+  )
+
+saveRDS(plot_epo, here::here("data-raw/plot_epo.rds"))
+
+
 # LOAD AND SAVE/UPDATE INTERNAL DATA ----
 # add new object to this and then udpate with each new data set
 df_omnipaque <- readRDS(here::here("data-raw/df_omnipaque.rds"))
@@ -838,6 +885,7 @@ df_FAS_Q <- readRDS(here::here("data-raw/df_FAS_Q.rds"))
 df_coeff_ascvd <- readRDS(here::here("data-raw/df_coeff_ascvd.rds"))
 mesa10yrcoeff <- readRDS(here::here("data-raw/mesa10yrcoeff.rds"))
 ddd <- readRDS(here::here("data-raw/ddd.rds"))
+plot_epo <- readRDS(here::here("data-raw/plot_epo.rds"))
 
 
 ## ├ SAVE internal objects ----
@@ -852,6 +900,7 @@ usethis::use_data(
   df_coeff_ascvd,
   df_sdi,
   df_FAS_Q,
+  plot_epo,
   internal = TRUE,
   overwrite = TRUE
 )
